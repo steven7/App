@@ -1,0 +1,915 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		26D4158116988224EDD565BC /* Pods_AlchemieTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67D8098136A2390695312A32 /* Pods_AlchemieTests.framework */; };
+		74D615FEC39BA1D2F852B3E6 /* Pods_Alchemie.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 860D9649C2D92FEE108E9EE1 /* Pods_Alchemie.framework */; };
+		AA3152CE1FEA796000C772DE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3152CD1FEA796000C772DE /* AppDelegate.swift */; };
+		AA3152D01FEA796000C772DE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3152CF1FEA796000C772DE /* ViewController.swift */; };
+		AA3152D31FEA796000C772DE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA3152D11FEA796000C772DE /* Main.storyboard */; };
+		AA3152D61FEA796000C772DE /* Alchemie.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AA3152D41FEA796000C772DE /* Alchemie.xcdatamodeld */; };
+		AA3152D81FEA796000C772DE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA3152D71FEA796000C772DE /* Assets.xcassets */; };
+		AA3152DB1FEA796000C772DE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA3152D91FEA796000C772DE /* LaunchScreen.storyboard */; };
+		AA3152E61FEA796000C772DE /* AlchemieTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3152E51FEA796000C772DE /* AlchemieTests.swift */; };
+		AA3152F11FEA796000C772DE /* AlchemieUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3152F01FEA796000C772DE /* AlchemieUITests.swift */; };
+		AA3152FF1FEA797E00C772DE /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3152FE1FEA797E00C772DE /* LoginViewController.swift */; };
+		AA3153011FEA798900C772DE /* CreateUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3153001FEA798900C772DE /* CreateUserViewController.swift */; };
+		AA3153031FEA799C00C772DE /* CreateUserConfirmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3153021FEA799C00C772DE /* CreateUserConfirmViewController.swift */; };
+		AA3153051FEA79B800C772DE /* OptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3153041FEA79B800C772DE /* OptionsViewController.swift */; };
+		AA3153071FEA79C300C772DE /* PlacementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3153061FEA79C300C772DE /* PlacementViewController.swift */; };
+		AA3153091FEA79D300C772DE /* AlchemieAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3153081FEA79D300C772DE /* AlchemieAPI.swift */; };
+		AA31530C1FEA7A0C00C772DE /* OptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA31530A1FEA7A0C00C772DE /* OptionTableViewCell.swift */; };
+		AA31530D1FEA7A0C00C772DE /* OptionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA31530B1FEA7A0C00C772DE /* OptionTableViewCell.xib */; };
+		AA3153101FEA7A1800C772DE /* SubOptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA31530E1FEA7A1800C772DE /* SubOptionTableViewCell.swift */; };
+		AA3153111FEA7A1800C772DE /* SubOptionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA31530F1FEA7A1800C772DE /* SubOptionTableViewCell.xib */; };
+		AA3153141FEA7A2500C772DE /* CreateOptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3153121FEA7A2500C772DE /* CreateOptionTableViewCell.swift */; };
+		AA3153151FEA7A2500C772DE /* CreateOptionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA3153131FEA7A2500C772DE /* CreateOptionTableViewCell.xib */; };
+		AA3153181FEA7A3400C772DE /* CreateSubOptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3153161FEA7A3400C772DE /* CreateSubOptionTableViewCell.swift */; };
+		AA3153191FEA7A3400C772DE /* CreateSubOptionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA3153171FEA7A3400C772DE /* CreateSubOptionTableViewCell.xib */; };
+		AA31531C1FEA7A6000C772DE /* SubOptionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA31531A1FEA7A6000C772DE /* SubOptionCollectionViewCell.swift */; };
+		AA31531D1FEA7A6000C772DE /* SubOptionCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA31531B1FEA7A6000C772DE /* SubOptionCollectionViewCell.xib */; };
+		AA31531F1FEA7A7F00C772DE /* CreateOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA31531E1FEA7A7F00C772DE /* CreateOption.swift */; };
+		AA3153211FEA7A8C00C772DE /* CreateSubOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3153201FEA7A8C00C772DE /* CreateSubOption.swift */; };
+		AA3153231FEA7BC400C772DE /* Option.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3153221FEA7BC400C772DE /* Option.swift */; };
+		AA3153251FEA7BCF00C772DE /* SubOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3153241FEA7BCF00C772DE /* SubOption.swift */; };
+		AA6C7A971FEB3BFE00392EE7 /* CreateItemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6C7A951FEB3BFE00392EE7 /* CreateItemCollectionViewCell.swift */; };
+		AA6C7A981FEB3BFE00392EE7 /* CreateItemCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA6C7A961FEB3BFE00392EE7 /* CreateItemCollectionViewCell.xib */; };
+		AA6C7A9D1FEB3CAF00392EE7 /* ItemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6C7A9B1FEB3CAF00392EE7 /* ItemCollectionViewCell.swift */; };
+		AA6C7A9E1FEB3CAF00392EE7 /* ItemCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA6C7A9C1FEB3CAF00392EE7 /* ItemCollectionViewCell.xib */; };
+		AA9A1C041FED468F00F61C8F /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA9A1C031FED468F00F61C8F /* Item.swift */; };
+		AACFE98A1FEC348A00B798D7 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AACFE9891FEC348A00B798D7 /* Extensions.swift */; };
+		AACFE98C1FEC356E00B798D7 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = AACFE98B1FEC356E00B798D7 /* Utilities.swift */; };
+		EDFAEFDD126311D2D5E133A4 /* Pods_AlchemieUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A1E9DE0532AA032C714F154 /* Pods_AlchemieUITests.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		AA3152E21FEA796000C772DE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AA3152C21FEA796000C772DE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AA3152C91FEA796000C772DE;
+			remoteInfo = Alchemie;
+		};
+		AA3152ED1FEA796000C772DE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AA3152C21FEA796000C772DE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AA3152C91FEA796000C772DE;
+			remoteInfo = Alchemie;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		2B478D24BEEDD9C351B1274B /* Pods-AlchemieTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlchemieTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AlchemieTests/Pods-AlchemieTests.release.xcconfig"; sourceTree = "<group>"; };
+		31BC370EC04AD234CD7CB81E /* Pods-AlchemieUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlchemieUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AlchemieUITests/Pods-AlchemieUITests.release.xcconfig"; sourceTree = "<group>"; };
+		3E1F1D9384CFC8F14443153F /* Pods-Alchemie.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Alchemie.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Alchemie/Pods-Alchemie.debug.xcconfig"; sourceTree = "<group>"; };
+		63A73CC84BECA5A4620D137F /* Pods-AlchemieUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlchemieUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AlchemieUITests/Pods-AlchemieUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		67D8098136A2390695312A32 /* Pods_AlchemieTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AlchemieTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6A1E9DE0532AA032C714F154 /* Pods_AlchemieUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AlchemieUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		860D9649C2D92FEE108E9EE1 /* Pods_Alchemie.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Alchemie.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA3152CA1FEA796000C772DE /* Alchemie.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Alchemie.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA3152CD1FEA796000C772DE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		AA3152CF1FEA796000C772DE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		AA3152D21FEA796000C772DE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		AA3152D51FEA796000C772DE /* Alchemie.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Alchemie.xcdatamodel; sourceTree = "<group>"; };
+		AA3152D71FEA796000C772DE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		AA3152DA1FEA796000C772DE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		AA3152DC1FEA796000C772DE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AA3152E11FEA796000C772DE /* AlchemieTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AlchemieTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA3152E51FEA796000C772DE /* AlchemieTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlchemieTests.swift; sourceTree = "<group>"; };
+		AA3152E71FEA796000C772DE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AA3152EC1FEA796000C772DE /* AlchemieUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AlchemieUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA3152F01FEA796000C772DE /* AlchemieUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlchemieUITests.swift; sourceTree = "<group>"; };
+		AA3152F21FEA796000C772DE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AA3152FE1FEA797E00C772DE /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		AA3153001FEA798900C772DE /* CreateUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateUserViewController.swift; sourceTree = "<group>"; };
+		AA3153021FEA799C00C772DE /* CreateUserConfirmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateUserConfirmViewController.swift; sourceTree = "<group>"; };
+		AA3153041FEA79B800C772DE /* OptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsViewController.swift; sourceTree = "<group>"; };
+		AA3153061FEA79C300C772DE /* PlacementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacementViewController.swift; sourceTree = "<group>"; };
+		AA3153081FEA79D300C772DE /* AlchemieAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlchemieAPI.swift; sourceTree = "<group>"; };
+		AA31530A1FEA7A0C00C772DE /* OptionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionTableViewCell.swift; sourceTree = "<group>"; };
+		AA31530B1FEA7A0C00C772DE /* OptionTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OptionTableViewCell.xib; sourceTree = "<group>"; };
+		AA31530E1FEA7A1800C772DE /* SubOptionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubOptionTableViewCell.swift; sourceTree = "<group>"; };
+		AA31530F1FEA7A1800C772DE /* SubOptionTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SubOptionTableViewCell.xib; sourceTree = "<group>"; };
+		AA3153121FEA7A2500C772DE /* CreateOptionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateOptionTableViewCell.swift; sourceTree = "<group>"; };
+		AA3153131FEA7A2500C772DE /* CreateOptionTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreateOptionTableViewCell.xib; sourceTree = "<group>"; };
+		AA3153161FEA7A3400C772DE /* CreateSubOptionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateSubOptionTableViewCell.swift; sourceTree = "<group>"; };
+		AA3153171FEA7A3400C772DE /* CreateSubOptionTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreateSubOptionTableViewCell.xib; sourceTree = "<group>"; };
+		AA31531A1FEA7A6000C772DE /* SubOptionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubOptionCollectionViewCell.swift; sourceTree = "<group>"; };
+		AA31531B1FEA7A6000C772DE /* SubOptionCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SubOptionCollectionViewCell.xib; sourceTree = "<group>"; };
+		AA31531E1FEA7A7F00C772DE /* CreateOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateOption.swift; sourceTree = "<group>"; };
+		AA3153201FEA7A8C00C772DE /* CreateSubOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateSubOption.swift; sourceTree = "<group>"; };
+		AA3153221FEA7BC400C772DE /* Option.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Option.swift; sourceTree = "<group>"; };
+		AA3153241FEA7BCF00C772DE /* SubOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubOption.swift; sourceTree = "<group>"; };
+		AA6C7A951FEB3BFE00392EE7 /* CreateItemCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateItemCollectionViewCell.swift; sourceTree = "<group>"; };
+		AA6C7A961FEB3BFE00392EE7 /* CreateItemCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreateItemCollectionViewCell.xib; sourceTree = "<group>"; };
+		AA6C7A9B1FEB3CAF00392EE7 /* ItemCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCollectionViewCell.swift; sourceTree = "<group>"; };
+		AA6C7A9C1FEB3CAF00392EE7 /* ItemCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ItemCollectionViewCell.xib; sourceTree = "<group>"; };
+		AA9A1C031FED468F00F61C8F /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
+		AACFE9891FEC348A00B798D7 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		AACFE98B1FEC356E00B798D7 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		C574F7D7FF72771D77E314D5 /* Pods-Alchemie.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Alchemie.release.xcconfig"; path = "Pods/Target Support Files/Pods-Alchemie/Pods-Alchemie.release.xcconfig"; sourceTree = "<group>"; };
+		D34DC663B10A3B276A8AFC33 /* Pods-AlchemieTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlchemieTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AlchemieTests/Pods-AlchemieTests.debug.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		AA3152C71FEA796000C772DE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				74D615FEC39BA1D2F852B3E6 /* Pods_Alchemie.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AA3152DE1FEA796000C772DE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				26D4158116988224EDD565BC /* Pods_AlchemieTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AA3152E91FEA796000C772DE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EDFAEFDD126311D2D5E133A4 /* Pods_AlchemieUITests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		23FFBD5E69754B0A457D95AD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				860D9649C2D92FEE108E9EE1 /* Pods_Alchemie.framework */,
+				67D8098136A2390695312A32 /* Pods_AlchemieTests.framework */,
+				6A1E9DE0532AA032C714F154 /* Pods_AlchemieUITests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		AA3152C11FEA796000C772DE = {
+			isa = PBXGroup;
+			children = (
+				AA3152CC1FEA796000C772DE /* Alchemie */,
+				AA3152E41FEA796000C772DE /* AlchemieTests */,
+				AA3152EF1FEA796000C772DE /* AlchemieUITests */,
+				AA3152CB1FEA796000C772DE /* Products */,
+				EA3BC51B28983FDF2BF9AEAE /* Pods */,
+				23FFBD5E69754B0A457D95AD /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		AA3152CB1FEA796000C772DE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AA3152CA1FEA796000C772DE /* Alchemie.app */,
+				AA3152E11FEA796000C772DE /* AlchemieTests.xctest */,
+				AA3152EC1FEA796000C772DE /* AlchemieUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AA3152CC1FEA796000C772DE /* Alchemie */ = {
+			isa = PBXGroup;
+			children = (
+				AA3152CD1FEA796000C772DE /* AppDelegate.swift */,
+				AA3152CF1FEA796000C772DE /* ViewController.swift */,
+				AA3152FE1FEA797E00C772DE /* LoginViewController.swift */,
+				AA3153001FEA798900C772DE /* CreateUserViewController.swift */,
+				AA3153021FEA799C00C772DE /* CreateUserConfirmViewController.swift */,
+				AA3153041FEA79B800C772DE /* OptionsViewController.swift */,
+				AA3153061FEA79C300C772DE /* PlacementViewController.swift */,
+				AA3152D11FEA796000C772DE /* Main.storyboard */,
+				AA3153081FEA79D300C772DE /* AlchemieAPI.swift */,
+				AACFE9891FEC348A00B798D7 /* Extensions.swift */,
+				AACFE98B1FEC356E00B798D7 /* Utilities.swift */,
+				AA6C7A991FEB3C6B00392EE7 /* Model */,
+				AA6C7A9A1FEB3C8000392EE7 /* Cells */,
+				AA3152D71FEA796000C772DE /* Assets.xcassets */,
+				AA3152D91FEA796000C772DE /* LaunchScreen.storyboard */,
+				AA3152DC1FEA796000C772DE /* Info.plist */,
+				AA3152D41FEA796000C772DE /* Alchemie.xcdatamodeld */,
+			);
+			path = Alchemie;
+			sourceTree = "<group>";
+		};
+		AA3152E41FEA796000C772DE /* AlchemieTests */ = {
+			isa = PBXGroup;
+			children = (
+				AA3152E51FEA796000C772DE /* AlchemieTests.swift */,
+				AA3152E71FEA796000C772DE /* Info.plist */,
+			);
+			path = AlchemieTests;
+			sourceTree = "<group>";
+		};
+		AA3152EF1FEA796000C772DE /* AlchemieUITests */ = {
+			isa = PBXGroup;
+			children = (
+				AA3152F01FEA796000C772DE /* AlchemieUITests.swift */,
+				AA3152F21FEA796000C772DE /* Info.plist */,
+			);
+			path = AlchemieUITests;
+			sourceTree = "<group>";
+		};
+		AA6C7A991FEB3C6B00392EE7 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				AA3153221FEA7BC400C772DE /* Option.swift */,
+				AA3153241FEA7BCF00C772DE /* SubOption.swift */,
+				AA9A1C031FED468F00F61C8F /* Item.swift */,
+				AA31531E1FEA7A7F00C772DE /* CreateOption.swift */,
+				AA3153201FEA7A8C00C772DE /* CreateSubOption.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		AA6C7A9A1FEB3C8000392EE7 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				AA31530A1FEA7A0C00C772DE /* OptionTableViewCell.swift */,
+				AA31530B1FEA7A0C00C772DE /* OptionTableViewCell.xib */,
+				AA31530E1FEA7A1800C772DE /* SubOptionTableViewCell.swift */,
+				AA31530F1FEA7A1800C772DE /* SubOptionTableViewCell.xib */,
+				AA3153121FEA7A2500C772DE /* CreateOptionTableViewCell.swift */,
+				AA3153131FEA7A2500C772DE /* CreateOptionTableViewCell.xib */,
+				AA3153161FEA7A3400C772DE /* CreateSubOptionTableViewCell.swift */,
+				AA3153171FEA7A3400C772DE /* CreateSubOptionTableViewCell.xib */,
+				AA31531A1FEA7A6000C772DE /* SubOptionCollectionViewCell.swift */,
+				AA31531B1FEA7A6000C772DE /* SubOptionCollectionViewCell.xib */,
+				AA6C7A9B1FEB3CAF00392EE7 /* ItemCollectionViewCell.swift */,
+				AA6C7A9C1FEB3CAF00392EE7 /* ItemCollectionViewCell.xib */,
+				AA6C7A951FEB3BFE00392EE7 /* CreateItemCollectionViewCell.swift */,
+				AA6C7A961FEB3BFE00392EE7 /* CreateItemCollectionViewCell.xib */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		EA3BC51B28983FDF2BF9AEAE /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				3E1F1D9384CFC8F14443153F /* Pods-Alchemie.debug.xcconfig */,
+				C574F7D7FF72771D77E314D5 /* Pods-Alchemie.release.xcconfig */,
+				D34DC663B10A3B276A8AFC33 /* Pods-AlchemieTests.debug.xcconfig */,
+				2B478D24BEEDD9C351B1274B /* Pods-AlchemieTests.release.xcconfig */,
+				63A73CC84BECA5A4620D137F /* Pods-AlchemieUITests.debug.xcconfig */,
+				31BC370EC04AD234CD7CB81E /* Pods-AlchemieUITests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		AA3152C91FEA796000C772DE /* Alchemie */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AA3152F51FEA796000C772DE /* Build configuration list for PBXNativeTarget "Alchemie" */;
+			buildPhases = (
+				84570E5C3DBDD591B07E28EA /* [CP] Check Pods Manifest.lock */,
+				AA3152C61FEA796000C772DE /* Sources */,
+				AA3152C71FEA796000C772DE /* Frameworks */,
+				AA3152C81FEA796000C772DE /* Resources */,
+				234B3A3198BCC13C24107B74 /* [CP] Embed Pods Frameworks */,
+				BF6544E1A1EA5E43C8EF7439 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Alchemie;
+			productName = Alchemie;
+			productReference = AA3152CA1FEA796000C772DE /* Alchemie.app */;
+			productType = "com.apple.product-type.application";
+		};
+		AA3152E01FEA796000C772DE /* AlchemieTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AA3152F81FEA796000C772DE /* Build configuration list for PBXNativeTarget "AlchemieTests" */;
+			buildPhases = (
+				6E288C4F5E1C9D888B0FC958 /* [CP] Check Pods Manifest.lock */,
+				AA3152DD1FEA796000C772DE /* Sources */,
+				AA3152DE1FEA796000C772DE /* Frameworks */,
+				AA3152DF1FEA796000C772DE /* Resources */,
+				76CF5B7B91428E02833229E4 /* [CP] Embed Pods Frameworks */,
+				6E97A0C8BD1A711B3CE7EB07 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AA3152E31FEA796000C772DE /* PBXTargetDependency */,
+			);
+			name = AlchemieTests;
+			productName = AlchemieTests;
+			productReference = AA3152E11FEA796000C772DE /* AlchemieTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		AA3152EB1FEA796000C772DE /* AlchemieUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AA3152FB1FEA796000C772DE /* Build configuration list for PBXNativeTarget "AlchemieUITests" */;
+			buildPhases = (
+				AE5053A948CB252C7A3F3E6F /* [CP] Check Pods Manifest.lock */,
+				AA3152E81FEA796000C772DE /* Sources */,
+				AA3152E91FEA796000C772DE /* Frameworks */,
+				AA3152EA1FEA796000C772DE /* Resources */,
+				D425322F730A35B53B5A70F9 /* [CP] Embed Pods Frameworks */,
+				567C647AF9D02155075DC2C6 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AA3152EE1FEA796000C772DE /* PBXTargetDependency */,
+			);
+			name = AlchemieUITests;
+			productName = AlchemieUITests;
+			productReference = AA3152EC1FEA796000C772DE /* AlchemieUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		AA3152C21FEA796000C772DE /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0910;
+				LastUpgradeCheck = 0910;
+				ORGANIZATIONNAME = steve;
+				TargetAttributes = {
+					AA3152C91FEA796000C772DE = {
+						CreatedOnToolsVersion = 9.1;
+						ProvisioningStyle = Automatic;
+					};
+					AA3152E01FEA796000C772DE = {
+						CreatedOnToolsVersion = 9.1;
+						ProvisioningStyle = Automatic;
+						TestTargetID = AA3152C91FEA796000C772DE;
+					};
+					AA3152EB1FEA796000C772DE = {
+						CreatedOnToolsVersion = 9.1;
+						ProvisioningStyle = Automatic;
+						TestTargetID = AA3152C91FEA796000C772DE;
+					};
+				};
+			};
+			buildConfigurationList = AA3152C51FEA796000C772DE /* Build configuration list for PBXProject "Alchemie" */;
+			compatibilityVersion = "Xcode 8.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = AA3152C11FEA796000C772DE;
+			productRefGroup = AA3152CB1FEA796000C772DE /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				AA3152C91FEA796000C772DE /* Alchemie */,
+				AA3152E01FEA796000C772DE /* AlchemieTests */,
+				AA3152EB1FEA796000C772DE /* AlchemieUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		AA3152C81FEA796000C772DE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA3153151FEA7A2500C772DE /* CreateOptionTableViewCell.xib in Resources */,
+				AA31530D1FEA7A0C00C772DE /* OptionTableViewCell.xib in Resources */,
+				AA31531D1FEA7A6000C772DE /* SubOptionCollectionViewCell.xib in Resources */,
+				AA6C7A981FEB3BFE00392EE7 /* CreateItemCollectionViewCell.xib in Resources */,
+				AA3152DB1FEA796000C772DE /* LaunchScreen.storyboard in Resources */,
+				AA3152D81FEA796000C772DE /* Assets.xcassets in Resources */,
+				AA3152D31FEA796000C772DE /* Main.storyboard in Resources */,
+				AA6C7A9E1FEB3CAF00392EE7 /* ItemCollectionViewCell.xib in Resources */,
+				AA3153111FEA7A1800C772DE /* SubOptionTableViewCell.xib in Resources */,
+				AA3153191FEA7A3400C772DE /* CreateSubOptionTableViewCell.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AA3152DF1FEA796000C772DE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AA3152EA1FEA796000C772DE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		234B3A3198BCC13C24107B74 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Alchemie/Pods-Alchemie-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftKeychainWrapper/SwiftKeychainWrapper.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftKeychainWrapper.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Alchemie/Pods-Alchemie-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		567C647AF9D02155075DC2C6 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AlchemieUITests/Pods-AlchemieUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6E288C4F5E1C9D888B0FC958 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-AlchemieTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6E97A0C8BD1A711B3CE7EB07 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AlchemieTests/Pods-AlchemieTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		76CF5B7B91428E02833229E4 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AlchemieTests/Pods-AlchemieTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		84570E5C3DBDD591B07E28EA /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Alchemie-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AE5053A948CB252C7A3F3E6F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-AlchemieUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BF6544E1A1EA5E43C8EF7439 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Alchemie/Pods-Alchemie-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D425322F730A35B53B5A70F9 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AlchemieUITests/Pods-AlchemieUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		AA3152C61FEA796000C772DE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA31531F1FEA7A7F00C772DE /* CreateOption.swift in Sources */,
+				AA3153071FEA79C300C772DE /* PlacementViewController.swift in Sources */,
+				AACFE98C1FEC356E00B798D7 /* Utilities.swift in Sources */,
+				AA3152FF1FEA797E00C772DE /* LoginViewController.swift in Sources */,
+				AA3153011FEA798900C772DE /* CreateUserViewController.swift in Sources */,
+				AA3153031FEA799C00C772DE /* CreateUserConfirmViewController.swift in Sources */,
+				AA9A1C041FED468F00F61C8F /* Item.swift in Sources */,
+				AA6C7A9D1FEB3CAF00392EE7 /* ItemCollectionViewCell.swift in Sources */,
+				AA3153251FEA7BCF00C772DE /* SubOption.swift in Sources */,
+				AA3153051FEA79B800C772DE /* OptionsViewController.swift in Sources */,
+				AA6C7A971FEB3BFE00392EE7 /* CreateItemCollectionViewCell.swift in Sources */,
+				AA3153091FEA79D300C772DE /* AlchemieAPI.swift in Sources */,
+				AA3153231FEA7BC400C772DE /* Option.swift in Sources */,
+				AA3153211FEA7A8C00C772DE /* CreateSubOption.swift in Sources */,
+				AA3152D01FEA796000C772DE /* ViewController.swift in Sources */,
+				AACFE98A1FEC348A00B798D7 /* Extensions.swift in Sources */,
+				AA3152CE1FEA796000C772DE /* AppDelegate.swift in Sources */,
+				AA31530C1FEA7A0C00C772DE /* OptionTableViewCell.swift in Sources */,
+				AA3152D61FEA796000C772DE /* Alchemie.xcdatamodeld in Sources */,
+				AA31531C1FEA7A6000C772DE /* SubOptionCollectionViewCell.swift in Sources */,
+				AA3153141FEA7A2500C772DE /* CreateOptionTableViewCell.swift in Sources */,
+				AA3153101FEA7A1800C772DE /* SubOptionTableViewCell.swift in Sources */,
+				AA3153181FEA7A3400C772DE /* CreateSubOptionTableViewCell.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AA3152DD1FEA796000C772DE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA3152E61FEA796000C772DE /* AlchemieTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AA3152E81FEA796000C772DE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA3152F11FEA796000C772DE /* AlchemieUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		AA3152E31FEA796000C772DE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AA3152C91FEA796000C772DE /* Alchemie */;
+			targetProxy = AA3152E21FEA796000C772DE /* PBXContainerItemProxy */;
+		};
+		AA3152EE1FEA796000C772DE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AA3152C91FEA796000C772DE /* Alchemie */;
+			targetProxy = AA3152ED1FEA796000C772DE /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		AA3152D11FEA796000C772DE /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AA3152D21FEA796000C772DE /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		AA3152D91FEA796000C772DE /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AA3152DA1FEA796000C772DE /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		AA3152F31FEA796000C772DE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		AA3152F41FEA796000C772DE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		AA3152F61FEA796000C772DE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3E1F1D9384CFC8F14443153F /* Pods-Alchemie.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = EPDF3ATTJ8;
+				INFOPLIST_FILE = Alchemie/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.alchemie.Alchemie-iOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		AA3152F71FEA796000C772DE /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C574F7D7FF72771D77E314D5 /* Pods-Alchemie.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = EPDF3ATTJ8;
+				INFOPLIST_FILE = Alchemie/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.alchemie.Alchemie-iOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		AA3152F91FEA796000C772DE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D34DC663B10A3B276A8AFC33 /* Pods-AlchemieTests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = EPDF3ATTJ8;
+				INFOPLIST_FILE = AlchemieTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.alchemie.AlchemieTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Alchemie.app/Alchemie";
+			};
+			name = Debug;
+		};
+		AA3152FA1FEA796000C772DE /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2B478D24BEEDD9C351B1274B /* Pods-AlchemieTests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = EPDF3ATTJ8;
+				INFOPLIST_FILE = AlchemieTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.alchemie.AlchemieTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Alchemie.app/Alchemie";
+			};
+			name = Release;
+		};
+		AA3152FC1FEA796000C772DE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 63A73CC84BECA5A4620D137F /* Pods-AlchemieUITests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = EPDF3ATTJ8;
+				INFOPLIST_FILE = AlchemieUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.alchemie.AlchemieUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Alchemie;
+			};
+			name = Debug;
+		};
+		AA3152FD1FEA796000C772DE /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 31BC370EC04AD234CD7CB81E /* Pods-AlchemieUITests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = EPDF3ATTJ8;
+				INFOPLIST_FILE = AlchemieUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.alchemie.AlchemieUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Alchemie;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AA3152C51FEA796000C772DE /* Build configuration list for PBXProject "Alchemie" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA3152F31FEA796000C772DE /* Debug */,
+				AA3152F41FEA796000C772DE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AA3152F51FEA796000C772DE /* Build configuration list for PBXNativeTarget "Alchemie" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA3152F61FEA796000C772DE /* Debug */,
+				AA3152F71FEA796000C772DE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AA3152F81FEA796000C772DE /* Build configuration list for PBXNativeTarget "AlchemieTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA3152F91FEA796000C772DE /* Debug */,
+				AA3152FA1FEA796000C772DE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AA3152FB1FEA796000C772DE /* Build configuration list for PBXNativeTarget "AlchemieUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA3152FC1FEA796000C772DE /* Debug */,
+				AA3152FD1FEA796000C772DE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		AA3152D41FEA796000C772DE /* Alchemie.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				AA3152D51FEA796000C772DE /* Alchemie.xcdatamodel */,
+			);
+			currentVersion = AA3152D51FEA796000C772DE /* Alchemie.xcdatamodel */;
+			path = Alchemie.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = AA3152C21FEA796000C772DE /* Project object */;
+}

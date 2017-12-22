@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="13533" systemVersion="16G1036" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="CDOption" representedClassName="CDOption" syncable="YES" codeGenerationType="class">
+        <attribute name="optionDescription" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="optionID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="user" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="subOptions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CDSubOption" syncable="YES"/>
+    </entity>
+    <entity name="CDSubOption" representedClassName="CDSubOption" parentEntity="CDOption" syncable="YES" codeGenerationType="class">
+        <attribute name="city" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="country" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="parentOptionID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="pocEmail" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="pocName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="pocPhone" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="postalCode" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="state" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="street" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="subOptionID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="subOptionStatus" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="CDOption" positionX="-63" positionY="-18" width="128" height="150"/>
+        <element name="CDSubOption" positionX="-54" positionY="-9" width="128" height="225"/>
+    </elements>
+</model>

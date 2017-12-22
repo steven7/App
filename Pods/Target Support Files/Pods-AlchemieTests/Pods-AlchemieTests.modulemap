@@ -1,0 +1,6 @@
+framework module Pods_AlchemieTests {
+  umbrella header "Pods-AlchemieTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
