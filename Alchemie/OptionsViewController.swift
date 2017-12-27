@@ -23,7 +23,7 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
     //var options = [NSManagedObject]()
     
     var currentUserName:String?
-    
+    var currentSubOption:SubOption?
     var currentOptionTitle:String?
     var currentSubOptionTitle:String?
     
@@ -118,9 +118,10 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
         else if (option is SubOption) {
             print("sub option")
-            let currentSubOption = option as! SubOption
-            currentOptionTitle = currentSubOption.parentOption?.title
-            currentSubOptionTitle = currentSubOption.name
+            let thecurrentSubOption = option as! SubOption
+            currentOptionTitle = thecurrentSubOption.parentOption?.title
+            currentSubOptionTitle = thecurrentSubOption.name
+            currentSubOption = thecurrentSubOption
             self.performSegue(withIdentifier: "optionsToPlacement", sender: self)
         }
         else if (option is CreateSubOption){
@@ -397,6 +398,7 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
             let placementViewController = segue.destination as! PlacementViewController
             placementViewController.optionTitle = currentOptionTitle
             placementViewController.subOptionOneTitle = currentSubOptionTitle
+            placementViewController.currentSubOption = currentSubOption
         }
     }
     
@@ -459,22 +461,28 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
                 let newSubOption = SubOption()
                 newSubOption.name = suboptionName
                 newSubOption.parentOption = newOption
+                newSubOption.parentOptionID = newOption.optionID
                 guard let imageList = suboption["ImagesList"] as? [[String: AnyObject]] else {
                     print("somethings wrong with the data")
                     return [AnyObject]()
                 }
-                /*
+                
                 // sub option images
                 for image in imageList {
-                    guard let imgPointer = suboption["ImgPointer"] as? String else {
+                    /*
+                    guard let imgPointer = image["ImgPointer"] as? String else {
                         print("somethings wrong with the data")
                         return [AnyObject]()
                     }
-                    guard let title = suboption["Title"] as? String else {
+                    */
+                    
+                    let imgPointer = image["ImgPointer"] as? String
+                    
+                    guard let title = image["Title"] as? String else {
                         print("somethings wrong with the data")
                         return [AnyObject]()
                     }
-                }*/
+                }
                 theOptions.append(newSubOption)
                 createSubOptionWithCoreData(with: newSubOption)
             }

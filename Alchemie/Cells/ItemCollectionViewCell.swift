@@ -10,9 +10,32 @@ import UIKit
 
 class ItemCollectionViewCell: UICollectionViewCell {
 
+    var theimage:UIImage?
+    var theimagePointer:String?
+    var thecaption:String?
+    
+    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var captionTextLabel: UILabel!
+    
+    @IBOutlet weak var theBackgroundView: UIView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        imageView.image = theimage
+        captionTextLabel.text = thecaption
+        theBackgroundView.backgroundColor = UIColor.clear
+        theBackgroundView.layer.cornerRadius = 15
+    }
+
+    func setImagewwithCaption( image:UIImage, caption:String){
+        imageView.image = image
+        captionTextLabel.text = caption
+    }
+    
+    func withItem( item: Item){
+        imageView.image = item.image
+        captionTextLabel.text = item.caption
     }
 
 }

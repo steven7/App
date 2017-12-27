@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="13533" systemVersion="16G1036" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="CDItem" representedClassName="CDItem" parentEntity="CDSubOption" syncable="YES" codeGenerationType="class">
+        <attribute name="caption" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="imgPointer" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="imgUUID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="parentSubOptionID" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="subOption" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDSubOption" inverseName="items" inverseEntity="CDSubOption" syncable="YES"/>
+    </entity>
     <entity name="CDOption" representedClassName="CDOption" syncable="YES" codeGenerationType="class">
         <attribute name="optionDescription" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="optionID" optional="YES" attributeType="String" syncable="YES"/>
@@ -7,7 +14,7 @@
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="user" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="subOptions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CDSubOption" syncable="YES"/>
+        <relationship name="subOptions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CDSubOption" inverseName="option" inverseEntity="CDSubOption" syncable="YES"/>
     </entity>
     <entity name="CDSubOption" representedClassName="CDSubOption" parentEntity="CDOption" syncable="YES" codeGenerationType="class">
         <attribute name="city" optional="YES" attributeType="String" syncable="YES"/>
@@ -22,9 +29,12 @@
         <attribute name="street" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="subOptionID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="subOptionStatus" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="items" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CDItem" inverseName="subOption" inverseEntity="CDItem" syncable="YES"/>
+        <relationship name="option" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDOption" inverseName="subOptions" inverseEntity="CDOption" syncable="YES"/>
     </entity>
     <elements>
-        <element name="CDOption" positionX="-63" positionY="-18" width="128" height="150"/>
-        <element name="CDSubOption" positionX="-54" positionY="-9" width="128" height="225"/>
+        <element name="CDItem" positionX="223" positionY="198" width="128" height="28"/>
+        <element name="CDOption" positionX="-324" positionY="-360" width="128" height="28"/>
+        <element name="CDSubOption" positionX="-74" positionY="-216" width="128" height="28"/>
     </elements>
 </model>

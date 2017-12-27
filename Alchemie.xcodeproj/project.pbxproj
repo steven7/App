@@ -37,11 +37,15 @@
 		AA3153211FEA7A8C00C772DE /* CreateSubOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3153201FEA7A8C00C772DE /* CreateSubOption.swift */; };
 		AA3153231FEA7BC400C772DE /* Option.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3153221FEA7BC400C772DE /* Option.swift */; };
 		AA3153251FEA7BCF00C772DE /* SubOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3153241FEA7BCF00C772DE /* SubOption.swift */; };
+		AA54CC8E1FEEB17F00B72C44 /* ImageStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA54CC8D1FEEB17F00B72C44 /* ImageStore.swift */; };
 		AA6C7A971FEB3BFE00392EE7 /* CreateItemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6C7A951FEB3BFE00392EE7 /* CreateItemCollectionViewCell.swift */; };
 		AA6C7A981FEB3BFE00392EE7 /* CreateItemCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA6C7A961FEB3BFE00392EE7 /* CreateItemCollectionViewCell.xib */; };
 		AA6C7A9D1FEB3CAF00392EE7 /* ItemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6C7A9B1FEB3CAF00392EE7 /* ItemCollectionViewCell.swift */; };
 		AA6C7A9E1FEB3CAF00392EE7 /* ItemCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA6C7A9C1FEB3CAF00392EE7 /* ItemCollectionViewCell.xib */; };
 		AA9A1C041FED468F00F61C8F /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA9A1C031FED468F00F61C8F /* Item.swift */; };
+		AA9A1C061FED6E5600F61C8F /* CreateItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA9A1C051FED6E5600F61C8F /* CreateItem.swift */; };
+		AA9A1C081FED72F600F61C8F /* CreateItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA9A1C071FED72F600F61C8F /* CreateItemViewController.swift */; };
+		AAB125301FF4443300F75EBA /* BigImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB1252F1FF4443300F75EBA /* BigImageViewController.swift */; };
 		AACFE98A1FEC348A00B798D7 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AACFE9891FEC348A00B798D7 /* Extensions.swift */; };
 		AACFE98C1FEC356E00B798D7 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = AACFE98B1FEC356E00B798D7 /* Utilities.swift */; };
 		EDFAEFDD126311D2D5E133A4 /* Pods_AlchemieUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A1E9DE0532AA032C714F154 /* Pods_AlchemieUITests.framework */; };
@@ -106,11 +110,15 @@
 		AA3153201FEA7A8C00C772DE /* CreateSubOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateSubOption.swift; sourceTree = "<group>"; };
 		AA3153221FEA7BC400C772DE /* Option.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Option.swift; sourceTree = "<group>"; };
 		AA3153241FEA7BCF00C772DE /* SubOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubOption.swift; sourceTree = "<group>"; };
+		AA54CC8D1FEEB17F00B72C44 /* ImageStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageStore.swift; sourceTree = "<group>"; };
 		AA6C7A951FEB3BFE00392EE7 /* CreateItemCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateItemCollectionViewCell.swift; sourceTree = "<group>"; };
 		AA6C7A961FEB3BFE00392EE7 /* CreateItemCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreateItemCollectionViewCell.xib; sourceTree = "<group>"; };
 		AA6C7A9B1FEB3CAF00392EE7 /* ItemCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCollectionViewCell.swift; sourceTree = "<group>"; };
 		AA6C7A9C1FEB3CAF00392EE7 /* ItemCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ItemCollectionViewCell.xib; sourceTree = "<group>"; };
 		AA9A1C031FED468F00F61C8F /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
+		AA9A1C051FED6E5600F61C8F /* CreateItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateItem.swift; sourceTree = "<group>"; };
+		AA9A1C071FED72F600F61C8F /* CreateItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateItemViewController.swift; sourceTree = "<group>"; };
+		AAB1252F1FF4443300F75EBA /* BigImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BigImageViewController.swift; sourceTree = "<group>"; };
 		AACFE9891FEC348A00B798D7 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		AACFE98B1FEC356E00B798D7 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		C574F7D7FF72771D77E314D5 /* Pods-Alchemie.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Alchemie.release.xcconfig"; path = "Pods/Target Support Files/Pods-Alchemie/Pods-Alchemie.release.xcconfig"; sourceTree = "<group>"; };
@@ -187,10 +195,13 @@
 				AA3153021FEA799C00C772DE /* CreateUserConfirmViewController.swift */,
 				AA3153041FEA79B800C772DE /* OptionsViewController.swift */,
 				AA3153061FEA79C300C772DE /* PlacementViewController.swift */,
+				AA9A1C071FED72F600F61C8F /* CreateItemViewController.swift */,
+				AAB1252F1FF4443300F75EBA /* BigImageViewController.swift */,
 				AA3152D11FEA796000C772DE /* Main.storyboard */,
 				AA3153081FEA79D300C772DE /* AlchemieAPI.swift */,
 				AACFE9891FEC348A00B798D7 /* Extensions.swift */,
 				AACFE98B1FEC356E00B798D7 /* Utilities.swift */,
+				AA54CC8D1FEEB17F00B72C44 /* ImageStore.swift */,
 				AA6C7A991FEB3C6B00392EE7 /* Model */,
 				AA6C7A9A1FEB3C8000392EE7 /* Cells */,
 				AA3152D71FEA796000C772DE /* Assets.xcassets */,
@@ -227,6 +238,7 @@
 				AA9A1C031FED468F00F61C8F /* Item.swift */,
 				AA31531E1FEA7A7F00C772DE /* CreateOption.swift */,
 				AA3153201FEA7A8C00C772DE /* CreateSubOption.swift */,
+				AA9A1C051FED6E5600F61C8F /* CreateItem.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -574,7 +586,9 @@
 				AACFE98C1FEC356E00B798D7 /* Utilities.swift in Sources */,
 				AA3152FF1FEA797E00C772DE /* LoginViewController.swift in Sources */,
 				AA3153011FEA798900C772DE /* CreateUserViewController.swift in Sources */,
+				AA9A1C081FED72F600F61C8F /* CreateItemViewController.swift in Sources */,
 				AA3153031FEA799C00C772DE /* CreateUserConfirmViewController.swift in Sources */,
+				AA9A1C061FED6E5600F61C8F /* CreateItem.swift in Sources */,
 				AA9A1C041FED468F00F61C8F /* Item.swift in Sources */,
 				AA6C7A9D1FEB3CAF00392EE7 /* ItemCollectionViewCell.swift in Sources */,
 				AA3153251FEA7BCF00C772DE /* SubOption.swift in Sources */,
@@ -588,9 +602,11 @@
 				AA3152CE1FEA796000C772DE /* AppDelegate.swift in Sources */,
 				AA31530C1FEA7A0C00C772DE /* OptionTableViewCell.swift in Sources */,
 				AA3152D61FEA796000C772DE /* Alchemie.xcdatamodeld in Sources */,
+				AA54CC8E1FEEB17F00B72C44 /* ImageStore.swift in Sources */,
 				AA31531C1FEA7A6000C772DE /* SubOptionCollectionViewCell.swift in Sources */,
 				AA3153141FEA7A2500C772DE /* CreateOptionTableViewCell.swift in Sources */,
 				AA3153101FEA7A1800C772DE /* SubOptionTableViewCell.swift in Sources */,
+				AAB125301FF4443300F75EBA /* BigImageViewController.swift in Sources */,
 				AA3153181FEA7A3400C772DE /* CreateSubOptionTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -763,7 +779,7 @@
 				INFOPLIST_FILE = Alchemie/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.alchemie.Alchemie-iOS";
+				PRODUCT_BUNDLE_IDENTIFIER = com.alchemie.Alchemie;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -780,7 +796,7 @@
 				INFOPLIST_FILE = Alchemie/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.alchemie.Alchemie-iOS";
+				PRODUCT_BUNDLE_IDENTIFIER = com.alchemie.Alchemie;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

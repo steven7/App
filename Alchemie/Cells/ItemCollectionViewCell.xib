@@ -13,21 +13,23 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="itemCell" id="gTV-IL-0wX" customClass="ItemCollectionViewCell" customModule="Alchemie" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="160" height="160"/>
+            <rect key="frame" x="0.0" y="0.0" width="170" height="170"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="160" height="160"/>
+                <rect key="frame" x="0.0" y="0.0" width="170" height="170"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Fdd-di-Cx1">
-                        <rect key="frame" x="10" y="0.0" width="140" height="140"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="140" id="ZT2-Sc-OMt"/>
-                            <constraint firstAttribute="height" constant="140" id="mRm-f6-Whv"/>
-                        </constraints>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yhc-Wq-34a">
+                        <rect key="frame" x="0.0" y="0.0" width="170" height="170"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Fdd-di-Cx1">
+                        <rect key="frame" x="10" y="6" width="150" height="144"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Caption" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XWO-D4-ZoN">
-                        <rect key="frame" x="10" y="140" width="140" height="20"/>
+                        <rect key="frame" x="10" y="152" width="150" height="18"/>
                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -35,14 +37,28 @@
                 </subviews>
             </view>
             <constraints>
-                <constraint firstItem="XWO-D4-ZoN" firstAttribute="top" secondItem="Fdd-di-Cx1" secondAttribute="bottom" id="72v-qa-bgs"/>
+                <constraint firstItem="XWO-D4-ZoN" firstAttribute="top" secondItem="Fdd-di-Cx1" secondAttribute="bottom" constant="2" id="72v-qa-bgs"/>
+                <constraint firstAttribute="trailing" secondItem="Fdd-di-Cx1" secondAttribute="trailing" constant="10" id="LPh-u9-3jE"/>
                 <constraint firstItem="Fdd-di-Cx1" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="S7u-tB-jmP"/>
                 <constraint firstAttribute="bottom" secondItem="XWO-D4-ZoN" secondAttribute="bottom" id="bOD-AK-b1d"/>
+                <constraint firstItem="yhc-Wq-34a" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="d8u-ZQ-vj5"/>
                 <constraint firstItem="XWO-D4-ZoN" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="10" id="ebv-7P-9pu"/>
-                <constraint firstItem="Fdd-di-Cx1" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="nD7-ae-LaQ"/>
+                <constraint firstAttribute="bottom" secondItem="yhc-Wq-34a" secondAttribute="bottom" id="h1b-Vt-iEO"/>
+                <constraint firstItem="Fdd-di-Cx1" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="10" id="iDo-zv-hc8"/>
+                <constraint firstItem="Fdd-di-Cx1" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="6" id="nD7-ae-LaQ"/>
+                <constraint firstItem="yhc-Wq-34a" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="ovf-E0-6ot"/>
+                <constraint firstAttribute="bottom" secondItem="Fdd-di-Cx1" secondAttribute="bottom" constant="20" id="rIs-O2-WZB"/>
                 <constraint firstAttribute="trailing" secondItem="XWO-D4-ZoN" secondAttribute="trailing" constant="10" id="wGV-12-RyW"/>
+                <constraint firstAttribute="trailing" secondItem="yhc-Wq-34a" secondAttribute="trailing" id="ysq-S7-XzJ"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <size key="customSize" width="170" height="170"/>
+            <connections>
+                <outlet property="captionTextLabel" destination="XWO-D4-ZoN" id="l3S-al-Agf"/>
+                <outlet property="imageView" destination="Fdd-di-Cx1" id="MqW-JV-PoM"/>
+                <outlet property="theBackgroundView" destination="yhc-Wq-34a" id="zII-kZ-nls"/>
+            </connections>
+            <point key="canvasLocation" x="40" y="114"/>
         </collectionViewCell>
     </objects>
 </document>
