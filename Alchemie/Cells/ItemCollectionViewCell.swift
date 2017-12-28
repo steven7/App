@@ -14,6 +14,8 @@ class ItemCollectionViewCell: UICollectionViewCell {
     var theimagePointer:String?
     var thecaption:String?
     
+    var highlightedBackground:Bool?
+    
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var captionTextLabel: UILabel!
     
@@ -24,11 +26,12 @@ class ItemCollectionViewCell: UICollectionViewCell {
         // Initialization code
         imageView.image = theimage
         captionTextLabel.text = thecaption
+        highlightedBackground = false
         theBackgroundView.backgroundColor = UIColor.clear
         theBackgroundView.layer.cornerRadius = 15
     }
 
-    func setImagewwithCaption( image:UIImage, caption:String){
+    func setImagewithCaption( image:UIImage, caption:String){
         imageView.image = image
         captionTextLabel.text = caption
     }

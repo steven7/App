@@ -17,11 +17,14 @@ class Item: NSObject {
     var caption:String?
     var parentSubOptionID:String?
     
+    var highlightedBackground:Bool?
+    
     override init () {
         image = nil
         imgPointer = ""
         imgUUID = NSUUID().uuidString
         caption = ""
         parentSubOptionID = ""
+        highlightedBackground = false
     }
 }

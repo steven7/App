@@ -282,11 +282,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Alchemie/PlacementViewController.swift"
-            timestampString = "536108953.506949"
+            timestampString = "536113426.670036"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "333"
-            endingLineNumber = "333"
+            startingLineNumber = "404"
+            endingLineNumber = "404"
             landmarkName = "addItemToCurrentSubOptionCoreData(item:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -298,11 +298,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Alchemie/PlacementViewController.swift"
-            timestampString = "536108953.507375"
+            timestampString = "536113426.670879"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "361"
-            endingLineNumber = "361"
+            startingLineNumber = "432"
+            endingLineNumber = "432"
             landmarkName = "createItemCompletion(image:caption:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -314,11 +314,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Alchemie/PlacementViewController.swift"
-            timestampString = "536108953.507663"
+            timestampString = "536113426.671504"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "332"
-            endingLineNumber = "332"
+            startingLineNumber = "403"
+            endingLineNumber = "403"
             landmarkName = "addItemToCurrentSubOptionCoreData(item:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -330,11 +330,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Alchemie/PlacementViewController.swift"
-            timestampString = "536108953.507949"
+            timestampString = "536113426.672121"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "335"
-            endingLineNumber = "335"
+            startingLineNumber = "406"
+            endingLineNumber = "406"
             landmarkName = "addItemToCurrentSubOptionCoreData(item:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -346,11 +346,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Alchemie/PlacementViewController.swift"
-            timestampString = "536108953.508236"
+            timestampString = "536113426.672737"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "334"
-            endingLineNumber = "334"
+            startingLineNumber = "405"
+            endingLineNumber = "405"
             landmarkName = "addItemToCurrentSubOptionCoreData(item:)"
             landmarkType = "7">
          </BreakpointContent>

@@ -31,6 +31,10 @@ class PlacementViewController: UIViewController, UICollectionViewDelegate, UICol
     var subOptionOneTitle:String?
     var subOptionTwoTitle:String?
     
+    let imageStore = ImageStore.sharedInstance
+    
+    var highlightedIndex:Int?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -93,6 +97,7 @@ class PlacementViewController: UIViewController, UICollectionViewDelegate, UICol
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
         if(collectionView.tag == 0) {
             if ( collectionViewOneContents[indexPath.row] is CreateItem ) {
                 let cell = collectionViewOne.dequeueReusableCell(withReuseIdentifier: "createItemCell", for: indexPath) as! CreateItemCollectionViewCell
@@ -102,6 +107,27 @@ class PlacementViewController: UIViewController, UICollectionViewDelegate, UICol
                 let item = collectionViewOneContents[indexPath.row] as! Item
                 let cell = collectionViewOne.dequeueReusableCell(withReuseIdentifier: "itemCell", for: indexPath) as! ItemCollectionViewCell
                 cell.withItem(item: item)
+                
+                if let highlighted = highlightedIndex {
+                    if (highlighted == indexPath.row) {
+                        cell.theBackgroundView.backgroundColor = UIColor(displayP3Red: 0.4, green: 0.6667, blue: 1.0, alpha: 1.0)
+                    }
+                    else {
+                        cell.theBackgroundView.backgroundColor = UIColor.clear
+                    }
+                }
+                else {
+                    cell.theBackgroundView.backgroundColor = UIColor.clear
+                }
+                
+                /*
+                if (item.highlightedBackground)! {
+                    cell.theBackgroundView.backgroundColor = UIColor(displayP3Red: 0.4, green: 0.6667, blue: 1.0, alpha: 1.0)
+                }
+                else {
+                    cell.theBackgroundView.backgroundColor = UIColor.clear
+                }
+                */
                 // let imageView = UIImageView(image: item.image)
                 // cell.contentView.addSubview()
                 return cell
@@ -120,26 +146,68 @@ class PlacementViewController: UIViewController, UICollectionViewDelegate, UICol
         else if ( collectionViewOneContents[indexPath.row] is Item ) {
             self.bigImageButton.isHidden = false
             self.bigImageButton.isEnabled = true
-            print("pressed item cell")
+            print("pressed item cell at \(indexPath.row)")
             let item = collectionViewOneContents[indexPath.row] as! Item
             let cell = collectionView.cellForItem(at: indexPath) as! ItemCollectionViewCell
+            // clearAllCellBackgroundColors()
+            //clearBackgroundColors()
             clearAllCellBackgroundColors()
             cell.theBackgroundView.backgroundColor = UIColor(displayP3Red: 0.4, green: 0.6667, blue: 1.0, alpha: 1.0)
+            //cell.highlightedBackground = true
+            //item.highlightedBackground = true
+            self.highlightedIndex = indexPath.row
             bigImageView.image = item.image
+            collectionViewOne.reloadData()
+        }
+    }
+    
+    func clearBackgroundColors(){
+        var i = 0
+        for (item) in collectionViewOneContents {
+            let theItem = collectionViewOneContents[i]
+            if (theItem  is CreateItem)  {
+                continue
+            }
             
+            guard let imageItem = item as? Item else {
+                continue
+            }
+            
+            imageItem.highlightedBackground = false
+            
+            i += 1
         }
     }
     
     func clearAllCellBackgroundColors(){
         var i = 0
-        for (col) in collectionViewOneContents {
-            if (col is CreateItem)  {
+        for (item) in collectionViewOneContents {
+            let theItem = collectionViewOneContents[i]
+            if (theItem  is CreateItem)  {
+                continue
+            }
+            
+            guard let imageItem = item as? Item else {
+                continue
+            }
+            
+            imageItem.highlightedBackground = false
+            
+            i += 1
+        }
+        //for (col) in collectionViewOneContents {
+        for i  in 0 ..< collectionViewOne.numberOfItems(inSection: 0) {
+            let item = collectionViewOneContents[i]
+            if (item is CreateItem)  {
                 continue
             }
             let indexPath = IndexPath(row: i, section: 0)
-            let cell = collectionViewOne.cellForItem(at: indexPath) as! ItemCollectionViewCell
+            guard let cell = collectionViewOne.cellForItem(at: indexPath) as? ItemCollectionViewCell else {
+                continue
+            }
             cell.theBackgroundView.backgroundColor = UIColor.clear
-            i += 1
+            cell.highlightedBackground = false
+            // i += 1
         }
     }
     
@@ -178,9 +246,13 @@ class PlacementViewController: UIViewController, UICollectionViewDelegate, UICol
                 oneItem.imgPointer = oneManagedItem .value(forKeyPath: "imgPointer") as? String
                 
                 
+                oneItem.image = imageStore.image(forKey: oneItem.imgUUID!)
+                
+                
                 print("one item!!")
                 print("  -  \(oneItem.caption)")
                 print("  -  \(oneItem.imgUUID)")
+                print("  -  \(oneItem.image)")
                 
                 /*
                 get image
@@ -274,6 +346,8 @@ class PlacementViewController: UIViewController, UICollectionViewDelegate, UICol
                 oneItem.imgUUID    = oneManagedItem .value(forKeyPath: "imgUUID") as? String
                 oneItem.imgPointer = oneManagedItem .value(forKeyPath: "imgPointer") as? String
                 
+                oneItem.image = imageStore.image(forKey: oneItem.imgUUID!)
+                
                 /*
                  get image
                  
@@ -291,7 +365,7 @@ class PlacementViewController: UIViewController, UICollectionViewDelegate, UICol
         return theItems
     }
     
-    func addItemToCurrentSubOptionCoreData(item: Item){
+    func addItemToCurrentSubOptionCoreData(item: Item ){
         guard let appDelegate =
             UIApplication.shared.delegate as? AppDelegate else {
                 return
@@ -323,12 +397,8 @@ class PlacementViewController: UIViewController, UICollectionViewDelegate, UICol
             cdItem.setValue(item.imgPointer,         forKeyPath: "imgPointer")
             cdItem.setValue(item.parentSubOptionID,  forKeyPath: "parentSubOptionID")
  
-            /*
-            cdItem.setValue("caption",            forKeyPath: "caption")
-            cdItem.setValue(" "      ,            forKeyPath: "imgUUID")
-            cdItem.setValue(" "      ,         forKeyPath: "imgPointer")
-            cdItem.setValue(" "      ,  forKeyPath: "parentSubOptionID")
-            */
+            imageStore.setImage(item.image!, forKey: item.imgUUID!)
+            
             let set = NSSet(object: cdItem)
             
             subOptionToUpdate.setValue(set, forKey: "items")
