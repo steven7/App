@@ -25,9 +25,7 @@ class PlacementViewController: UIViewController, UICollectionViewDelegate, UICol
     @IBOutlet weak var stackView: UIStackView!
     
     @IBOutlet weak var buttonOne: UIButton!
-    
     @IBOutlet weak var buttonTwo: UIButton!
-    
     @IBOutlet weak var buttonThree: UIButton!
     
     var collectionViewOneContents = [AnyObject]()
@@ -43,8 +41,6 @@ class PlacementViewController: UIViewController, UICollectionViewDelegate, UICol
     let imageStore = ImageStore.sharedInstance
     
     var highlightedIndex:Int?
-    
-    var panGesture = UIPanGestureRecognizer()
     
     var panGestureOne   = UIPanGestureRecognizer()
     var panGestureTwo   = UIPanGestureRecognizer()
@@ -88,26 +84,13 @@ class PlacementViewController: UIViewController, UICollectionViewDelegate, UICol
         self.bigImageButton.isHidden = true
         self.bigImageButton.isEnabled = false
         
-        self.stackView.isUserInteractionEnabled = true
+        //self.stackView.isUserInteractionEnabled = true
         
         currentOption?.printQuestionList()
         
         if let sub = self.currentSubOption {
             if let option = sub.parentOption {
                 option.printQuestionList()
-                /*
-                if let questionSet = option.questionSet {
-                    if questionSet.count > 0 {
-                        questionSet[0].printQuestionList()
-                    }
-                    else {
-                        print("no questions in set")
-                    }
-                }
-                else {
-                    print("question set not availabe")
-                }
-                 */
             }
             else {
                 print("parent option not availabe")
@@ -118,11 +101,9 @@ class PlacementViewController: UIViewController, UICollectionViewDelegate, UICol
         }
         
         
-        panGesture = UIPanGestureRecognizer(target: self, action: #selector(draggedButtonOne(_:)) )
-        
-        panGestureOne   = UIPanGestureRecognizer(target: self, action: #selector(draggedButtonOne(_:)) )
-        panGestureTwo   = UIPanGestureRecognizer(target: self, action: #selector(draggedButtonTwo(_:)) )
-        panGestureThree = UIPanGestureRecognizer(target: self, action: #selector(draggedButtonThree(_:)) )
+        panGestureOne   = UIPanGestureRecognizer(target: self, action: #selector(draggedButtonOne(_:) ) )
+        panGestureTwo   = UIPanGestureRecognizer(target: self, action: #selector(draggedButtonTwo(_:) ) )
+        panGestureThree = UIPanGestureRecognizer(target: self, action: #selector(draggedButtonThree(_:) ) )
         
         self.buttonOne.isUserInteractionEnabled = true
         self.buttonOne.addGestureRecognizer(panGestureOne)
@@ -132,6 +113,7 @@ class PlacementViewController: UIViewController, UICollectionViewDelegate, UICol
         
         self.buttonThree.isUserInteractionEnabled = true
         self.buttonThree.addGestureRecognizer(panGestureThree)
+        
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -543,8 +525,9 @@ class PlacementViewController: UIViewController, UICollectionViewDelegate, UICol
     }
     
     @IBAction func buttonOnePressed(_ sender: Any) {
-        if (bigImageView.image != nil &&
-            self.buttonOne.bounds.intersects(bigImageView.bounds) ) {
+        print(" one pressed")
+        if (bigImageView.image != nil ) { //&&
+        //self.buttonOne.bounds.int ersects(bigImageView.bounds) ) {
             self.performSegue(withIdentifier: "toQuestions", sender: self)
         }
     }
@@ -571,9 +554,10 @@ class PlacementViewController: UIViewController, UICollectionViewDelegate, UICol
     ///////////////////
     
     @objc func draggedButtonOne(_ sender:UIPanGestureRecognizer) {
-        // self.view.bringSubview(toFront: self.buttonOne)
+        print(" one dragged")
+        //self.view.bringSubview(toFront: self.buttonOne)
         let translation = sender.translation(in: self.view)
-        buttonOne.center = CGPoint(x: buttonOne.center.x + translation.x, y: buttonOne.center.y + translation.y)
+        buttonOne.center   = CGPoint(x: buttonOne.center.x + translation.x , y: buttonOne.center.y + translation.y)
         sender.setTranslation(CGPoint.zero, in: self.view)
     }
     
@@ -581,7 +565,7 @@ class PlacementViewController: UIViewController, UICollectionViewDelegate, UICol
         print(" two dragged")
         // self.view.bringSubview(toFront: self.buttonTwo)
         let translation = sender.translation(in: self.view)
-        buttonTwo.center = CGPoint(x: buttonTwo.center.x + translation.x, y: buttonTwo.center.y + translation.y)
+        buttonTwo.center   = CGPoint(x: buttonTwo.center.x + translation.x , y: buttonTwo.center.y + translation.y)
         sender.setTranslation(CGPoint.zero, in: self.view)
     }
     
