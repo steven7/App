@@ -16,6 +16,8 @@ class Option: NSObject {
     var status:String?
     var optionDescription:String?
     var type:String?
+    var questionSet:[QuestionSet]? // not in use for now
+    var questionList = [Question]()
     
     override init() {
         title = ""
@@ -23,5 +25,24 @@ class Option: NSObject {
         status = ""
         optionDescription = ""
         type = ""
+    }
+    
+    func printQuestionList(){
+        
+        if questionList.count == 0 {
+            print("no questions in this set")
+            return
+        }
+        
+        print(" ---  print question list ---  ")
+        //if let qList = questionList {
+            for question in questionList {
+                print("        \(String(describing: question.questionText!))")
+            }
+        /*
+        }
+        else {
+            print("no questions in this set")
+        }*/
     }
 }

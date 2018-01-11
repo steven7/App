@@ -112,4 +112,37 @@ class AlchemieAPI: NSObject {
         }
     }
     
+    func fetchQuestionSet (completion: @escaping (Bool, [[String: AnyObject]])->()) {
+    
+        print ("begin fetch question set")
+        
+        let url = URL(string: "http://Alchemiewebservice20171213043804.azurewebsites.net/service1.svc/GetQuestionSet")!
+        Alamofire.request(url, method: .get, parameters: nil ).responseJSON { (response) in
+        
+            print(" ------ the first response ------ ")
+            print(response)
+            
+            guard let responseJSON = response.result.value as? [String: AnyObject] else {
+                print("Invalid tag information received from the service")
+                completion(false, [[String: AnyObject]]())
+                return
+            }
+            
+            //print(responseJSON)
+            
+            
+            guard let questionSet = responseJSON["GetQuestionSetResult"] as? [[String: AnyObject]] else {
+                print("somethings wrong with the data for get question set")
+                completion(false, [[String: AnyObject]]())
+                return
+            }
+            
+            print(" ------ parsed as  GetQuestionSetResult ------ ")
+            print(questionSet)
+            
+            completion(true, questionSet)
+            
+        }
+    }
+    
 }

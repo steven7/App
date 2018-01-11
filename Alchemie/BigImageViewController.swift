@@ -18,6 +18,12 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
     
     var theImage:UIImage?
     
+    var touchedLocation = CGPoint(x: 0.0, y: 0.0)
+    
+    @IBOutlet weak var buttonOne: UIButton!
+    
+    @IBOutlet weak var stackView: UIStackView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         bigImage.image = theImage
@@ -25,7 +31,14 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
         self.scrollView.minimumZoomScale = 0.2;
         self.scrollView.maximumZoomScale = 5.0;
         self.scrollView.delegate = self;
+        
+        self.view.isUserInteractionEnabled = true
+        self.buttonOne.isUserInteractionEnabled = true
+        self.stackView.isUserInteractionEnabled = true
+        self.bigImage.isUserInteractionEnabled = true
+        self.scrollView.isUserInteractionEnabled = true
     }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -35,6 +48,30 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
 
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return self.bigImage
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        //let touch = event?.allTouches
+        
+        //let loc = touch
+        print("touch lolz")
+        let touch : UITouch! =  touches.first! as UITouch
+        
+        touchedLocation = touch.location(in: self.buttonOne)
+        
+        buttonOne.center = touchedLocation
+        
+    }
+    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+        print("touch continue")
+        
+        let touch : UITouch! =  touches.first! as UITouch
+        
+        touchedLocation = touch.location(in: self.buttonOne)
+        
+        buttonOne.center = touchedLocation
     }
     
     /*

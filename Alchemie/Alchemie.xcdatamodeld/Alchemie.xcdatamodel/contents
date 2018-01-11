@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="13533" systemVersion="16G1036" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="13772" systemVersion="17C88" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="CDItem" representedClassName="CDItem" parentEntity="CDSubOption" syncable="YES" codeGenerationType="class">
         <attribute name="caption" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="imgPointer" optional="YES" attributeType="String" syncable="YES"/>
@@ -14,8 +14,16 @@
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="user" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="questionList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CDQuestionList" inverseName="option" inverseEntity="CDQuestionList" syncable="YES"/>
         <relationship name="subOptions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CDSubOption" inverseName="option" inverseEntity="CDSubOption" syncable="YES"/>
     </entity>
+    <entity name="CDQuestionList" representedClassName="CDQuestionList" syncable="YES" codeGenerationType="class">
+        <attribute name="parentOptionID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="questionSetID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="questionText" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="option" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDOption" inverseName="questionList" inverseEntity="CDOption" syncable="YES"/>
+    </entity>
+    <entity name="CDQuestionSet" representedClassName="CDQuestionSet" syncable="YES" codeGenerationType="class"/>
     <entity name="CDSubOption" representedClassName="CDSubOption" parentEntity="CDOption" syncable="YES" codeGenerationType="class">
         <attribute name="city" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="country" optional="YES" attributeType="String" syncable="YES"/>
@@ -33,8 +41,10 @@
         <relationship name="option" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDOption" inverseName="subOptions" inverseEntity="CDOption" syncable="YES"/>
     </entity>
     <elements>
-        <element name="CDItem" positionX="223" positionY="198" width="128" height="28"/>
-        <element name="CDOption" positionX="-324" positionY="-360" width="128" height="28"/>
-        <element name="CDSubOption" positionX="-74" positionY="-216" width="128" height="28"/>
+        <element name="CDItem" positionX="385" positionY="-18" width="128" height="28"/>
+        <element name="CDOption" positionX="-324" positionY="-360" width="128" height="165"/>
+        <element name="CDQuestionList" positionX="-108" positionY="-108" width="128" height="105"/>
+        <element name="CDQuestionSet" positionX="27" positionY="0" width="128" height="45"/>
+        <element name="CDSubOption" positionX="70" positionY="-190" width="128" height="28"/>
     </elements>
 </model>

@@ -22,9 +22,18 @@ class PlacementViewController: UIViewController, UICollectionViewDelegate, UICol
     
     @IBOutlet weak var bigImageButton: UIButton!
     
+    @IBOutlet weak var stackView: UIStackView!
+    
+    @IBOutlet weak var buttonOne: UIButton!
+    
+    @IBOutlet weak var buttonTwo: UIButton!
+    
+    @IBOutlet weak var buttonThree: UIButton!
+    
     var collectionViewOneContents = [AnyObject]()
     var collectionViewTwoContents = [AnyObject]()
     
+    var currentOption:Option?
     var currentSubOption:SubOption?
     
     var optionTitle:String?
@@ -34,6 +43,16 @@ class PlacementViewController: UIViewController, UICollectionViewDelegate, UICol
     let imageStore = ImageStore.sharedInstance
     
     var highlightedIndex:Int?
+    
+    var panGesture = UIPanGestureRecognizer()
+    
+    var panGestureOne   = UIPanGestureRecognizer()
+    var panGestureTwo   = UIPanGestureRecognizer()
+    var panGestureThree = UIPanGestureRecognizer()
+    
+    var touchedLocationOne = CGPoint(x: 0.0, y: 0.0)
+    var touchedLocationTwo = CGPoint(x: 0.0, y: 0.0)
+    var touchedLocationThree = CGPoint(x: 0.0, y: 0.0)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,6 +88,50 @@ class PlacementViewController: UIViewController, UICollectionViewDelegate, UICol
         self.bigImageButton.isHidden = true
         self.bigImageButton.isEnabled = false
         
+        self.stackView.isUserInteractionEnabled = true
+        
+        currentOption?.printQuestionList()
+        
+        if let sub = self.currentSubOption {
+            if let option = sub.parentOption {
+                option.printQuestionList()
+                /*
+                if let questionSet = option.questionSet {
+                    if questionSet.count > 0 {
+                        questionSet[0].printQuestionList()
+                    }
+                    else {
+                        print("no questions in set")
+                    }
+                }
+                else {
+                    print("question set not availabe")
+                }
+                 */
+            }
+            else {
+                print("parent option not availabe")
+            }
+        }
+        else {
+            print("current sub option not availabe")
+        }
+        
+        
+        panGesture = UIPanGestureRecognizer(target: self, action: #selector(draggedButtonOne(_:)) )
+        
+        panGestureOne   = UIPanGestureRecognizer(target: self, action: #selector(draggedButtonOne(_:)) )
+        panGestureTwo   = UIPanGestureRecognizer(target: self, action: #selector(draggedButtonTwo(_:)) )
+        panGestureThree = UIPanGestureRecognizer(target: self, action: #selector(draggedButtonThree(_:)) )
+        
+        self.buttonOne.isUserInteractionEnabled = true
+        self.buttonOne.addGestureRecognizer(panGestureOne)
+        
+        self.buttonTwo.isUserInteractionEnabled = true
+        self.buttonTwo.addGestureRecognizer(panGestureTwo)
+        
+        self.buttonThree.isUserInteractionEnabled = true
+        self.buttonThree.addGestureRecognizer(panGestureThree)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -461,6 +524,12 @@ class PlacementViewController: UIViewController, UICollectionViewDelegate, UICol
             let viewController = segue.destination as! BigImageViewController
             viewController.theImage = bigImageView.image
         }
+        if (segue.identifier == "toQuestions") {
+            let viewController = segue.destination as! QuestionsViewController
+            if let option = currentOption{
+                viewController.theQuestions = option.questionList
+            }
+        }
     }
     
     @IBAction func bigImageButtonPressed(_ sender: Any) {
@@ -472,5 +541,102 @@ class PlacementViewController: UIViewController, UICollectionViewDelegate, UICol
     @IBAction func backButtonPressed(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
     }
+    
+    @IBAction func buttonOnePressed(_ sender: Any) {
+        if (bigImageView.image != nil &&
+            self.buttonOne.bounds.intersects(bigImageView.bounds) ) {
+            self.performSegue(withIdentifier: "toQuestions", sender: self)
+        }
+    }
+    
+    @IBAction func buttonTwoPressed(_ sender: Any) {
+        if (bigImageView.image != nil &&
+            self.buttonTwo.bounds.intersects(bigImageView.bounds) ) {
+            self.performSegue(withIdentifier: "toQuestions", sender: self)
+        }
+    }
+    
+    @IBAction func buttonThreePressed(_ sender: Any) {
+        if (bigImageView.image != nil &&
+            self.buttonThree.bounds.intersects(bigImageView.bounds) ) {
+            self.performSegue(withIdentifier: "toQuestions", sender: self)
+        }
+        
+    }
+    
+    ///////////////////
+    //
+    //    drop and drag
+    //
+    ///////////////////
+    
+    @objc func draggedButtonOne(_ sender:UIPanGestureRecognizer) {
+        // self.view.bringSubview(toFront: self.buttonOne)
+        let translation = sender.translation(in: self.view)
+        buttonOne.center = CGPoint(x: buttonOne.center.x + translation.x, y: buttonOne.center.y + translation.y)
+        sender.setTranslation(CGPoint.zero, in: self.view)
+    }
+    
+    @objc func draggedButtonTwo(_ sender:UIPanGestureRecognizer) {
+        print(" two dragged")
+        // self.view.bringSubview(toFront: self.buttonTwo)
+        let translation = sender.translation(in: self.view)
+        buttonTwo.center = CGPoint(x: buttonTwo.center.x + translation.x, y: buttonTwo.center.y + translation.y)
+        sender.setTranslation(CGPoint.zero, in: self.view)
+    }
+    
+    @objc func draggedButtonThree(_ sender:UIPanGestureRecognizer) {
+        print(" three dragged")
+        // self.view.bringSubview(toFront: self.buttonThree)
+        let translation = sender.translation(in: self.view)
+        buttonThree.center = CGPoint(x: buttonThree.center.x + translation.x, y: buttonThree.center.y + translation.y)
+        sender.setTranslation(CGPoint.zero, in: self.view)
+    }
+    
+    /*
+    func draggedView(_ send:UIPanGestureRecognizer) {
+            self.view.bringSubview(toFront: <#T##UIView#>)
+    }
+    */
+    
+    /*
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        //let touch = event?.allTouches
+        
+        //let loc = touch
+        print("touch lolz")
+        let touch : UITouch! =  touches.first! as UITouch
+        
+        touchedLocationOne = touch.location(in: self.bigImageView)
+        touchedLocationTwo = touch.location(in: self.buttonTwo)
+        touchedLocationThree = touch.location(in: self.buttonThree)
+        
+        bigImageView.center = touchedLocationOne
+        
+      //      buttonTwo.center = touchedLocationTwo
+        
+      //      buttonThree.center  = touchedLocationThree
+        
+    }
+    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+        print("touch continue")
+        
+        let touch : UITouch! =  touches.first! as UITouch
+        
+        touchedLocationOne = touch.location(in: self.buttonOne)
+        touchedLocationTwo = touch.location(in: self.buttonTwo)
+        touchedLocationThree = touch.location(in: self.buttonThree)
+        
+        touchedLocationOne = touch.location(in: self.bigImageView)
+        bigImageView.center = touchedLocationOne
+        
+       //  buttonOne.center = touchedLocationOne
+        //buttonTwo.center = touchedLocationTwo
+        //buttonThree.center  = touchedLocationThree
+    }
+    */
+    
     
 }
