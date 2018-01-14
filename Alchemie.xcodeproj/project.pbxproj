@@ -37,6 +37,16 @@
 		AA3153211FEA7A8C00C772DE /* CreateSubOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3153201FEA7A8C00C772DE /* CreateSubOption.swift */; };
 		AA3153231FEA7BC400C772DE /* Option.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3153221FEA7BC400C772DE /* Option.swift */; };
 		AA3153251FEA7BCF00C772DE /* SubOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3153241FEA7BCF00C772DE /* SubOption.swift */; };
+		AA371D5A200ADFEA00BCD3AC /* TextQuestionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA371D58200ADFEA00BCD3AC /* TextQuestionTableViewCell.swift */; };
+		AA371D5B200ADFEA00BCD3AC /* TextQuestionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA371D59200ADFEA00BCD3AC /* TextQuestionTableViewCell.xib */; };
+		AA371D60200AE03200BCD3AC /* YesOrNoQuestionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA371D5E200AE03200BCD3AC /* YesOrNoQuestionTableViewCell.swift */; };
+		AA371D61200AE03200BCD3AC /* YesOrNoQuestionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA371D5F200AE03200BCD3AC /* YesOrNoQuestionTableViewCell.xib */; };
+		AA371D64200AE04300BCD3AC /* ListQuestionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA371D62200AE04300BCD3AC /* ListQuestionTableViewCell.swift */; };
+		AA371D65200AE04300BCD3AC /* ListQuestionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA371D63200AE04300BCD3AC /* ListQuestionTableViewCell.xib */; };
+		AA371D68200AE05500BCD3AC /* MultiListQuestionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA371D66200AE05500BCD3AC /* MultiListQuestionTableViewCell.swift */; };
+		AA371D69200AE05500BCD3AC /* MultiListQuestionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA371D67200AE05500BCD3AC /* MultiListQuestionTableViewCell.xib */; };
+		AA371D6C200AE06300BCD3AC /* PhotoQuestionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA371D6A200AE06300BCD3AC /* PhotoQuestionTableViewCell.swift */; };
+		AA371D6D200AE06300BCD3AC /* PhotoQuestionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA371D6B200AE06300BCD3AC /* PhotoQuestionTableViewCell.xib */; };
 		AA54CC8E1FEEB17F00B72C44 /* ImageStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA54CC8D1FEEB17F00B72C44 /* ImageStore.swift */; };
 		AA6311352006E8780023D786 /* QuestionSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6311342006E8780023D786 /* QuestionSet.swift */; };
 		AA6C7A971FEB3BFE00392EE7 /* CreateItemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6C7A951FEB3BFE00392EE7 /* CreateItemCollectionViewCell.swift */; };
@@ -112,6 +122,16 @@
 		AA3153201FEA7A8C00C772DE /* CreateSubOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateSubOption.swift; sourceTree = "<group>"; };
 		AA3153221FEA7BC400C772DE /* Option.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Option.swift; sourceTree = "<group>"; };
 		AA3153241FEA7BCF00C772DE /* SubOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubOption.swift; sourceTree = "<group>"; };
+		AA371D58200ADFEA00BCD3AC /* TextQuestionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextQuestionTableViewCell.swift; sourceTree = "<group>"; };
+		AA371D59200ADFEA00BCD3AC /* TextQuestionTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextQuestionTableViewCell.xib; sourceTree = "<group>"; };
+		AA371D5E200AE03200BCD3AC /* YesOrNoQuestionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YesOrNoQuestionTableViewCell.swift; sourceTree = "<group>"; };
+		AA371D5F200AE03200BCD3AC /* YesOrNoQuestionTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YesOrNoQuestionTableViewCell.xib; sourceTree = "<group>"; };
+		AA371D62200AE04300BCD3AC /* ListQuestionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListQuestionTableViewCell.swift; sourceTree = "<group>"; };
+		AA371D63200AE04300BCD3AC /* ListQuestionTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ListQuestionTableViewCell.xib; sourceTree = "<group>"; };
+		AA371D66200AE05500BCD3AC /* MultiListQuestionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiListQuestionTableViewCell.swift; sourceTree = "<group>"; };
+		AA371D67200AE05500BCD3AC /* MultiListQuestionTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MultiListQuestionTableViewCell.xib; sourceTree = "<group>"; };
+		AA371D6A200AE06300BCD3AC /* PhotoQuestionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoQuestionTableViewCell.swift; sourceTree = "<group>"; };
+		AA371D6B200AE06300BCD3AC /* PhotoQuestionTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PhotoQuestionTableViewCell.xib; sourceTree = "<group>"; };
 		AA54CC8D1FEEB17F00B72C44 /* ImageStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageStore.swift; sourceTree = "<group>"; };
 		AA6311342006E8780023D786 /* QuestionSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionSet.swift; sourceTree = "<group>"; };
 		AA6C7A951FEB3BFE00392EE7 /* CreateItemCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateItemCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -235,6 +255,51 @@
 			path = AlchemieUITests;
 			sourceTree = "<group>";
 		};
+		AA371D55200ADF6E00BCD3AC /* Options */ = {
+			isa = PBXGroup;
+			children = (
+				AA31530A1FEA7A0C00C772DE /* OptionTableViewCell.swift */,
+				AA31530B1FEA7A0C00C772DE /* OptionTableViewCell.xib */,
+				AA31530E1FEA7A1800C772DE /* SubOptionTableViewCell.swift */,
+				AA31530F1FEA7A1800C772DE /* SubOptionTableViewCell.xib */,
+				AA3153121FEA7A2500C772DE /* CreateOptionTableViewCell.swift */,
+				AA3153131FEA7A2500C772DE /* CreateOptionTableViewCell.xib */,
+				AA3153161FEA7A3400C772DE /* CreateSubOptionTableViewCell.swift */,
+				AA3153171FEA7A3400C772DE /* CreateSubOptionTableViewCell.xib */,
+			);
+			path = Options;
+			sourceTree = "<group>";
+		};
+		AA371D56200ADFA400BCD3AC /* Placement */ = {
+			isa = PBXGroup;
+			children = (
+				AA31531A1FEA7A6000C772DE /* SubOptionCollectionViewCell.swift */,
+				AA31531B1FEA7A6000C772DE /* SubOptionCollectionViewCell.xib */,
+				AA6C7A9B1FEB3CAF00392EE7 /* ItemCollectionViewCell.swift */,
+				AA6C7A9C1FEB3CAF00392EE7 /* ItemCollectionViewCell.xib */,
+				AA6C7A951FEB3BFE00392EE7 /* CreateItemCollectionViewCell.swift */,
+				AA6C7A961FEB3BFE00392EE7 /* CreateItemCollectionViewCell.xib */,
+			);
+			path = Placement;
+			sourceTree = "<group>";
+		};
+		AA371D57200ADFBB00BCD3AC /* Questions */ = {
+			isa = PBXGroup;
+			children = (
+				AA371D58200ADFEA00BCD3AC /* TextQuestionTableViewCell.swift */,
+				AA371D59200ADFEA00BCD3AC /* TextQuestionTableViewCell.xib */,
+				AA371D5E200AE03200BCD3AC /* YesOrNoQuestionTableViewCell.swift */,
+				AA371D5F200AE03200BCD3AC /* YesOrNoQuestionTableViewCell.xib */,
+				AA371D62200AE04300BCD3AC /* ListQuestionTableViewCell.swift */,
+				AA371D63200AE04300BCD3AC /* ListQuestionTableViewCell.xib */,
+				AA371D66200AE05500BCD3AC /* MultiListQuestionTableViewCell.swift */,
+				AA371D67200AE05500BCD3AC /* MultiListQuestionTableViewCell.xib */,
+				AA371D6A200AE06300BCD3AC /* PhotoQuestionTableViewCell.swift */,
+				AA371D6B200AE06300BCD3AC /* PhotoQuestionTableViewCell.xib */,
+			);
+			path = Questions;
+			sourceTree = "<group>";
+		};
 		AA6C7A991FEB3C6B00392EE7 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -252,20 +317,9 @@
 		AA6C7A9A1FEB3C8000392EE7 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				AA31530A1FEA7A0C00C772DE /* OptionTableViewCell.swift */,
-				AA31530B1FEA7A0C00C772DE /* OptionTableViewCell.xib */,
-				AA31530E1FEA7A1800C772DE /* SubOptionTableViewCell.swift */,
-				AA31530F1FEA7A1800C772DE /* SubOptionTableViewCell.xib */,
-				AA3153121FEA7A2500C772DE /* CreateOptionTableViewCell.swift */,
-				AA3153131FEA7A2500C772DE /* CreateOptionTableViewCell.xib */,
-				AA3153161FEA7A3400C772DE /* CreateSubOptionTableViewCell.swift */,
-				AA3153171FEA7A3400C772DE /* CreateSubOptionTableViewCell.xib */,
-				AA31531A1FEA7A6000C772DE /* SubOptionCollectionViewCell.swift */,
-				AA31531B1FEA7A6000C772DE /* SubOptionCollectionViewCell.xib */,
-				AA6C7A9B1FEB3CAF00392EE7 /* ItemCollectionViewCell.swift */,
-				AA6C7A9C1FEB3CAF00392EE7 /* ItemCollectionViewCell.xib */,
-				AA6C7A951FEB3BFE00392EE7 /* CreateItemCollectionViewCell.swift */,
-				AA6C7A961FEB3BFE00392EE7 /* CreateItemCollectionViewCell.xib */,
+				AA371D57200ADFBB00BCD3AC /* Questions */,
+				AA371D55200ADF6E00BCD3AC /* Options */,
+				AA371D56200ADFA400BCD3AC /* Placement */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -400,12 +454,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				AA3153151FEA7A2500C772DE /* CreateOptionTableViewCell.xib in Resources */,
+				AA371D6D200AE06300BCD3AC /* PhotoQuestionTableViewCell.xib in Resources */,
 				AA31530D1FEA7A0C00C772DE /* OptionTableViewCell.xib in Resources */,
 				AA31531D1FEA7A6000C772DE /* SubOptionCollectionViewCell.xib in Resources */,
 				AA6C7A981FEB3BFE00392EE7 /* CreateItemCollectionViewCell.xib in Resources */,
 				AA3152DB1FEA796000C772DE /* LaunchScreen.storyboard in Resources */,
 				AA3152D81FEA796000C772DE /* Assets.xcassets in Resources */,
+				AA371D61200AE03200BCD3AC /* YesOrNoQuestionTableViewCell.xib in Resources */,
+				AA371D65200AE04300BCD3AC /* ListQuestionTableViewCell.xib in Resources */,
 				AA3152D31FEA796000C772DE /* Main.storyboard in Resources */,
+				AA371D69200AE05500BCD3AC /* MultiListQuestionTableViewCell.xib in Resources */,
+				AA371D5B200ADFEA00BCD3AC /* TextQuestionTableViewCell.xib in Resources */,
 				AA6C7A9E1FEB3CAF00392EE7 /* ItemCollectionViewCell.xib in Resources */,
 				AA3153111FEA7A1800C772DE /* SubOptionTableViewCell.xib in Resources */,
 				AA3153191FEA7A3400C772DE /* CreateSubOptionTableViewCell.xib in Resources */,
@@ -591,17 +650,22 @@
 				AA3153071FEA79C300C772DE /* PlacementViewController.swift in Sources */,
 				AACFE98C1FEC356E00B798D7 /* Utilities.swift in Sources */,
 				AA3152FF1FEA797E00C772DE /* LoginViewController.swift in Sources */,
+				AA371D6C200AE06300BCD3AC /* PhotoQuestionTableViewCell.swift in Sources */,
 				AA3153011FEA798900C772DE /* CreateUserViewController.swift in Sources */,
 				AA9A1C081FED72F600F61C8F /* CreateItemViewController.swift in Sources */,
 				AA3153031FEA799C00C772DE /* CreateUserConfirmViewController.swift in Sources */,
 				AA9A1C061FED6E5600F61C8F /* CreateItem.swift in Sources */,
 				AA6311352006E8780023D786 /* QuestionSet.swift in Sources */,
 				AA9A1C041FED468F00F61C8F /* Item.swift in Sources */,
+				AA371D60200AE03200BCD3AC /* YesOrNoQuestionTableViewCell.swift in Sources */,
+				AA371D5A200ADFEA00BCD3AC /* TextQuestionTableViewCell.swift in Sources */,
 				AA6C7A9D1FEB3CAF00392EE7 /* ItemCollectionViewCell.swift in Sources */,
 				AA3153251FEA7BCF00C772DE /* SubOption.swift in Sources */,
 				AA3153051FEA79B800C772DE /* OptionsViewController.swift in Sources */,
+				AA371D68200AE05500BCD3AC /* MultiListQuestionTableViewCell.swift in Sources */,
 				AA6C7A971FEB3BFE00392EE7 /* CreateItemCollectionViewCell.swift in Sources */,
 				AA3153091FEA79D300C772DE /* AlchemieAPI.swift in Sources */,
+				AA371D64200AE04300BCD3AC /* ListQuestionTableViewCell.swift in Sources */,
 				AA3153231FEA7BC400C772DE /* Option.swift in Sources */,
 				AA3153211FEA7A8C00C772DE /* CreateSubOption.swift in Sources */,
 				AA3152D01FEA796000C772DE /* ViewController.swift in Sources */,

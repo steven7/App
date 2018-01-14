@@ -20,9 +20,23 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
     
     var touchedLocation = CGPoint(x: 0.0, y: 0.0)
     
-    @IBOutlet weak var buttonOne: UIButton!
+    var currentOption:Option?
+    var currentSubOption:SubOption?// not used yet
     
     @IBOutlet weak var stackView: UIStackView!
+    
+    @IBOutlet weak var buttonOne: UIButton!
+    @IBOutlet weak var buttonTwo: UIButton!
+    @IBOutlet weak var buttonThree: UIButton!
+    
+    
+    var buttonOnes = [UIButton]()
+    var buttonTwos = [UIButton]()
+    var buttonThrees = [UIButton]()
+    
+    var panGestureOne   = UIPanGestureRecognizer()
+    var panGestureTwo   = UIPanGestureRecognizer()
+    var panGestureThree = UIPanGestureRecognizer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,9 +51,61 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
         self.stackView.isUserInteractionEnabled = true
         self.bigImage.isUserInteractionEnabled = true
         self.scrollView.isUserInteractionEnabled = true
+        
+        self.buttonOne.layer.cornerRadius = 10
+        self.buttonTwo.layer.cornerRadius = 10
+        self.buttonThree.layer.cornerRadius = 10
+        
+        // draggable buttons
+        
+        //panGestureOne   = UIPanGestureRecognizer(target: self, action: #selector(draggedButtonOne(_:) ) )
+        panGestureTwo   = UIPanGestureRecognizer(target: self, action: #selector(draggedButtonTwo(_:) ) )
+        panGestureThree = UIPanGestureRecognizer(target: self, action: #selector(draggedButtonThree(_:) ) )
+        
+        self.buttonOne.isUserInteractionEnabled = true
+        self.buttonOne.addGestureRecognizer(panGestureOne)
+        
+        self.buttonTwo.isUserInteractionEnabled = true
+        self.buttonTwo.addGestureRecognizer(panGestureTwo)
+        
+        self.buttonThree.isUserInteractionEnabled = true
+        self.buttonThree.addGestureRecognizer(panGestureThree)
+        
+        
+        setUpInitialPanGestures()
+        
+       // self.buttonThree.sendActions(for: <#T##UIControlEvents#>)
+        //self.buttonThree.sendActions(for: .touchDragInside)
+        //panGestureThree()
+        //self.draggedButtonThree(<#T##sender: UIPanGestureRecognizer##UIPanGestureRecognizer#>)
     }
     
 
+    func setUpInitialPanGestures() {
+        
+        let copyButtonOne = buttonOne.copyButton()
+        copyButtonOne.isUserInteractionEnabled = true
+        let panGestureOne   = UIPanGestureRecognizer(target: self, action: #selector(draggedButtonEvery(_:) ) )
+        copyButtonOne.addGestureRecognizer(panGestureOne)
+        copyButtonOne.addTarget(self, action: #selector(buttonPressed(_:)), for: .touchUpInside)
+        self.view.addSubview(copyButtonOne)
+        
+        let copyButtonTwo = buttonTwo.copyButton()
+        copyButtonTwo.isUserInteractionEnabled = true
+        let panGestureTwo   = UIPanGestureRecognizer(target: self, action: #selector(draggedButtonEvery(_:) ) )
+        copyButtonTwo.addGestureRecognizer(panGestureTwo)
+        copyButtonTwo.addTarget(self, action: #selector(buttonPressed(_:)), for: .touchUpInside)
+        self.view.addSubview(copyButtonTwo)
+        
+        let copyButtonThree = buttonThree.copyButton()
+        copyButtonThree.isUserInteractionEnabled = true
+        let panGestureThree = UIPanGestureRecognizer(target: self, action: #selector(draggedButtonEvery(_:) ) )
+        copyButtonThree.addGestureRecognizer(panGestureThree)
+        copyButtonThree.addTarget(self, action: #selector(buttonPressed(_:)), for: .touchUpInside)
+        self.view.addSubview(copyButtonThree)
+        
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -49,7 +115,7 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return self.bigImage
     }
-    
+    /*
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         //let touch = event?.allTouches
         
@@ -73,6 +139,7 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
         
         buttonOne.center = touchedLocation
     }
+    */
     
     /*
     // MARK: - Navigation
@@ -85,8 +152,84 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
     */
 
   
+    @IBAction func buttonOnePressed(_ sender: Any) {
+        //self.performSegue(withIdentifier: "toQuestions", sender: self)
+    }
+    
+    @IBAction func buttonTwoPressed(_ sender: Any) {
+        //print("button two pressed!!")
+        //self.performSegue(withIdentifier: "toQuestions", sender: self)
+    }
+    
+    @IBAction func buttonThreePressed(_ sender: Any) {
+        //print("button three pressed!!")
+        //self.performSegue(withIdentifier: "toQuestions", sender: self)
+        
+    }
+    
+    @objc func buttonPressed(_ sender: Any) {
+        //print("copy button pressed!!")
+        self.performSegue(withIdentifier: "toQuestions", sender: self)
+    }
+    
     @IBAction func closeButtonPressed(_ sender: Any) {
         self.navigationController?.popViewController(animated: false)
+    }
+    
+    ///////////////////
+    //
+    //    drop and drag
+    //
+    ///////////////////
+    
+    @objc func draggedButtonEvery(_ sender:UIPanGestureRecognizer) {
+        //print(" one !!dupe!! dragged")
+        
+        let location = sender.location(in: bigImage)
+        print("the location: \(location)")
+        let locationsv = sender.location(in: scrollView)
+        print("the location sv: \(locationsv)")
+        
+        let buttonView = sender.view as! UIButton
+        let translation = sender.translation(in: self.view)
+        buttonView.center   = CGPoint(x: buttonView.center.x + translation.x , y: buttonView.center.y + translation.y)
+        sender.setTranslation(CGPoint.zero, in: self.view)
+    }
+    
+    @objc func draggedButtonOne(_ sender:UIPanGestureRecognizer) {
+        let copyButton = buttonOne.copyButton()
+        let panGesture   = UIPanGestureRecognizer(target: self, action: #selector(draggedButtonEvery(_:) ) )
+        copyButton.isUserInteractionEnabled = true
+        copyButton.addGestureRecognizer(panGesture)
+        copyButton.addTarget(self, action: #selector(buttonPressed(_:)), for: .touchUpInside)
+        self.view.addSubview(copyButton)
+    }
+    
+    @objc func draggedButtonTwo(_ sender:UIPanGestureRecognizer) {
+        let copyButton = buttonTwo.copyButton()
+        let panGesture   = UIPanGestureRecognizer(target: self, action: #selector(draggedButtonEvery(_:) ) )
+        copyButton.isUserInteractionEnabled = true
+        copyButton.addGestureRecognizer(panGesture)
+        copyButton.addTarget(self, action: #selector(buttonPressed(_:)), for: .touchUpInside)
+        self.view.addSubview(copyButton)
+    }
+    
+    @objc func draggedButtonThree(_ sender:UIPanGestureRecognizer) {
+        let copyButton = buttonThree.copyButton()
+        let newPanGestureOne   = UIPanGestureRecognizer(target: self, action: #selector(draggedButtonEvery(_:) ) )
+        copyButton.isUserInteractionEnabled = true
+        copyButton.addGestureRecognizer(newPanGestureOne)
+        copyButton.addTarget(self, action: #selector(buttonPressed(_:)), for: .touchUpInside)
+        self.view.addSubview(copyButton)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "toQuestions") {
+            let viewController = segue.destination as! QuestionsViewController
+            if let option = currentOption {
+                viewController.theQuestions = option.questionList
+            }
+        }
     }
     
 }

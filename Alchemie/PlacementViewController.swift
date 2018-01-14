@@ -505,10 +505,13 @@ class PlacementViewController: UIViewController, UICollectionViewDelegate, UICol
         if (segue.identifier == "toBigImage" ) {
             let viewController = segue.destination as! BigImageViewController
             viewController.theImage = bigImageView.image
+            if let option = currentOption {
+                viewController.currentOption = option
+            }
         }
         if (segue.identifier == "toQuestions") {
             let viewController = segue.destination as! QuestionsViewController
-            if let option = currentOption{
+            if let option = currentOption {
                 viewController.theQuestions = option.questionList
             }
         }
@@ -526,24 +529,24 @@ class PlacementViewController: UIViewController, UICollectionViewDelegate, UICol
     
     @IBAction func buttonOnePressed(_ sender: Any) {
         print(" one pressed")
-        if (bigImageView.image != nil ) { //&&
+        //if (bigImageView.image != nil ) { //&&
         //self.buttonOne.bounds.int ersects(bigImageView.bounds) ) {
             self.performSegue(withIdentifier: "toQuestions", sender: self)
-        }
+        //}
     }
     
     @IBAction func buttonTwoPressed(_ sender: Any) {
-        if (bigImageView.image != nil &&
-            self.buttonTwo.bounds.intersects(bigImageView.bounds) ) {
+        //if (bigImageView.image != nil &&
+        //    self.buttonTwo.bounds.intersects(bigImageView.bounds) ) {
             self.performSegue(withIdentifier: "toQuestions", sender: self)
-        }
+        //}
     }
     
     @IBAction func buttonThreePressed(_ sender: Any) {
-        if (bigImageView.image != nil &&
-            self.buttonThree.bounds.intersects(bigImageView.bounds) ) {
+        //if (bigImageView.image != nil &&
+        //    self.buttonThree.bounds.intersects(bigImageView.bounds) ) {
             self.performSegue(withIdentifier: "toQuestions", sender: self)
-        }
+        //}
         
     }
     

@@ -148,7 +148,7 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
     func createOptionPopup(){
         let alert = UIAlertController(title: "Create New Option", message: "Enter the title for the new option", preferredStyle: .alert)
         alert.addTextField(configurationHandler: nil)
-        let cancelAction = UIAlertAction(title: "Canel", style: .cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         let createAction = UIAlertAction(title: "Create", style: .default, handler: { action in
             let createdOption = Option()
             createdOption.title = alert.textFields![0].text
@@ -168,7 +168,7 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
     func createSubOptionPopup(withParent option:Option, atRow row:Int ){
         let alert = UIAlertController(title: "Create New Sub Option", message: "Enter the title for the new sub option", preferredStyle: .alert)
         alert.addTextField(configurationHandler: nil)
-        let cancelAction = UIAlertAction(title: "Canel", style: .cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         let createAction = UIAlertAction(title: "Create", style: .default, handler: { action in
             let createdSubOption = SubOption()
             createdSubOption.name = alert.textFields![0].text

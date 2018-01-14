@@ -9,6 +9,57 @@
 import Foundation
 import UIKit
 
+extension UIButton {
+    
+    func copyButton() -> UIButton {
+        let copyButton = UIButton(type: .system)
+        copyButton.setTitle(self.titleLabel?.text, for: .normal)
+        //newButtonOne.titleLabel?.text =
+        copyButton.titleLabel?.textColor = UIColor.lightBlue
+        copyButton.backgroundColor = UIColor.white
+        copyButton.layer.cornerRadius = 10
+        copyButton.frame = self.frame
+        //copyButton.frame =
+            // CGRect(x: buttonThree.frame.minX, y: buttonThree.frame.minY, width: buttonThree.frame.width, height: buttonThree.frame.height)
+        return copyButton
+    }
+    
+}
+
+extension UIColor {
+    
+    static let lightBlue = UIColor(displayP3Red: 0.4, green: 0.66667, blue: 1.0, alpha: 1.0)
+    
+}
+
+extension UIButton {
+    
+    /// Creates a duplicate of the terget UIButton
+    /// The caller specified the UIControlEvent types to copy across to the duplicate
+    ///
+    /// - Parameter controlEvents: UIControlEvent types to copy
+    /// - Returns: A UIButton duplicate of the original button
+    func duplicate(forControlEvents controlEvents: [UIControlEvents]) -> UIButton? {
+        
+        // Attempt to duplicate button by archiving and unarchiving the original UIButton
+        let archivedButton = NSKeyedArchiver.archivedData(withRootObject: self)
+        guard let buttonDuplicate = NSKeyedUnarchiver.unarchiveObject(with: archivedButton) as? UIButton else { return nil }
+        
+        // Copy targets and associated actions
+        self.allTargets.forEach { target in
+            
+            controlEvents.forEach { controlEvent in
+                
+                self.actions(forTarget: target, forControlEvent: controlEvent)?.forEach { action in
+                    buttonDuplicate.addTarget(target, action: Selector(action), for: controlEvent)
+                }
+            }
+        }
+        
+        return buttonDuplicate
+    }
+}
+
 extension UIViewController {
     
     func notConnectedToInternetPopup() {
