@@ -17,6 +17,14 @@ class Question: NSObject {
     var questionSetID:String?  // "QuestionSetID": "ac215129-d606-4fe3-813d-da73cb591eae",
     var questionText:String?   //"QuestionText": "Enter some text here:",
     var questionType:Int?      //"QuestionType": 1
+    
+    override init(){
+        
+    }
+    
+    init (text:String) {
+        questionText = text
+    }
 }
 
 class QuestionSet: NSObject {

@@ -14,8 +14,11 @@ extension UIButton {
     func copyButton() -> UIButton {
         let copyButton = UIButton(type: .system)
         copyButton.setTitle(self.titleLabel?.text, for: .normal)
-        //newButtonOne.titleLabel?.text =
-        copyButton.titleLabel?.textColor = UIColor.lightBlue
+        // newButtonOne.titleLabel?.text =
+        copyButton.titleLabel?.font = UIFont(name: "System", size: 20.0)
+        // textColor = UIColor.lightBlue
+        copyButton.setTitleColor(UIColor.lightBlue, for: .normal)
+        // copyButton.settit
         copyButton.backgroundColor = UIColor.white
         copyButton.layer.cornerRadius = 10
         copyButton.frame = self.frame

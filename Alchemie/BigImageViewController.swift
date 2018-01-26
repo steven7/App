@@ -39,8 +39,10 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
     var panGestureThree = UIPanGestureRecognizer()
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         bigImage.image = theImage
+        
         // Do any additional setup after loading the view.
         self.scrollView.minimumZoomScale = 0.2;
         self.scrollView.maximumZoomScale = 5.0;
@@ -58,7 +60,7 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
         
         // draggable buttons
         
-        //panGestureOne   = UIPanGestureRecognizer(target: self, action: #selector(draggedButtonOne(_:) ) )
+        panGestureOne   = UIPanGestureRecognizer(target: self, action: #selector(draggedButtonOne(_:) ) )
         panGestureTwo   = UIPanGestureRecognizer(target: self, action: #selector(draggedButtonTwo(_:) ) )
         panGestureThree = UIPanGestureRecognizer(target: self, action: #selector(draggedButtonThree(_:) ) )
         
@@ -71,8 +73,10 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
         self.buttonThree.isUserInteractionEnabled = true
         self.buttonThree.addGestureRecognizer(panGestureThree)
         
-        
-        setUpInitialPanGestures()
+        DispatchQueue.main.async {
+            self.setUpInitialPanGestures()
+        }
+        //setUpInitialPanGestures()
         
        // self.buttonThree.sendActions(for: <#T##UIControlEvents#>)
         //self.buttonThree.sendActions(for: .touchDragInside)
@@ -115,31 +119,6 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return self.bigImage
     }
-    /*
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        //let touch = event?.allTouches
-        
-        //let loc = touch
-        print("touch lolz")
-        let touch : UITouch! =  touches.first! as UITouch
-        
-        touchedLocation = touch.location(in: self.buttonOne)
-        
-        buttonOne.center = touchedLocation
-        
-    }
-    
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
-        print("touch continue")
-        
-        let touch : UITouch! =  touches.first! as UITouch
-        
-        touchedLocation = touch.location(in: self.buttonOne)
-        
-        buttonOne.center = touchedLocation
-    }
-    */
     
     /*
     // MARK: - Navigation
