@@ -12,6 +12,7 @@ import UIKit
 class Item: NSObject {
     
     var image:UIImage?
+    var editedImage:UIImage?
     var imgPointer:String?
     var imgUUID:String?
     var caption:String?
@@ -21,6 +22,7 @@ class Item: NSObject {
     
     override init () {
         image = nil
+        editedImage = nil
         imgPointer = ""
         imgUUID = NSUUID().uuidString
         caption = ""

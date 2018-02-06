@@ -12,6 +12,8 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
     
     @IBOutlet weak var closeButton: UIButton!
     
+    @IBOutlet weak var eraseIconsButton: UIButton!
+    
     @IBOutlet weak var bigImage: UIImageView!
     
     @IBOutlet weak var scrollView: UIScrollView!
@@ -23,11 +25,17 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
     var currentOption:Option?
     var currentSubOption:SubOption?// not used yet
     
+    var questions = [QuestionSet]()
+    
     @IBOutlet weak var stackView: UIStackView!
     
     @IBOutlet weak var buttonOne: UIButton!
     @IBOutlet weak var buttonTwo: UIButton!
     @IBOutlet weak var buttonThree: UIButton!
+    
+    var onDismiss: ( (UIView)  -> (UIImage) )?
+    
+    var thumbnailImageView: UIImageView?
     
     
     var buttonOnes = [UIButton]()
@@ -37,6 +45,10 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
     var panGestureOne   = UIPanGestureRecognizer()
     var panGestureTwo   = UIPanGestureRecognizer()
     var panGestureThree = UIPanGestureRecognizer()
+    
+    var currentItem:Item?
+    
+    let api = AlchemieAPI()
     
     override func viewDidLoad() {
         
@@ -82,6 +94,21 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
         //self.buttonThree.sendActions(for: .touchDragInside)
         //panGestureThree()
         //self.draggedButtonThree(<#T##sender: UIPanGestureRecognizer##UIPanGestureRecognizer#>)
+        
+        self.view.bringSubview(toFront: eraseIconsButton)
+        
+        
+        
+        
+        api.fetchQuestionSet(completion: { success, response in
+            if (success) {
+                print(response)
+                self.questions = self.getQuestionSetFromJSON(withJSON: response)
+            }
+            else {
+                self.errorPopup()
+            }
+        })
     }
     
 
@@ -92,6 +119,7 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
         let panGestureOne   = UIPanGestureRecognizer(target: self, action: #selector(draggedButtonEvery(_:) ) )
         copyButtonOne.addGestureRecognizer(panGestureOne)
         copyButtonOne.addTarget(self, action: #selector(buttonPressed(_:)), for: .touchUpInside)
+        self.buttonOnes.append(copyButtonOne)
         self.view.addSubview(copyButtonOne)
         
         let copyButtonTwo = buttonTwo.copyButton()
@@ -99,6 +127,7 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
         let panGestureTwo   = UIPanGestureRecognizer(target: self, action: #selector(draggedButtonEvery(_:) ) )
         copyButtonTwo.addGestureRecognizer(panGestureTwo)
         copyButtonTwo.addTarget(self, action: #selector(buttonPressed(_:)), for: .touchUpInside)
+        self.buttonTwos.append(copyButtonTwo)
         self.view.addSubview(copyButtonTwo)
         
         let copyButtonThree = buttonThree.copyButton()
@@ -106,6 +135,7 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
         let panGestureThree = UIPanGestureRecognizer(target: self, action: #selector(draggedButtonEvery(_:) ) )
         copyButtonThree.addGestureRecognizer(panGestureThree)
         copyButtonThree.addTarget(self, action: #selector(buttonPressed(_:)), for: .touchUpInside)
+        self.buttonThrees.append(copyButtonThree)
         self.view.addSubview(copyButtonThree)
         
     }
@@ -118,6 +148,115 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
 
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return self.bigImage
+    }
+    
+    func getQuestionSetFromJSON(withJSON json:[[String: AnyObject]] ) -> [QuestionSet] {
+        
+        var theQuestions = [QuestionSet]()
+        for questionSet in json {
+            //guard let optionName = option["OptionName"] as? String else {
+            //    print("somethings wrong with the data")
+            //     return [AnyObject]()
+            //}
+            let oneQuestionSet = QuestionSet()
+            
+            var setCompanyNum = 0
+            var setID         = " "
+            var setSurveyIconPointer = " "
+            var setSurveyName = " "
+            var setSurveyType = " "
+            
+            if let questionSetCompanyNum = questionSet["CompanyNum"] as? Int {
+                //print("somethings wrong with the data")
+                //return [QuestionSet]()
+                setCompanyNum = questionSetCompanyNum
+            }
+            else {
+                setCompanyNum = 0
+            }
+            if let  questionSetID = questionSet["ID"] as? String   {
+                //print("somethings wrong with the data")
+                //return [QuestionSet]()
+                setID = questionSetID
+            }
+            
+            if let questionSetSurveyIcon = questionSet["SurveyIconPointer"] as? String  {
+                //print("somethings wrong with the data")
+                //let questionSetSurveyIcon = "  "
+                //return [QuestionSet]()
+                setSurveyIconPointer = questionSetSurveyIcon
+                print("pointer icon \(setSurveyIconPointer) ")
+                
+                if let  questionSetSurveyName = questionSet["SurveyName"] as? String {
+                    setSurveyName = questionSetSurveyName
+                    // return [QuestionSet]()
+                    
+                    if (setSurveyName == "Question Set 1") {
+                        print("q one")
+                        api.downloadImageForButton (button: self.buttonOne, imgPointer: setSurveyIconPointer)
+                    }
+                    else if (setSurveyName == "Question Set 2") {
+                        print("q two")
+                        api.downloadImageForButton (button: self.buttonTwo, imgPointer: setSurveyIconPointer)
+                    }
+                    else if (setSurveyName == "Question Set 3") {
+                        print("q three")
+                        api.downloadImageForButton (button: self.buttonThree, imgPointer: setSurveyIconPointer)
+                    }
+                    
+                }
+                else {
+                    print("somethings wrong with the data")
+                    setSurveyName  = "  "
+                }
+                
+            }
+            else {
+                print("pointer icon not there")
+            }
+            
+            
+            
+            if let  questionSetSurveyType = questionSet["SurveyType"] as? String  {
+                //print("somethings wrong with the data")
+                //return [QuestionSet]()
+                setSurveyType = questionSetSurveyType
+            }
+            
+            oneQuestionSet.companyNum = setCompanyNum
+            oneQuestionSet.theID      = setID
+            oneQuestionSet.surveyIcon = setSurveyIconPointer
+            oneQuestionSet.surveyName = setSurveyName
+            oneQuestionSet.surveyType = setSurveyType
+            
+            guard let questionList = questionSet["QuesList"] as? [[String: AnyObject]] else {
+                print("somethings wrong with the data")
+                return [QuestionSet]()
+            }
+            
+            for oneQuestion in questionList  {
+                
+                let question = Question()
+                var qSetID = " "
+                var qText = " "
+                
+                if let questionSetID = oneQuestion["QuestionSetID"] as? String  {
+                    qSetID = questionSetID
+                }
+                
+                if let questionText = oneQuestion["QuestionText"] as? String {
+                    qText = questionText
+                }
+                
+                question.questionSetID = qSetID
+                question.questionText = qText
+                print("hopefully added \(qText)")
+                oneQuestionSet.questionList.append(question)
+            }
+            theQuestions.append(oneQuestionSet)
+        }
+        return theQuestions
+        
     }
     
     /*
@@ -152,7 +291,30 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
     }
     
     @IBAction func closeButtonPressed(_ sender: Any) {
+        let editedImage = onDismiss!(self.view);
+        thumbnailImageView?.image = editedImage
+        currentItem?.editedImage = editedImage
         self.navigationController?.popViewController(animated: false)
+    }
+    
+    @IBAction func eraseIconsButtonPressed(_ sender: Any) {
+        print("erase icons button pressed")
+        for b in buttonOnes {
+            self.view.willRemoveSubview(b)
+            b.removeFromSuperview()
+        }
+        for b in buttonTwos {
+            self.view.willRemoveSubview(b)
+            b.removeFromSuperview()
+        }
+        for b in buttonThrees {
+            self.view.willRemoveSubview(b)
+            b.removeFromSuperview()
+        }
+        buttonOnes.removeAll()
+        buttonTwos.removeAll()
+        buttonThrees.removeAll()
+        bigImage.image = currentItem?.image
     }
     
     ///////////////////

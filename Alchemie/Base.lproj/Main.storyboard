@@ -618,8 +618,23 @@
                                     <action selector="closeButtonPressed:" destination="W7V-Sy-WKJ" eventType="touchUpInside" id="ymQ-QK-TBz"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AGO-v9-y5t">
+                                <rect key="frame" x="638" y="35" width="160" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="160" id="CXc-hc-aWN"/>
+                                    <constraint firstAttribute="height" constant="60" id="NNp-PQ-lfL"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Erase Icons">
+                                    <color key="titleColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="eraseIconsButtonPressed:" destination="77i-8B-zQl" eventType="touchUpInside" id="Vyx-9i-FXO"/>
+                                </connections>
+                            </button>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="K3M-Iz-bMx">
-                                <rect key="frame" x="0.0" y="120" width="834" height="892"/>
+                                <rect key="frame" x="0.0" y="120" width="834" height="862"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ezZ-QI-XHD">
                                         <rect key="frame" x="0.0" y="0.0" width="834" height="985"/>
@@ -636,15 +651,14 @@
                                     <constraint firstAttribute="bottom" secondItem="ezZ-QI-XHD" secondAttribute="bottom" id="zYE-6Y-cnn"/>
                                 </constraints>
                             </scrollView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d9G-Yv-nwB">
-                                <rect key="frame" x="302" y="1012" width="230" height="100"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d9G-Yv-nwB">
+                                <rect key="frame" x="357.5" y="982" width="120" height="120"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="100" id="6d6-34-NDQ"/>
-                                    <constraint firstAttribute="width" constant="230" id="aOj-B7-gkG"/>
+                                    <constraint firstAttribute="height" constant="120" id="6d6-34-NDQ"/>
+                                    <constraint firstAttribute="width" constant="120" id="aOj-B7-gkG"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <state key="normal" title="Item Two">
+                                <state key="normal" title=" " image="questionSetIcon2">
                                     <color key="titleColor" red="0.40000000000000002" green="0.66666666669999997" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
@@ -676,15 +690,14 @@
                                     <constraint firstAttribute="height" constant="100" id="4hm-aM-PVH"/>
                                 </constraints>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sSp-yT-cL1">
-                                <rect key="frame" x="597" y="1012" width="230" height="100"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sSp-yT-cL1">
+                                <rect key="frame" x="613.5" y="982" width="120" height="120"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="100" id="cMu-QI-eyo"/>
-                                    <constraint firstAttribute="width" constant="230" id="gFl-Qt-3gF"/>
+                                    <constraint firstAttribute="height" constant="120" id="cMu-QI-eyo"/>
+                                    <constraint firstAttribute="width" constant="120" id="gFl-Qt-3gF"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <state key="normal" title="Item Three">
+                                <state key="normal" title=" " image="questionSetIcon3">
                                     <color key="titleColor" red="0.40000000000000002" green="0.66666666669999997" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
@@ -692,14 +705,13 @@
                                     <action selector="buttonThreePressed:" destination="77i-8B-zQl" eventType="touchUpInside" id="rIZ-rk-msr"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4fj-Nz-MRU">
-                                <rect key="frame" x="7" y="1012" width="230" height="100"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4fj-Nz-MRU">
+                                <rect key="frame" x="101.5" y="982" width="120" height="120"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="230" id="GvZ-Mo-Fc3"/>
-                                    <constraint firstAttribute="height" constant="100" id="urN-VN-oxT"/>
+                                    <constraint firstAttribute="width" constant="120" id="GvZ-Mo-Fc3"/>
+                                    <constraint firstAttribute="height" constant="120" id="urN-VN-oxT"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <state key="normal" title="Item One">
+                                <state key="normal" title=" " image="questionSetIcon1">
                                     <color key="titleColor" red="0.39996641869999999" green="0.66470879319999998" blue="0.98684233430000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
@@ -710,20 +722,22 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="K3M-Iz-bMx" firstAttribute="trailing" secondItem="7wn-xw-Dk9" secondAttribute="trailing" id="15n-aS-1Wz"/>
-                            <constraint firstAttribute="bottom" secondItem="d9G-Yv-nwB" secondAttribute="bottom" id="67a-BR-uSh"/>
+                            <constraint firstAttribute="bottom" secondItem="d9G-Yv-nwB" secondAttribute="bottom" constant="10" id="67a-BR-uSh"/>
                             <constraint firstItem="iLG-Mx-Hpc" firstAttribute="top" secondItem="7wn-xw-Dk9" secondAttribute="top" constant="30" id="8Tr-Qk-2Yl"/>
-                            <constraint firstItem="d9G-Yv-nwB" firstAttribute="leading" secondItem="4fj-Nz-MRU" secondAttribute="trailing" constant="65" id="8mP-bt-3HG"/>
+                            <constraint firstItem="d9G-Yv-nwB" firstAttribute="leading" secondItem="4fj-Nz-MRU" secondAttribute="trailing" constant="136" id="8mP-bt-3HG"/>
                             <constraint firstAttribute="trailing" secondItem="keI-uo-LwE" secondAttribute="trailing" id="DuA-8J-k3L"/>
-                            <constraint firstAttribute="bottom" secondItem="sSp-yT-cL1" secondAttribute="bottom" id="IvK-Lt-NUA"/>
+                            <constraint firstAttribute="bottom" secondItem="sSp-yT-cL1" secondAttribute="bottom" constant="10" id="IvK-Lt-NUA"/>
                             <constraint firstItem="K3M-Iz-bMx" firstAttribute="leading" secondItem="7wn-xw-Dk9" secondAttribute="leading" id="NwQ-lW-fAS"/>
+                            <constraint firstItem="7wn-xw-Dk9" firstAttribute="trailing" secondItem="AGO-v9-y5t" secondAttribute="trailing" constant="36" id="Oh3-te-ULe"/>
                             <constraint firstAttribute="bottom" secondItem="keI-uo-LwE" secondAttribute="bottom" id="ZFG-cR-9Oq"/>
-                            <constraint firstItem="7wn-xw-Dk9" firstAttribute="bottom" secondItem="4fj-Nz-MRU" secondAttribute="bottom" id="aKy-JD-8Tp"/>
-                            <constraint firstAttribute="bottom" secondItem="K3M-Iz-bMx" secondAttribute="bottom" constant="100" id="bBE-GQ-XKm"/>
+                            <constraint firstItem="7wn-xw-Dk9" firstAttribute="bottom" secondItem="4fj-Nz-MRU" secondAttribute="bottom" constant="10" id="aKy-JD-8Tp"/>
+                            <constraint firstAttribute="bottom" secondItem="K3M-Iz-bMx" secondAttribute="bottom" constant="130" id="bBE-GQ-XKm"/>
+                            <constraint firstItem="AGO-v9-y5t" firstAttribute="top" secondItem="7wn-xw-Dk9" secondAttribute="top" constant="15" id="dc8-g6-ZFR"/>
                             <constraint firstItem="iLG-Mx-Hpc" firstAttribute="leading" secondItem="7wn-xw-Dk9" secondAttribute="leading" constant="35" id="f1H-fb-WTI"/>
                             <constraint firstItem="K3M-Iz-bMx" firstAttribute="top" secondItem="PbG-wN-dL6" secondAttribute="top" constant="120" id="iPx-EW-n7h"/>
                             <constraint firstItem="keI-uo-LwE" firstAttribute="leading" secondItem="PbG-wN-dL6" secondAttribute="leading" id="jcK-9N-r9k"/>
                             <constraint firstItem="d9G-Yv-nwB" firstAttribute="centerX" secondItem="PbG-wN-dL6" secondAttribute="centerX" id="njd-48-8En"/>
-                            <constraint firstItem="sSp-yT-cL1" firstAttribute="leading" secondItem="d9G-Yv-nwB" secondAttribute="trailing" constant="65" id="pkW-2U-yj1"/>
+                            <constraint firstItem="sSp-yT-cL1" firstAttribute="leading" secondItem="d9G-Yv-nwB" secondAttribute="trailing" constant="136" id="pkW-2U-yj1"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="7wn-xw-Dk9"/>
                         <variation key="default">
@@ -738,6 +752,7 @@
                         <outlet property="buttonThree" destination="sSp-yT-cL1" id="VIM-xU-Hxj"/>
                         <outlet property="buttonTwo" destination="d9G-Yv-nwB" id="vtb-n6-f8l"/>
                         <outlet property="closeButton" destination="iLG-Mx-Hpc" id="zVq-ZA-o0f"/>
+                        <outlet property="eraseIconsButton" destination="AGO-v9-y5t" id="2zP-dE-nZ0"/>
                         <outlet property="scrollView" destination="K3M-Iz-bMx" id="9AA-i3-3UN"/>
                         <outlet property="stackView" destination="keI-uo-LwE" id="wb2-hj-E4y"/>
                         <segue destination="KfE-mm-mJ3" kind="show" identifier="toQuestions" id="Hv1-z9-cfl"/>
@@ -745,7 +760,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="K43-Om-i3b" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3340" y="1948"/>
+            <point key="canvasLocation" x="3339.5683453237411" y="1947.841726618705"/>
         </scene>
         <!--Questions View Controller-->
         <scene sceneID="NNc-EN-gkb">
@@ -1116,6 +1131,9 @@
         <image name="addPhoto" width="150" height="150"/>
         <image name="backIcon" width="313" height="313"/>
         <image name="bigImage" width="256" height="256"/>
+        <image name="questionSetIcon1" width="112" height="112"/>
+        <image name="questionSetIcon2" width="112" height="112"/>
+        <image name="questionSetIcon3" width="112" height="112"/>
         <image name="thumbsUp" width="128" height="128"/>
         <image name="white" width="16" height="16"/>
         <image name="xIcon" width="112" height="112"/>

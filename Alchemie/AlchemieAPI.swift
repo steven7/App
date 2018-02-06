@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+//import AlamofireImage
 
 class AlchemieAPI: NSObject {
     
@@ -145,4 +146,43 @@ class AlchemieAPI: NSObject {
         }
     }
     
+    func downloadImageForButton (button:UIButton, imgPointer:String ) {
+        let url = URL(string: "http://alchemiewebservice20171213043804.azurewebsites.net/service1.svc/downloadimage/\(imgPointer)")!
+        /*
+        Alamofire.request(url).responseImage { response in
+            debugPrint(response)
+            
+            print(response.request)
+            print(response.response)
+            debugPrint(response.result)
+            
+            if let image = response.result.value {
+                print("image downloaded: \(image)")
+            }
+            DispatchQueue.main.async {
+                button.setBackgroundImage(image, for: .normal)
+                // button.titleLabel?.text = ""
+                button.setTitle("", for: .normal)
+            }
+        }*/
+    }
+    
+    func downloadImage ( imgPointer:String, completion: @escaping (Bool, [[String: AnyObject]])->()) {
+        
+        print ("begin fetch question set")
+        
+        let url = URL(string: "http://alchemiewebservice20171213043804.azurewebsites.net/service1.svc/downloadimage/\(imgPointer)")!
+        /*
+        Alamofire.request(url).responseImage { response in
+            debugPrint(response)
+            
+            print(response.request)
+            print(response.response)
+            debugPrint(response.result)
+            
+            if let image = response.result.value {
+                print("image downloaded: \(image)")
+            }
+        } */
+    }
 }

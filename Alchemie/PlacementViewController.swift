@@ -50,6 +50,8 @@ class PlacementViewController: UIViewController, UICollectionViewDelegate, UICol
     var touchedLocationTwo = CGPoint(x: 0.0, y: 0.0)
     var touchedLocationThree = CGPoint(x: 0.0, y: 0.0)
     
+    var currentItem:Item?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -152,7 +154,6 @@ class PlacementViewController: UIViewController, UICollectionViewDelegate, UICol
                 let item = collectionViewOneContents[indexPath.row] as! Item
                 let cell = collectionViewOne.dequeueReusableCell(withReuseIdentifier: "itemCell", for: indexPath) as! ItemCollectionViewCell
                 cell.withItem(item: item)
-                
                 if let highlighted = highlightedIndex {
                     if (highlighted == indexPath.row) {
                         cell.theBackgroundView.backgroundColor = UIColor(displayP3Red: 0.4, green: 0.6667, blue: 1.0, alpha: 1.0)
@@ -164,17 +165,6 @@ class PlacementViewController: UIViewController, UICollectionViewDelegate, UICol
                 else {
                     cell.theBackgroundView.backgroundColor = UIColor.clear
                 }
-                
-                /*
-                if (item.highlightedBackground)! {
-                    cell.theBackgroundView.backgroundColor = UIColor(displayP3Red: 0.4, green: 0.6667, blue: 1.0, alpha: 1.0)
-                }
-                else {
-                    cell.theBackgroundView.backgroundColor = UIColor.clear
-                }
-                */
-                // let imageView = UIImageView(image: item.image)
-                // cell.contentView.addSubview()
                 return cell
             }
         }
@@ -193,6 +183,7 @@ class PlacementViewController: UIViewController, UICollectionViewDelegate, UICol
             self.bigImageButton.isEnabled = true
             print("pressed item cell at \(indexPath.row)")
             let item = collectionViewOneContents[indexPath.row] as! Item
+            self.currentItem = item
             let cell = collectionView.cellForItem(at: indexPath) as! ItemCollectionViewCell
             // clearAllCellBackgroundColors()
             //clearBackgroundColors()
@@ -201,7 +192,12 @@ class PlacementViewController: UIViewController, UICollectionViewDelegate, UICol
             //cell.highlightedBackground = true
             //item.highlightedBackground = true
             self.highlightedIndex = indexPath.row
-            bigImageView.image = item.image
+            if (item.editedImage != nil) {
+                bigImageView.image = item.editedImage
+            }
+            else {
+                bigImageView.image = item.image
+            }
             collectionViewOne.reloadData()
         }
     }
@@ -493,6 +489,26 @@ class PlacementViewController: UIViewController, UICollectionViewDelegate, UICol
         // Pass the selected object to the new view controller.
     }
     */
+    
+    func captureImage(theview:UIView ) -> UIImage {
+        
+        UIGraphicsBeginImageContext(theview.frame.size)
+        theview.layer.render(in:UIGraphicsGetCurrentContext()!)
+        buttonOne.layer.render(in:UIGraphicsGetCurrentContext()!)
+        buttonTwo.layer.render(in:UIGraphicsGetCurrentContext()!)
+        buttonThree.layer.render(in:UIGraphicsGetCurrentContext()!)
+        var image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        //let croppedImage = image?.crop(rect: CGRect(x: 0, y: 100, width: 834, height: 800))
+        let boundingBox = CGRect(x: 0, y: 330, width: 800, height: 530)
+        let croppedCGImage:CGImage = (image!.cgImage?.cropping(to: boundingBox))!
+        let croppedImage = UIImage(cgImage: croppedCGImage)
+        
+        
+        
+        return croppedImage
+    }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "toCreateItem" ) {
@@ -505,8 +521,13 @@ class PlacementViewController: UIViewController, UICollectionViewDelegate, UICol
         if (segue.identifier == "toBigImage" ) {
             let viewController = segue.destination as! BigImageViewController
             viewController.theImage = bigImageView.image
+                // currentItem?.image
+                // bigImageView.image
             if let option = currentOption {
                 viewController.currentOption = option
+                viewController.thumbnailImageView = bigImageView
+                viewController.onDismiss = captureImage
+                viewController.currentItem = self.currentItem
             }
         }
         if (segue.identifier == "toQuestions") {

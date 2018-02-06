@@ -9,17 +9,33 @@
 import Foundation
 import UIKit
 
+extension UIImage {
+    func crop( rect: CGRect) -> UIImage {
+        var rect = rect
+        rect.origin.x*=self.scale
+        rect.origin.y*=self.scale
+        rect.size.width*=self.scale
+        rect.size.height*=self.scale
+        
+        let imageRef = self.cgImage!.cropping(to: rect)
+        let image = UIImage(cgImage: imageRef!, scale: self.scale, orientation: self.imageOrientation)
+        return image
+    }
+}
+
+
 extension UIButton {
     
     func copyButton() -> UIButton {
-        let copyButton = UIButton(type: .system)
+        let copyButton = UIButton(type: .custom)
         copyButton.setTitle(self.titleLabel?.text, for: .normal)
-        // newButtonOne.titleLabel?.text =
         copyButton.titleLabel?.font = UIFont(name: "System", size: 20.0)
-        // textColor = UIColor.lightBlue
         copyButton.setTitleColor(UIColor.lightBlue, for: .normal)
-        // copyButton.settit
         copyButton.backgroundColor = UIColor.white
+        copyButton.setBackgroundImage(self.currentBackgroundImage, for: .normal)
+        copyButton.setImage(self.currentImage, for: .normal)
+        // copyButton.setImage(self.image(for: .normal), for: .normal)
+        copyButton.imageView?.layer.cornerRadius = 10
         copyButton.layer.cornerRadius = 10
         copyButton.frame = self.frame
         //copyButton.frame =

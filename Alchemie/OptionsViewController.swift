@@ -409,7 +409,6 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
                 
                 questionfetchRequest.predicate = NSPredicate(format: "parentOptionID == %@", oneOption.optionID!)
                 
-                
                 do {
                     let theManaged_SubOptions = try managedContext.fetch(subfetchRequest)
                     for oneManaged_SubOption in theManaged_SubOptions {
@@ -458,6 +457,7 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     
     func eraseOptionsFromCoreDataWithCurrentUser() {
+        
         guard let appDelegate =
             UIApplication.shared.delegate as? AppDelegate else {
                 return
