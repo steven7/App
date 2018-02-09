@@ -53,6 +53,8 @@
 		AA6C7A981FEB3BFE00392EE7 /* CreateItemCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA6C7A961FEB3BFE00392EE7 /* CreateItemCollectionViewCell.xib */; };
 		AA6C7A9D1FEB3CAF00392EE7 /* ItemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6C7A9B1FEB3CAF00392EE7 /* ItemCollectionViewCell.swift */; };
 		AA6C7A9E1FEB3CAF00392EE7 /* ItemCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA6C7A9C1FEB3CAF00392EE7 /* ItemCollectionViewCell.xib */; };
+		AA7D4F1E202E2E61005CA847 /* NextQuestionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7D4F1C202E2E61005CA847 /* NextQuestionTableViewCell.swift */; };
+		AA7D4F1F202E2E61005CA847 /* NextQuestionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA7D4F1D202E2E61005CA847 /* NextQuestionTableViewCell.xib */; };
 		AA9A1C041FED468F00F61C8F /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA9A1C031FED468F00F61C8F /* Item.swift */; };
 		AA9A1C061FED6E5600F61C8F /* CreateItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA9A1C051FED6E5600F61C8F /* CreateItem.swift */; };
 		AA9A1C081FED72F600F61C8F /* CreateItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA9A1C071FED72F600F61C8F /* CreateItemViewController.swift */; };
@@ -138,6 +140,8 @@
 		AA6C7A961FEB3BFE00392EE7 /* CreateItemCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreateItemCollectionViewCell.xib; sourceTree = "<group>"; };
 		AA6C7A9B1FEB3CAF00392EE7 /* ItemCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCollectionViewCell.swift; sourceTree = "<group>"; };
 		AA6C7A9C1FEB3CAF00392EE7 /* ItemCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ItemCollectionViewCell.xib; sourceTree = "<group>"; };
+		AA7D4F1C202E2E61005CA847 /* NextQuestionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextQuestionTableViewCell.swift; sourceTree = "<group>"; };
+		AA7D4F1D202E2E61005CA847 /* NextQuestionTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NextQuestionTableViewCell.xib; sourceTree = "<group>"; };
 		AA9A1C031FED468F00F61C8F /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		AA9A1C051FED6E5600F61C8F /* CreateItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateItem.swift; sourceTree = "<group>"; };
 		AA9A1C071FED72F600F61C8F /* CreateItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateItemViewController.swift; sourceTree = "<group>"; };
@@ -296,6 +300,8 @@
 				AA371D67200AE05500BCD3AC /* MultiListQuestionTableViewCell.xib */,
 				AA371D6A200AE06300BCD3AC /* PhotoQuestionTableViewCell.swift */,
 				AA371D6B200AE06300BCD3AC /* PhotoQuestionTableViewCell.xib */,
+				AA7D4F1C202E2E61005CA847 /* NextQuestionTableViewCell.swift */,
+				AA7D4F1D202E2E61005CA847 /* NextQuestionTableViewCell.xib */,
 			);
 			path = Questions;
 			sourceTree = "<group>";
@@ -461,6 +467,7 @@
 				AA3152DB1FEA796000C772DE /* LaunchScreen.storyboard in Resources */,
 				AA3152D81FEA796000C772DE /* Assets.xcassets in Resources */,
 				AA371D61200AE03200BCD3AC /* YesOrNoQuestionTableViewCell.xib in Resources */,
+				AA7D4F1F202E2E61005CA847 /* NextQuestionTableViewCell.xib in Resources */,
 				AA371D65200AE04300BCD3AC /* ListQuestionTableViewCell.xib in Resources */,
 				AA3152D31FEA796000C772DE /* Main.storyboard in Resources */,
 				AA371D69200AE05500BCD3AC /* MultiListQuestionTableViewCell.xib in Resources */,
@@ -658,6 +665,7 @@
 				AA6311352006E8780023D786 /* QuestionSet.swift in Sources */,
 				AA9A1C041FED468F00F61C8F /* Item.swift in Sources */,
 				AA371D60200AE03200BCD3AC /* YesOrNoQuestionTableViewCell.swift in Sources */,
+				AA7D4F1E202E2E61005CA847 /* NextQuestionTableViewCell.swift in Sources */,
 				AA371D5A200ADFEA00BCD3AC /* TextQuestionTableViewCell.swift in Sources */,
 				AA6C7A9D1FEB3CAF00392EE7 /* ItemCollectionViewCell.swift in Sources */,
 				AA3153251FEA7BCF00C772DE /* SubOption.swift in Sources */,

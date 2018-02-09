@@ -611,7 +611,7 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
                 // return [QuestionSet]()
             }
             else {
-                print("somethings wrong with the data")
+                print("somethings wrong with the question data")
                 setSurveyName  = "  "
             }
             
@@ -628,7 +628,7 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
             oneQuestionSet.surveyType = setSurveyType
             
             guard let questionList = questionSet["QuesList"] as? [[String: AnyObject]] else {
-                print("somethings wrong with the data")
+                print("somethings wrong with the  question data")
                 return [QuestionSet]()
             }
             
@@ -662,7 +662,7 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
         var theOptions = [AnyObject]()
         for option in json {
             guard let optionName = option["OptionName"] as? String else {
-                print("somethings wrong with the data")
+                print("somethings wrong with the options data")
                 return [AnyObject]()
             }
             let newOption = Option()
@@ -671,14 +671,14 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
             theOptions.append(newOption)
             createOptionWithCoreData(with: newOption)
             guard let subOptions = option["Suboptions"] as? [[String: AnyObject]]else {
-                print("somethings wrong with the data")
+                print("somethings wrong with the options data")
                 return [AnyObject]()
             }
             
             // sub options
             for suboption in subOptions  {
                 guard let suboptionName = suboption["Suboption"] as? String else {
-                    print("somethings wrong with the data")
+                    print("somethings wrong with the options data")
                     return [AnyObject]()
                 }
                 let newSubOption = SubOption()
@@ -686,26 +686,22 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
                 newSubOption.parentOption = newOption
                 newSubOption.parentOptionID = newOption.optionID
                 guard let imageList = suboption["ImagesList"] as? [[String: AnyObject]] else {
-                    print("somethings wrong with the data")
+                    print("somethings wrong with the options data")
                     return [AnyObject]()
                 }
-                
+                /*
                 // sub option images
                 for image in imageList {
-                    /*
-                    guard let imgPointer = image["ImgPointer"] as? String else {
-                        print("somethings wrong with the data")
-                        return [AnyObject]()
-                    }
-                    */
+                    
                     
                     let imgPointer = image["ImgPointer"] as? String
                     
                     guard let title = image["Title"] as? String else {
-                        print("somethings wrong with the data")
+                        print("somethings wrong with the options data")
                         return [AnyObject]()
                     }
-                }
+                }*/
+                
                 theOptions.append(newSubOption)
                 createSubOptionWithCoreData(with: newSubOption)
             }

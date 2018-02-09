@@ -30,6 +30,7 @@ class QuestionsViewController: UIViewController, UITableViewDelegate, UITableVie
         case list
         case listMulti
         case photo
+        case next
     }
     
     // var pickerQuestions = [ "Question One", "Question Two", "Question Three", "Question Four", "Question Five"]
@@ -61,7 +62,7 @@ class QuestionsViewController: UIViewController, UITableViewDelegate, UITableVie
         self.pickerView.delegate = self
         self.pickerView.dataSource = self
         
-        theQuestionTypes = [.text, .yesOrNo, .list, .listMulti, .photo ]
+        theQuestionTypes = [.text, .yesOrNo, .list, .listMulti, .photo, .next, .next ]
         /*
         theQuestions.append(Question(text: "qwerty asdfg zxcvbn") )
         theQuestions.append(Question(text: "qwerty asdfg zxcvbn") )
@@ -78,12 +79,14 @@ class QuestionsViewController: UIViewController, UITableViewDelegate, UITableVie
         let lNib = UINib(nibName: "ListQuestionTableViewCell", bundle: nil)
         let mNib = UINib(nibName: "MultiListQuestionTableViewCell", bundle: nil)
         let pNib = UINib(nibName: "PhotoQuestionTableViewCell", bundle: nil)
+        let nqNib = UINib(nibName: "NextQuestionTableViewCell", bundle: nil)
         
         tableView.register(tNib, forCellReuseIdentifier: "textCell")
         tableView.register(yNib, forCellReuseIdentifier: "yesrOrNoCell")
         tableView.register(lNib, forCellReuseIdentifier: "listCell")
         tableView.register(mNib, forCellReuseIdentifier: "multiListCell")
         tableView.register(pNib, forCellReuseIdentifier: "photoCell")
+        tableView.register(nqNib, forCellReuseIdentifier: "nextQuestionCell")
         
         tableView.rowHeight = tableView.estimatedRowHeight
         
@@ -162,6 +165,10 @@ class QuestionsViewController: UIViewController, UITableViewDelegate, UITableVie
             cell.photoClosure = photoButtonClosure
             return cell
         }
+        else if (type == .next) {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "nextQuestionCell") as! NextQuestionTableViewCell
+            return cell
+        }
         
         let cell = UITableViewCell()
         let theText = theQuestions[indexPath.row].questionText
@@ -170,6 +177,41 @@ class QuestionsViewController: UIViewController, UITableViewDelegate, UITableVie
         //cell.textLabel?.textAlignment = .center
         return cell
         
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let type = theQuestionTypes[indexPath.row]
+        if (type == .next) {
+            createNextRow()
+        }
+    }
+    
+    func createNextRow(){
+        
+        let endRow = theQuestions.count - 1
+        
+        // delete one row model
+        theQuestionTypes.removeLast()
+        
+        // add two rows to medl
+        let newQuestion = Question(text:"Wow! This is the next Question!")
+        theQuestions.append(newQuestion)
+        //theQuestions.append(newQuestion)
+        
+        theQuestionTypes.append(.list)
+        theQuestionTypes.append(.next)
+        
+        let indexPathEnd = IndexPath(row: endRow , section: 0)
+        let indexPathAdd = IndexPath(row: endRow + 1 , section: 0)
+        
+        tableView.beginUpdates()
+        
+        tableView.deleteRows(at: [indexPathEnd], with: .fade)
+        tableView.insertRows(at: [indexPathEnd, indexPathAdd], with: .bottom)
+        
+        tableView.endUpdates()
+        
+        tableView.scrollToRow(at: indexPathEnd, at: .middle, animated: true)
     }
     
     
@@ -190,6 +232,9 @@ class QuestionsViewController: UIViewController, UITableViewDelegate, UITableVie
             return 150
         }
         else if (type == .photo) {
+            return 110
+        }
+        else if (type == .next) {
             return 110
         }
         else {
