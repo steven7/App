@@ -8,6 +8,8 @@
 
 import UIKit
 
+
+
 class Question: NSObject {
     var companyNum:Int?     //"CompanyNum": null,
     var listID:String?         //"ListID": null,
@@ -16,7 +18,19 @@ class Question: NSObject {
     var questionNum:Int?        //"QuestionNum": 1,
     var questionSetID:String?  // "QuestionSetID": "ac215129-d606-4fe3-813d-da73cb591eae",
     var questionText:String?   //"QuestionText": "Enter some text here:",
-    var questionType:Int?      //"QuestionType": 1
+    var questionTypeNumber:Int?      //"QuestionType": 1
+    var questionType:QuestionTypes?      //"QuestionType": 1
+    
+    enum QuestionTypes  {
+        case text
+        case yesOrNo
+        case list
+        case listMulti
+        case photo
+        case next
+    }
+    
+    var dict:[Int:QuestionTypes] = [ 1 : .text,  2 : .yesOrNo, 3 : .list, 4 : .listMulti, 5 : .photo]
     
     override init(){
         
@@ -24,6 +38,21 @@ class Question: NSObject {
     
     init (text:String) {
         questionText = text
+    }
+    
+    init (text:String, type:Int) {
+        questionText = text
+        questionType = dict[type]
+    }
+    
+    init (text:String, type:QuestionTypes) {
+        questionText = text
+        questionType = type
+    }
+    
+    func setType(type:Int) {
+        questionTypeNumber = type
+        questionType = dict[type]
     }
 }
 

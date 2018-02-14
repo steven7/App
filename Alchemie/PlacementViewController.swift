@@ -185,12 +185,8 @@ class PlacementViewController: UIViewController, UICollectionViewDelegate, UICol
             let item = collectionViewOneContents[indexPath.row] as! Item
             self.currentItem = item
             let cell = collectionView.cellForItem(at: indexPath) as! ItemCollectionViewCell
-            // clearAllCellBackgroundColors()
-            //clearBackgroundColors()
             clearAllCellBackgroundColors()
             cell.theBackgroundView.backgroundColor = UIColor(displayP3Red: 0.4, green: 0.6667, blue: 1.0, alpha: 1.0)
-            //cell.highlightedBackground = true
-            //item.highlightedBackground = true
             self.highlightedIndex = indexPath.row
             if (item.editedImage != nil) {
                 bigImageView.image = item.editedImage
@@ -209,13 +205,10 @@ class PlacementViewController: UIViewController, UICollectionViewDelegate, UICol
             if (theItem  is CreateItem)  {
                 continue
             }
-            
             guard let imageItem = item as? Item else {
                 continue
             }
-            
             imageItem.highlightedBackground = false
-            
             i += 1
         }
     }
@@ -227,13 +220,10 @@ class PlacementViewController: UIViewController, UICollectionViewDelegate, UICol
             if (theItem  is CreateItem)  {
                 continue
             }
-            
             guard let imageItem = item as? Item else {
                 continue
             }
-            
-            imageItem.highlightedBackground = false
-            
+            imageItem.highlightedBackground = false 
             i += 1
         }
         //for (col) in collectionViewOneContents {

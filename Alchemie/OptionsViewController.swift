@@ -32,6 +32,8 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
     var optionsLoaded = false
     var questionsLoaded = false
     
+    let imageStore = ImageStore.sharedInstance
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let oNib = UINib(nibName: "OptionTableViewCell", bundle: nil)
@@ -341,9 +343,11 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
             let cdQuestionList = NSManagedObject(entity: entity,
                                                  insertInto: managedContext)
             
-            cdQuestionList.setValue(question.questionText,    forKeyPath: "questionText")
-            cdQuestionList.setValue(question.questionSetID,   forKeyPath: "questionSetID")
-            cdQuestionList.setValue(option.optionID,          forKeyPath: "parentOptionID")
+            cdQuestionList.setValue(question.questionText,     forKeyPath: "questionText")
+            cdQuestionList.setValue(question.questionSetID,    forKeyPath: "questionSetID")
+            cdQuestionList.setValue(option.optionID,           forKeyPath: "parentOptionID")
+            
+            cdQuestionList.setValue(question.questionTypeNumber,   forKeyPath: "questionTypeNumber")
             
             optionToUpdate.setValue(NSSet(object: cdQuestionList), forKey: "questionList")
             
@@ -435,6 +439,12 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
                         let question = Question()
                         question.questionSetID  = oneQuestion.value(forKeyPath: "questionSetID") as? String
                         question.questionText   = oneQuestion.value(forKeyPath: "questionText") as? String
+                        if let qTypeNumber   = oneQuestion.value(forKeyPath: "questionTypeNumber") as? Int {
+                            question.setType(type: qTypeNumber)
+                        }
+                        else {
+                            question.setType(type: 1)
+                        }
                         oneOption.questionList.append(question)
                     }
                     
@@ -637,6 +647,7 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
                 let question = Question()
                 var qSetID = " "
                 var qText = " "
+                var qType = 1
                 
                 if let questionSetID = oneQuestion["QuestionSetID"] as? String  {
                     qSetID = questionSetID
@@ -646,8 +657,13 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
                     qText = questionText
                 }
                 
+                if let questionType = oneQuestion["QuestionType"] as? Int {
+                    qType = questionType
+                }
+                
                 question.questionSetID = qSetID
                 question.questionText = qText
+                question.setType(type: qType)
                 print("hopefully added \(qText)")
                 oneQuestionSet.questionList.append(question)
             }
@@ -689,26 +705,99 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
                     print("somethings wrong with the options data")
                     return [AnyObject]()
                 }
-                /*
-                // sub option images
-                for image in imageList {
-                    
-                    
-                    let imgPointer = image["ImgPointer"] as? String
-                    
-                    guard let title = image["Title"] as? String else {
-                        print("somethings wrong with the options data")
-                        return [AnyObject]()
-                    }
-                }*/
+                
+                
                 
                 theOptions.append(newSubOption)
                 createSubOptionWithCoreData(with: newSubOption)
+                
+                
+                // sub option images
+                for image in imageList {
+                    
+                    let imgPointer = image["ImgPointer"] as? String
+                    
+                    // guard
+                    let title = image["Title"] as? String // else {
+                    //    print("somethings wrong with the options data")
+                    //    return [AnyObject]()
+                    //}
+                    
+                    
+                    // should probably do this in queue after images download
+                    let item = Item()
+                    /// <-----  fix this ---->
+                    item.image = UIImage(named: "questionSetIcon2") // this is temporary image. change it soon
+                    item.imgUUID = imgPointer
+                    item.imgPointer = imgPointer
+                    item.parentSubOptionID = newSubOption.subOptionID
+                    item.caption = title
+                    
+                    
+                    addItemToCurrentSubOptionCoreData(subOption: newSubOption,  item: item )
+                    
+                }
+                
+                
             }
             theOptions.append(CreateSubOption(withParent: newOption))
         }
         theOptions.append(CreateOption()) ///  - dont do this its put there automatically
         return theOptions
+    }
+    
+    func addItemToCurrentSubOptionCoreData(subOption: SubOption, item: Item ){
+        guard let appDelegate =
+            UIApplication.shared.delegate as? AppDelegate else {
+                return
+        }
+        let managedContext =
+            appDelegate.persistentContainer.viewContext
+        
+        
+        let subOptionID = subOption.subOptionID
+        let fetchRequest =
+            NSFetchRequest<NSManagedObject>(entityName: "CDSubOption")
+        
+        fetchRequest.predicate = NSPredicate(format: "subOptionID == %@", subOptionID!)
+        
+        do {
+            
+            let subOptionsToUpdate = try managedContext.fetch(fetchRequest)
+            let subOptionToUpdate = subOptionsToUpdate[0]
+            
+            let entity =
+                NSEntityDescription.entity(forEntityName: "CDItem",
+                                           in: managedContext)!
+            let cdItem = NSManagedObject(entity: entity,
+                                         insertInto: managedContext)
+            
+            
+            cdItem.setValue(item.caption,            forKeyPath: "caption")
+            cdItem.setValue(item.imgUUID,            forKeyPath: "imgUUID")
+            cdItem.setValue(item.imgPointer,         forKeyPath: "imgPointer")
+            cdItem.setValue(item.parentSubOptionID,  forKeyPath: "parentSubOptionID")
+            
+            // fix this
+            imageStore.setImage(item.image!, forKey: item.imgUUID!)
+            
+            let set = NSSet(object: cdItem)
+            
+            subOptionToUpdate.setValue(set, forKey: "items")
+            
+            do {
+                try managedContext.save()
+                //people.append(person)
+            } catch let error as NSError {
+                print("Could not save. \(error), \(error.userInfo)")
+            }
+            
+        }
+        catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+        
+        
     }
     
     @IBAction func backButtonPressed(_ sender: Any) {

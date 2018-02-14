@@ -8,7 +8,7 @@
 
 import UIKit
 
-class QuestionsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class QuestionsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIGestureRecognizerDelegate {
     
     
 
@@ -24,6 +24,7 @@ class QuestionsViewController: UIViewController, UITableViewDelegate, UITableVie
     
     @IBOutlet weak var pickerViewTopConstraint: NSLayoutConstraint!
     
+    /*
     enum QuestionTypes  {
         case text
         case yesOrNo
@@ -32,13 +33,14 @@ class QuestionsViewController: UIViewController, UITableViewDelegate, UITableVie
         case photo
         case next
     }
+    */
     
     // var pickerQuestions = [ "Question One", "Question Two", "Question Three", "Question Four", "Question Five"]
     var pickerQuestions = [ "Question One", "Question Two", "Question Three", "Question Four", "Question Five", "Question Six", "Question Seven", "Question Eight"]
     
     var theQuestions = [Question]()
     
-    var theQuestionTypes = [QuestionTypes]()
+    var theQuestionTypes = [Question.QuestionTypes]()
     
     
     let imagePicker = UIImagePickerController()
@@ -62,7 +64,9 @@ class QuestionsViewController: UIViewController, UITableViewDelegate, UITableVie
         self.pickerView.delegate = self
         self.pickerView.dataSource = self
         
-        theQuestionTypes = [.text, .yesOrNo, .list, .listMulti, .photo, .next, .next ]
+        theQuestionTypes = [.text, .yesOrNo, .list, .listMulti, .photo, .next] // , .next ]
+        theQuestions.append(Question(text: "Next Question", type: .next) )
+        
         /*
         theQuestions.append(Question(text: "qwerty asdfg zxcvbn") )
         theQuestions.append(Question(text: "qwerty asdfg zxcvbn") )
@@ -92,6 +96,7 @@ class QuestionsViewController: UIViewController, UITableViewDelegate, UITableVie
         
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(screenTapped))
+        tapGesture.delegate = self
         self.view.addGestureRecognizer(tapGesture)
         
         //NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardDidShow(_:)), name: .UIKeyboardDidShow , object: nil)
@@ -103,6 +108,7 @@ class QuestionsViewController: UIViewController, UITableViewDelegate, UITableVie
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -115,7 +121,8 @@ class QuestionsViewController: UIViewController, UITableViewDelegate, UITableVie
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let type = theQuestionTypes[indexPath.row]
+        let type = theQuestions[indexPath.row].questionType
+        // let othertype = theQuestionTypes[indexPath.row]
         let text = theQuestions[indexPath.row].questionText
         let textString = "  \(indexPath.row+1).  \(String(describing: text!))"
         
@@ -169,6 +176,17 @@ class QuestionsViewController: UIViewController, UITableViewDelegate, UITableVie
             let cell = tableView.dequeueReusableCell(withIdentifier: "nextQuestionCell") as! NextQuestionTableViewCell
             return cell
         }
+        else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "listCell") as! ListQuestionTableViewCell
+            cell.questionLabel.text = textString
+            cell.pickerClosureOpen = pickerClosureOpen
+            cell.pickerClosureClose = pickerClosureClose
+            cell.pickerPositionClosure = setPickerPositionClosure
+            cell.pickerQuestionsClosure = setPickerQuestionsClosure
+            cell.pickerClosureCloseWithAns = pickerClosureCloseWithAns
+            cell.keyboardManageClosure = keyboardManageClosure
+            cell.keyboardManageClosureClose = keyboardManageClosureClose
+        }
         
         let cell = UITableViewCell()
         let theText = theQuestions[indexPath.row].questionText
@@ -180,7 +198,7 @@ class QuestionsViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let type = theQuestionTypes[indexPath.row]
+        let type = theQuestions[indexPath.row].questionType
         if (type == .next) {
             createNextRow()
         }
@@ -191,15 +209,17 @@ class QuestionsViewController: UIViewController, UITableViewDelegate, UITableVie
         let endRow = theQuestions.count - 1
         
         // delete one row model
-        theQuestionTypes.removeLast()
+        // theQuestionTypes.removeLast()
+        theQuestions.popLast()
         
         // add two rows to medl
-        let newQuestion = Question(text:"Wow! This is the next Question!")
+        let newQuestion = Question(text:"Wow! This is the next Question!", type: .list)
+        let nextQuestion = Question(text:"Next Question", type: .next)
         theQuestions.append(newQuestion)
-        //theQuestions.append(newQuestion)
+        theQuestions.append(nextQuestion)
         
-        theQuestionTypes.append(.list)
-        theQuestionTypes.append(.next)
+        //theQuestionTypes.append(.list)
+        //theQuestionTypes.append(.next)
         
         let indexPathEnd = IndexPath(row: endRow , section: 0)
         let indexPathAdd = IndexPath(row: endRow + 1 , section: 0)
@@ -217,7 +237,8 @@ class QuestionsViewController: UIViewController, UITableViewDelegate, UITableVie
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
-        let type = theQuestionTypes[indexPath.row]
+        // let type = theQuestionTypes[indexPath.row]
+        let type = theQuestions[indexPath.row].questionType
         
         if (type == .text) {
             return 150
@@ -322,11 +343,13 @@ class QuestionsViewController: UIViewController, UITableViewDelegate, UITableVie
         self.view.bringSubview(toFront: self.pickerView)
     }
     
+    
     func pickerClosureClose() {
         self.pickerView.isHidden = true
         self.pickerView.isUserInteractionEnabled = false
         let answer = self.pickerView.selectedRow(inComponent: 0)
     }
+ 
     
     func pickerClosureCloseWithAns(textField: UITextField) {
         self.pickerView.isHidden = true
@@ -509,16 +532,38 @@ class QuestionsViewController: UIViewController, UITableViewDelegate, UITableVie
         print("Keyboard will hide!")
     }
     
+    /*
+    @objc func (_ notification: NSNotification){
+        self.view.endEditing(true)
+        pickerClosureClose()
+    }
+    */
+    
     @objc func screenTapped(){
         self.view.endEditing(true)
         pickerClosureClose()
     }
+ 
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         print("touches began?")
         self.view.endEditing(true)
     }
-
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        print("rec gesture?")
+        let lastIndex = IndexPath(row: self.theQuestions.count - 1, section: 0)
+        if let nextView = self.tableView.cellForRow(at: lastIndex) {
+            if let isDesc = touch.view?.isDescendant(of: nextView ) {
+                // isKind(of: NextQuestionTableViewCell.classForCoder()))! {
+                if isDesc {
+                    return false
+                }
+            }
+        }
+        return true
+    }
+    
     @IBAction func closeButtonPressed(_ sender: Any) {
         self.navigationController?.popViewController(animated: false)
     }

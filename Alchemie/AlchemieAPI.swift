@@ -8,7 +8,7 @@
 
 import UIKit
 import Alamofire
-//import AlamofireImage
+// import AlamofireImage
 
 class AlchemieAPI: NSObject {
     
