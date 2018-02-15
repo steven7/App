@@ -197,7 +197,9 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
     //
     ///////////////////////////////
     
+    
     func createOptionWithCoreData(with option:Option){
+        
         guard let appDelegate =
             UIApplication.shared.delegate as? AppDelegate else {
                 return
@@ -226,7 +228,9 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
         
     }
     
+    
     func createSubOptionWithCoreData(with subOption:SubOption){
+        
         guard let appDelegate =
             UIApplication.shared.delegate as? AppDelegate else {
                 return
@@ -553,12 +557,6 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
             else {
                 self.errorPopup()
             }
-            /*
-            self.optionsLoaded = true
-            if (self.checkIfEverythingLoaded()){
-                SVProgressHUD.dismiss()
-            }
-            */
         })
         api.fetchQuestionSet(completion: {   success, response in
             print(response)
@@ -683,6 +681,8 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
             }
         }
         
+        let dispatchGroup = DispatchGroup()
+        
         var theOptions = [AnyObject]()
         for option in json {
             guard let optionName = option["OptionName"] as? String else {
@@ -714,40 +714,28 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
                     return [AnyObject]()
                 }
                 
-                
                 theOptions.append(newSubOption)
                 createSubOptionWithCoreData(with: newSubOption)
-                
                 
                 // sub option images
                 for image in imageList {
                     
-                    let downloadOperation = BlockOperation {
-                        
-                        let imgPointer = image["ImgPointer"] as? String
-                        
-                        // guard
-                        let title = image["Title"] as? String // else {
-                        //    print("somethings wrong with the options data")
-                        //    return [AnyObject]()
-                        //}
-                        
-                        let downloadURL = self.baseDownloadImageURL + "\(imgPointer!)"
-                        
-                        /*
-                        self.optionsLoaded = true
-                        if (self.checkIfEverythingLoaded()){
-                            SVProgressHUD.dismiss()
-                        }
-                        */
-                        
-                        Alamofire.request(downloadURL).responseImage { response in
-                            debugPrint(response)
-                            
+                    let imgPointer = image["ImgPointer"] as? String
+                    
+                    // guard
+                    let title = image["Title"] as? String //
+                    
+                    let downloadURL = self.baseDownloadImageURL + "\(imgPointer!)"
+                
+                    dispatchGroup.enter()
+                
+                    Alamofire.request(downloadURL).responseImage { response in
+                        debugPrint(response)
+                        // let downloadOperation = BlockOperation {
                             print(response.request)
                             print(response.response)
                             debugPrint(response.result)
-                            
+                        
                             if let theimage = response.result.value {
                                 print("image downloaded: \(theimage)")
                                 
@@ -760,42 +748,44 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
                                 item.parentSubOptionID = newSubOption.subOptionID
                                 item.caption = title
                                 
-                                print("one download complete   \(title) on subOtion \(newSubOption.name) and option \(newOption.title) ")
-                                self.addItemToCurrentSubOptionCoreData(subOption: newSubOption,  item: item )
+                                print("one download complete   \(String(describing: title)) on subOtion \(String(describing: newSubOption.name)) and option \(String(describing: newOption.title)) ")
                                 
-                            }
-                            
-                            
-                            
+                                DispatchQueue.main.async {
+                                    self.addItemToCurrentSubOptionCoreData(subOption: newSubOption,  item: item )
+                                    
+                                }
+                                
+                                dispatchGroup.leave()
+                                
                         }
+                        
+                    }
                     
-                    } // let completionOperation = BlockOperation {
-                    completionOperation .addDependency(downloadOperation)
-                    operationQueue.addOperation(downloadOperation)
-                    /*
-                    // should probably do this in queue after images download
-                    let item = Item()
-                    /// <-----  fix this ---->
-                    item.image = UIImage(named: "questionSetIcon2") // this is temporary image. change it soon
-                    item.imgUUID = imgPointer
-                    item.imgPointer = imgPointer
-                    item.parentSubOptionID = newSubOption.subOptionID
-                    item.caption = title
+                    dispatchGroup.notify(queue: DispatchQueue.main) {
+                        // completion?(storedError)
+                        print("Downloads Done!!")
+                        self.optionsLoaded = true
+                        if (self.checkIfEverythingLoaded()) {
+                            SVProgressHUD.dismiss()
+                        }
+                    }
+                    
+                    //completionOperation.addDependency(downloadOperation)
+                    //self.operationQueue.addOperation(downloadOperation)
+                        //completionOperation.addDependency(downloadOperation)
+                        //operationQueue.addOperation(downloadOperation)
+                    //} // let completionOperation = BlockOperation {
                     
                     
-                    addItemToCurrentSubOptionCoreData(subOption: newSubOption,  item: item )
-                    */
-                }
-                
+                } // for image in imageList {
                 
             }
             theOptions.append(CreateSubOption(withParent: newOption))
         }
+        
         theOptions.append(CreateOption()) ///  - dont do this its put there automatically
         
-        
         operationQueue.addOperation(completionOperation)
-        // OperationQueue.main.addOperation(completionOperation)
         
         return theOptions
     }
@@ -807,6 +797,7 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
             UIApplication.shared.delegate as? AppDelegate else {
                 return
         }
+        
         let managedContext =
             appDelegate.persistentContainer.viewContext
         
@@ -863,6 +854,7 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func checkIfEverythingLoaded() -> Bool {
+        
         if (optionsLoaded && questionsLoaded) {
             for option in self.options {
                 if option is Option {
