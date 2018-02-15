@@ -13,6 +13,8 @@ import Alamofire
 class AlchemieAPI: NSObject {
     
     let baseURL = "http://ec2-54-84-28-14.compute-1.amazonaws.com/alchemie"
+    let baseDownloadImageURL = "http://alchemiewebservice20171213043804.azurewebsites.net/service1.svc/downloadimage/"
+    
     //for test
     // let baseURL = "localhost/alchemie"
     
@@ -167,11 +169,39 @@ class AlchemieAPI: NSObject {
         }*/
     }
     
+    
     func downloadImage ( imgPointer:String, completion: @escaping (Bool, [[String: AnyObject]])->()) {
         
         print ("begin fetch question set")
         
         let url = URL(string: "http://alchemiewebservice20171213043804.azurewebsites.net/service1.svc/downloadimage/\(imgPointer)")!
+        
+        let downloadURL = baseDownloadImageURL + "\(imgPointer)"
+        
+        Alamofire.request(downloadURL).responseImage { response in
+            debugPrint(response)
+            
+            print(response.request)
+            print(response.response)
+            debugPrint(response.result)
+            
+            if let theimage = response.result.value {
+                print("image downloaded: \(theimage)")
+                /*
+                // should probably do this in queue after images download
+                let item = Item()
+                /// <-----  fix this ---->
+                item.image = theimage // UIImage(named: "questionSetIcon2") // this is temporary image. change it soon
+                item.imgUUID = imgPointer
+                item.imgPointer = imgPointer
+                item.parentSubOptionID = newSubOption.subOptionID
+                item.caption = title
+                
+                print("one download complete   \(title) on subOtion \(newSubOption.name) and option \(newOption.title) ")
+                self.addItemToCurrentSubOptionCoreData(subOption: newSubOption,  item: item )
+                */
+            }
+        }
         /*
         Alamofire.request(url).responseImage { response in
             debugPrint(response)

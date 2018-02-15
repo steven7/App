@@ -10,6 +10,8 @@ import UIKit
 import CoreData
 import SVProgressHUD
 import SwiftKeychainWrapper
+import Alamofire
+import AlamofireImage
 
 class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -33,6 +35,10 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
     var questionsLoaded = false
     
     let imageStore = ImageStore.sharedInstance
+    
+    let operationQueue = OperationQueue()
+    
+    let baseDownloadImageURL = "http://alchemiewebservice20171213043804.azurewebsites.net/service1.svc/downloadimage/"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -547,11 +553,12 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
             else {
                 self.errorPopup()
             }
+            /*
             self.optionsLoaded = true
             if (self.checkIfEverythingLoaded()){
                 SVProgressHUD.dismiss()
             }
-            
+            */
         })
         api.fetchQuestionSet(completion: {   success, response in
             print(response)
@@ -593,23 +600,16 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
             var setSurveyType = " "
             
             if let questionSetCompanyNum = questionSet["CompanyNum"] as? Int {
-                //print("somethings wrong with the data")
-                //return [QuestionSet]()
                 setCompanyNum = questionSetCompanyNum
             }
             else {
                 setCompanyNum = 0
             }
             if let  questionSetID = questionSet["ID"] as? String   {
-                //print("somethings wrong with the data")
-                //return [QuestionSet]()
                 setID = questionSetID
             }
             
             if let questionSetSurveyIcon = questionSet["SurveyIcon"] as? String  {
-                //print("somethings wrong with the data")
-                //let questionSetSurveyIcon = "  "
-                //return [QuestionSet]()
                 setSurveyIcon = questionSetSurveyIcon
             }
             else {
@@ -675,6 +675,14 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func getOptionsFromJSON(withJSON json:[[String: AnyObject]] ) -> [AnyObject] {
         
+        let completionOperation = BlockOperation {
+            // do something
+            self.optionsLoaded = true
+            if (self.checkIfEverythingLoaded()){
+                SVProgressHUD.dismiss()
+            }
+        }
+        
         var theOptions = [AnyObject]()
         for option in json {
             guard let optionName = option["OptionName"] as? String else {
@@ -707,7 +715,6 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
                 }
                 
                 
-                
                 theOptions.append(newSubOption)
                 createSubOptionWithCoreData(with: newSubOption)
                 
@@ -715,15 +722,57 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
                 // sub option images
                 for image in imageList {
                     
-                    let imgPointer = image["ImgPointer"] as? String
+                    let downloadOperation = BlockOperation {
+                        
+                        let imgPointer = image["ImgPointer"] as? String
+                        
+                        // guard
+                        let title = image["Title"] as? String // else {
+                        //    print("somethings wrong with the options data")
+                        //    return [AnyObject]()
+                        //}
+                        
+                        let downloadURL = self.baseDownloadImageURL + "\(imgPointer!)"
+                        
+                        /*
+                        self.optionsLoaded = true
+                        if (self.checkIfEverythingLoaded()){
+                            SVProgressHUD.dismiss()
+                        }
+                        */
+                        
+                        Alamofire.request(downloadURL).responseImage { response in
+                            debugPrint(response)
+                            
+                            print(response.request)
+                            print(response.response)
+                            debugPrint(response.result)
+                            
+                            if let theimage = response.result.value {
+                                print("image downloaded: \(theimage)")
+                                
+                                // should probably do this in queue after images download
+                                let item = Item()
+                                /// <-----  fix this ---->
+                                item.image = theimage // UIImage(named: "questionSetIcon2") // this is temporary image. change it soon
+                                item.imgUUID = imgPointer
+                                item.imgPointer = imgPointer
+                                item.parentSubOptionID = newSubOption.subOptionID
+                                item.caption = title
+                                
+                                print("one download complete   \(title) on subOtion \(newSubOption.name) and option \(newOption.title) ")
+                                self.addItemToCurrentSubOptionCoreData(subOption: newSubOption,  item: item )
+                                
+                            }
+                            
+                            
+                            
+                        }
                     
-                    // guard
-                    let title = image["Title"] as? String // else {
-                    //    print("somethings wrong with the options data")
-                    //    return [AnyObject]()
-                    //}
-                    
-                    
+                    } // let completionOperation = BlockOperation {
+                    completionOperation .addDependency(downloadOperation)
+                    operationQueue.addOperation(downloadOperation)
+                    /*
                     // should probably do this in queue after images download
                     let item = Item()
                     /// <-----  fix this ---->
@@ -735,7 +784,7 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
                     
                     
                     addItemToCurrentSubOptionCoreData(subOption: newSubOption,  item: item )
-                    
+                    */
                 }
                 
                 
@@ -743,10 +792,17 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
             theOptions.append(CreateSubOption(withParent: newOption))
         }
         theOptions.append(CreateOption()) ///  - dont do this its put there automatically
+        
+        
+        operationQueue.addOperation(completionOperation)
+        // OperationQueue.main.addOperation(completionOperation)
+        
         return theOptions
     }
     
+    
     func addItemToCurrentSubOptionCoreData(subOption: SubOption, item: Item ){
+        
         guard let appDelegate =
             UIApplication.shared.delegate as? AppDelegate else {
                 return

@@ -10,7 +10,8 @@ target 'Alchemie' do
   pod 'Alamofire', '~> 4.5'
   pod 'SVProgressHUD'
   pod 'SwiftKeychainWrapper','~>3.0.1'	
-	
+  pod 'AlamofireImage', '~> 3.3'
+  
   target 'AlchemieTests' do
     inherit! :search_paths
     # Pods for testing

@@ -59,6 +59,8 @@
 		AA9A1C061FED6E5600F61C8F /* CreateItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA9A1C051FED6E5600F61C8F /* CreateItem.swift */; };
 		AA9A1C081FED72F600F61C8F /* CreateItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA9A1C071FED72F600F61C8F /* CreateItemViewController.swift */; };
 		AAB125301FF4443300F75EBA /* BigImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB1252F1FF4443300F75EBA /* BigImageViewController.swift */; };
+		AAB30BB22035573E0037DE26 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAB30BB32035573E0037DE26 /* Alamofire.framework */; };
+		AAB30BB4203557410037DE26 /* AlamofireImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAB30BB5203557410037DE26 /* AlamofireImage.framework */; };
 		AAC3530620074845005EB207 /* QuestionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC3530520074845005EB207 /* QuestionsViewController.swift */; };
 		AACFE98A1FEC348A00B798D7 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AACFE9891FEC348A00B798D7 /* Extensions.swift */; };
 		AACFE98C1FEC356E00B798D7 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = AACFE98B1FEC356E00B798D7 /* Utilities.swift */; };
@@ -146,6 +148,8 @@
 		AA9A1C051FED6E5600F61C8F /* CreateItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateItem.swift; sourceTree = "<group>"; };
 		AA9A1C071FED72F600F61C8F /* CreateItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateItemViewController.swift; sourceTree = "<group>"; };
 		AAB1252F1FF4443300F75EBA /* BigImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BigImageViewController.swift; sourceTree = "<group>"; };
+		AAB30BB32035573E0037DE26 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AAB30BB5203557410037DE26 /* AlamofireImage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = AlamofireImage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAC3530520074845005EB207 /* QuestionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionsViewController.swift; sourceTree = "<group>"; };
 		AACFE9891FEC348A00B798D7 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		AACFE98B1FEC356E00B798D7 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
@@ -158,6 +162,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AAB30BB4203557410037DE26 /* AlamofireImage.framework in Frameworks */,
+				AAB30BB22035573E0037DE26 /* Alamofire.framework in Frameworks */,
 				74D615FEC39BA1D2F852B3E6 /* Pods_Alchemie.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -184,6 +190,8 @@
 		23FFBD5E69754B0A457D95AD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AAB30BB5203557410037DE26 /* AlamofireImage.framework */,
+				AAB30BB32035573E0037DE26 /* Alamofire.framework */,
 				860D9649C2D92FEE108E9EE1 /* Pods_Alchemie.framework */,
 				67D8098136A2390695312A32 /* Pods_AlchemieTests.framework */,
 				6A1E9DE0532AA032C714F154 /* Pods_AlchemieUITests.framework */,
@@ -503,12 +511,14 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Alchemie/Pods-Alchemie-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftKeychainWrapper/SwiftKeychainWrapper.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftKeychainWrapper.framework",
 			);

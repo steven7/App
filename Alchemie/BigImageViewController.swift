@@ -106,7 +106,7 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
                 self.questions = self.getQuestionSetFromJSON(withJSON: response)
             }
             else {
-                self.errorPopup()
+                //self.errorPopup()
             }
         })
     }
