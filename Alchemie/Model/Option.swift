@@ -16,7 +16,7 @@ class Option: NSObject {
     var status:String?
     var optionDescription:String?
     var type:String?
-    var questionSet:[QuestionSet]? // not in use for now
+    // var questionSet:[QuestionSet]? // not in use for now
     var questionList = [Question]()
     
     override init() {

@@ -37,7 +37,7 @@ class ItemCollectionViewCell: UICollectionViewCell {
     }
     
     func withItem( item: Item){
-        imageView.image = item.image
+        imageView.image = item.originalImage
         captionTextLabel.text = item.caption
     }
 

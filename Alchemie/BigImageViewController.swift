@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class BigImageViewController: UIViewController, UIScrollViewDelegate {
     
@@ -18,14 +19,17 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
     
     @IBOutlet weak var scrollView: UIScrollView!
     
+    @IBOutlet weak var uploadButton: UIButton!
+    
     var theImage:UIImage?
     
     var touchedLocation = CGPoint(x: 0.0, y: 0.0)
     
     var currentOption:Option?
     var currentSubOption:SubOption?// not used yet
+    var currentItem:Item?
     
-    var questions = [QuestionSet]()
+    // var questions = [QuestionSet]()
     
     @IBOutlet weak var stackView: UIStackView!
     
@@ -46,7 +50,6 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
     var panGestureTwo   = UIPanGestureRecognizer()
     var panGestureThree = UIPanGestureRecognizer()
     
-    var currentItem:Item?
     
     let api = AlchemieAPI()
     
@@ -98,17 +101,22 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
         self.view.bringSubview(toFront: eraseIconsButton)
         
         
-        
+        self.uploadButton.layer.cornerRadius = 15
         
         api.fetchQuestionSet(completion: { success, response in
             if (success) {
                 print(response)
-                self.questions = self.getQuestionSetFromJSON(withJSON: response)
+                // self.questions =
+                // self.getQuestionSetFromJSON(withJSON: response)
             }
             else {
                 //self.errorPopup()
             }
         })
+        
+        // DispatchQueue.main.async {
+        getThreeButtonPositionOnImage()
+        // }
     }
     
 
@@ -215,8 +223,6 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
                 print("pointer icon not there")
             }
             
-            
-            
             if let  questionSetSurveyType = questionSet["SurveyType"] as? String  {
                 //print("somethings wrong with the data")
                 //return [QuestionSet]()
@@ -294,10 +300,14 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
         let editedImage = onDismiss!(self.view);
         thumbnailImageView?.image = editedImage
         currentItem?.editedImage = editedImage
+        getIconPositionsAndSaveToCoreData() 
         self.navigationController?.popViewController(animated: false)
     }
     
     @IBAction func eraseIconsButtonPressed(_ sender: Any) {
+        
+        //printIconPositions()
+        
         print("erase icons button pressed")
         for b in buttonOnes {
             self.view.willRemoveSubview(b)
@@ -314,7 +324,92 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
         buttonOnes.removeAll()
         buttonTwos.removeAll()
         buttonThrees.removeAll()
-        bigImage.image = currentItem?.image
+        bigImage.image = currentItem?.originalImage
+        
+    }
+    
+    func getThreeButtonPositionOnImage() {
+        
+        if let positionslist = currentItem?.questionIconPositionsOne {
+            for position in  positionslist {
+                addButtonOneOnPosition(positionCenter: position, buttonTypeArray: &buttonOnes)
+            }
+        }
+        
+        if let positionslist = currentItem?.questionIconPositionsTwo {
+            for position in positionslist  {
+                addButtonTwoOnPosition(positionCenter: position, buttonTypeArray: &buttonTwos)
+            }
+        }
+        
+        if let positionslist = currentItem?.questionIconPositionsThree {
+            for position in positionslist  {
+                addButtonThreeOnPosition(positionCenter: position, buttonTypeArray: &buttonThrees)
+            }
+        }
+        
+    }
+    
+    // for future use - this should work
+    // may also need to handle images
+    /*
+    func getButtonPositionOnImage (){
+        // each 'question' current has three associated icon sets this could change in the future
+        var questionlist = [Question()]
+        if let option = currentOption {
+            questionlist = option.questionList
+        }
+        
+        for question in questionlist {
+            for position in question.questionIconPositions!  {
+                addButtonOnPosition(positionCenter: position)
+            }
+        }
+        
+    }
+    */
+    
+    func addButtonOnPosition(positionCenter: CGPoint, buttonTypeArray: inout [UIButton]){
+        let buttonView = UIButton() // sender.view as! UIButton
+        //let translation = sender.translation(in: self.view)
+        buttonView.center   = positionCenter
+        // CGPoint(x: buttonView.center.x + translation.x , y: buttonView.center.y + translation.y)
+        //sender.setTranslation(CGPoint.zero, in: self.view)
+        buttonTypeArray.append(buttonView)
+        self.view.addSubview(buttonView)
+    }
+    
+    func addButtonOneOnPosition(positionCenter: CGPoint, buttonTypeArray: inout [UIButton]){
+        let buttonView = buttonOne.copyButton()
+        let newPanGestureOne   = UIPanGestureRecognizer(target: self, action: #selector(draggedButtonEvery(_:) ) )
+        buttonView.isUserInteractionEnabled = true
+        buttonView.addGestureRecognizer(newPanGestureOne)
+        buttonView.addTarget(self, action: #selector(buttonPressed(_:)), for: .touchUpInside)
+        buttonView.center   = positionCenter 
+        buttonTypeArray.append(buttonView)
+        self.view.addSubview(buttonView)
+    }
+    
+    func addButtonTwoOnPosition(positionCenter: CGPoint, buttonTypeArray: inout [UIButton]){
+        let buttonView = buttonTwo.copyButton()
+        let newPanGestureOne   = UIPanGestureRecognizer(target: self, action: #selector(draggedButtonEvery(_:) ) )
+        buttonView.isUserInteractionEnabled = true
+        buttonView.addGestureRecognizer(newPanGestureOne)
+        buttonView.addTarget(self, action: #selector(buttonPressed(_:)), for: .touchUpInside)
+        buttonView.center   = positionCenter
+        buttonTypeArray.append(buttonView)
+        self.view.addSubview(buttonView)
+    }
+    
+    func addButtonThreeOnPosition(positionCenter: CGPoint, buttonTypeArray: inout [UIButton]){
+        let buttonView = buttonThree.copyButton() // sender.view as! UIButton
+        let newPanGestureOne   = UIPanGestureRecognizer(target: self, action: #selector(draggedButtonEvery(_:) ) )
+        buttonView.isUserInteractionEnabled = true
+        buttonView.addGestureRecognizer(newPanGestureOne)
+        buttonView.addTarget(self, action: #selector(buttonPressed(_:)), for: .touchUpInside)
+        buttonView.center   = positionCenter
+        buttonTypeArray.append(buttonView)
+        self.view.addSubview(buttonView)
     }
     
     ///////////////////
@@ -335,6 +430,7 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
         let translation = sender.translation(in: self.view)
         buttonView.center   = CGPoint(x: buttonView.center.x + translation.x , y: buttonView.center.y + translation.y)
         sender.setTranslation(CGPoint.zero, in: self.view)
+        // clearButtonsOutsidePicture()
     }
     
     @objc func draggedButtonOne(_ sender:UIPanGestureRecognizer) {
@@ -343,6 +439,7 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
         copyButton.isUserInteractionEnabled = true
         copyButton.addGestureRecognizer(panGesture)
         copyButton.addTarget(self, action: #selector(buttonPressed(_:)), for: .touchUpInside)
+        buttonOnes.append(copyButton)
         self.view.addSubview(copyButton)
     }
     
@@ -352,6 +449,7 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
         copyButton.isUserInteractionEnabled = true
         copyButton.addGestureRecognizer(panGesture)
         copyButton.addTarget(self, action: #selector(buttonPressed(_:)), for: .touchUpInside)
+        buttonTwos.append(copyButton)
         self.view.addSubview(copyButton)
     }
     
@@ -361,6 +459,7 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
         copyButton.isUserInteractionEnabled = true
         copyButton.addGestureRecognizer(newPanGestureOne)
         copyButton.addTarget(self, action: #selector(buttonPressed(_:)), for: .touchUpInside)
+        buttonThrees.append(copyButton)
         self.view.addSubview(copyButton)
     }
     
@@ -371,6 +470,294 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
                 viewController.theQuestions = option.questionList
             }
         }
+    }
+    
+    func printIconPositions() {
+        
+        clearButtonsOutsidePicture()
+        
+        print("\n\n\n button one locations")
+        for button in buttonOnes {
+            let origin = button.frame.origin
+            let center = button.center
+            print("\norigin: \(origin)" )
+            print("center: \(center)\n" )
+        }
+        
+        print("\n\n\n button two locations")
+        for button in buttonTwos {
+            let origin = button.frame.origin
+            let center = button.center
+            print("\norigin: \(origin)" )
+            print("center: \(center)\n" )
+        }
+        
+        print("\n\n\n button three locations")
+        for button in buttonThrees {
+            let origin = button.frame.origin
+            let center = button.center
+            print("\norigin: \(origin)" )
+            print("center: \(center)\n" )
+        }
+        
+    }
+    
+    func getIconPositions() {
+        
+        clearButtonsOutsidePicture()
+        
+        print("\n\n\n button one locations")
+        for button in buttonOnes {
+            let origin = button.frame.origin
+            let center = button.center
+            print("\norigin: \(origin)" )
+            print("center: \(center)\n" )
+        }
+        
+        print("\n\n\n button two locations")
+        for button in buttonTwos {
+            let origin = button.frame.origin
+            let center = button.center
+            print("\norigin: \(origin)" )
+            print("center: \(center)\n" )
+        }
+        
+        print("\n\n\n button three locations")
+        for button in buttonThrees {
+            let origin = button.frame.origin
+            let center = button.center
+            print("\norigin: \(origin)" )
+            print("center: \(center)\n" )
+        }
+        
+    }
+    
+    func getIconPositionsAndSaveToCoreData() {
+    
+        clearButtonsOutsidePicture()
+        
+        var buttonOneCenters = [CGPoint]()
+        for button in buttonOnes {
+            let center = button.center
+            buttonOneCenters.append(center)
+        }
+        
+        var buttonTwoCenters = [CGPoint]()
+        for button in buttonTwos {
+            let center = button.center
+            buttonTwoCenters.append(center)
+        }
+        
+        var buttonThreeCenters = [CGPoint]()
+        for button in buttonThrees {
+            let center = button.center
+            buttonThreeCenters.append(center)
+        }
+        
+        self.currentItem?.questionIconPositionsOne = buttonOneCenters
+        self.currentItem?.questionIconPositionsTwo = buttonTwoCenters
+        self.currentItem?.questionIconPositionsThree = buttonThreeCenters
+        
+        saveButtonPositionsToCoreData(buttonOneCenters: buttonOneCenters,
+                                      buttonTwoCenters: buttonTwoCenters,
+                                      buttonThreeCenters: buttonThreeCenters)
+        
+    }
+
+    func saveButtonPositionsToCoreData(buttonOneCenters:[CGPoint], buttonTwoCenters:[CGPoint], buttonThreeCenters:[CGPoint]) {
+        
+        guard let appDelegate =
+            UIApplication.shared.delegate as? AppDelegate else {
+                return
+        }
+        
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        let currentItemId = currentItem?.itemID
+        
+        let dataOne = NSKeyedArchiver.archivedData(withRootObject: buttonOneCenters)
+        let dataTwo = NSKeyedArchiver.archivedData(withRootObject: buttonTwoCenters)
+        let dataThree = NSKeyedArchiver.archivedData(withRootObject: buttonThreeCenters)
+        
+        do {
+            
+            let itemfetchRequest = NSFetchRequest<NSManagedObject>(entityName: "CDItem")
+            
+            itemfetchRequest.predicate = NSPredicate(format: "itemID == %@", currentItemId!)
+            
+            let themanaged_Items = try managedContext.fetch(itemfetchRequest)
+            
+            // if  themanaged_Items.count > 0 {
+            
+                let onemanaged_Item = themanaged_Items[0]
+                
+                onemanaged_Item.setNilValueForKey("questionIconPositionsOne")
+                onemanaged_Item.setNilValueForKey("questionIconPositionsTwo")
+                onemanaged_Item.setNilValueForKey("questionIconPositionsThree")
+                
+                onemanaged_Item.setValue(currentItemId!, forKeyPath: "itemID")
+                onemanaged_Item.setValue(dataOne,        forKeyPath: "questionIconPositionsOne")
+                onemanaged_Item.setValue(dataTwo,        forKeyPath: "questionIconPositionsTwo")
+                onemanaged_Item.setValue(dataThree,      forKeyPath: "questionIconPositionsThree")
+            
+                //optionToUpdate.setValue(NSSet(object: cdQuestionList), forKey: "questionList")
+            
+                do {
+                    try managedContext.save()
+                    //people.append(person)
+                } catch let error as NSError {
+                    print("Could not save. \(error), \(error.userInfo)")
+                }
+            // }
+        }
+        catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+        
+        
+    }
+    
+    /*
+    func saveButtonPositionsToCoreDataOther(buttonOneCenters:[CGPoint], buttonTwoCenters:[CGPoint], buttonThreeCenters:[CGPoint]) {
+        
+        // currentOption
+        
+        guard let appDelegate =
+            UIApplication.shared.delegate as? AppDelegate else {
+                return
+        }
+        
+        let managedContext =
+            appDelegate.persistentContainer.viewContext
+        
+        let parentOptionID = currentOption?.optionID
+        let parentSubOptionID = currentSubOption?.subOptionID
+        let subOptionfetchRequest = NSFetchRequest<NSManagedObject>(entityName: "CDSubOption")
+        
+        subOptionfetchRequest.predicate = NSPredicate(format: "subOptionID == %@", parentOptionID!)
+        
+        let dataOne = NSKeyedArchiver.archivedData(withRootObject: buttonOneCenters)
+        let dataTwo = NSKeyedArchiver.archivedData(withRootObject: buttonTwoCenters)
+        let dataThree = NSKeyedArchiver.archivedData(withRootObject: buttonThreeCenters)
+        
+        do {
+            let subOptionsToUpdate = try managedContext.fetch(subOptionfetchRequest)
+            let subOoptionToUpdate = subOptionsToUpdate[0]
+            
+            let entity = NSEntityDescription.entity(forEntityName: "CDItem",
+                                                               in: managedContext)!
+            // let cdItem = NSManagedObject(entity: entity,
+            //                                      insertInto: managedContext)
+            
+            let itemfetchRequest =
+                NSFetchRequest<NSManagedObject>(entityName: "CDItem")
+            
+            itemfetchRequest.predicate = NSPredicate(format: "parentSubOptionID == %@", parentSubOptionID!)
+            
+            let cdItem = try managedContext.fetch(itemfetchRequest)
+            
+            /*
+            // get questions
+            let questionfetchRequest =
+                NSFetchRequest<NSManagedObject>(entityName: "CDQuestionList")
+            
+            questionfetchRequest.predicate = NSPredicate(format: "parentOptionID == %@", parentOptionID!)
+            
+            let theManaged_Questions = try managedContext.fetch(questionfetchRequest)
+            for oneQuestion in theManaged_Questions {
+                oneQuestion.setValue(dataOne,     forKeyPath: "questionIconPositionsOne")
+                oneQuestion.setValue(dataTwo,     forKeyPath: "questionIconPositionsTwo")
+                oneQuestion.setValue(dataThree,   forKeyPath: "questionIconPositionsThree")
+                
+                
+                optionToUpdate.setValue(NSSet(object: oneQuestion), forKey: "questionList")
+                
+                do {
+                    try managedContext.save()
+                    //people.append(person)
+                } catch let error as NSError {
+                    print("Could not save. \(error), \(error.userInfo)")
+                }
+            }
+            */
+            /*
+             cdItem.setValue(dataOne,     forKeyPath: "questionIconPositionsOne")
+             cdItem.setValue(dataTwo,     forKeyPath: "questionIconPositionsTwo")
+             cdItem.setValue(dataThree,   forKeyPath: "questionIconPositionsThree")
+ 
+             /*
+             cdQuestionList.setValue(question.questionText,     forKeyPath: "questionText")
+             cdQuestionList.setValue(question.questionSetID,    forKeyPath: "questionSetID")
+             cdQuestionList.setValue(option.optionID,           forKeyPath: "parentOptionID")
+             cdQuestionList.setValue(question.questionTypeNumber,   forKeyPath: "questionTypeNumber")
+             */
+ 
+             optionToUpdate.setValue(NSSet(object: cdQuestionList), forKey: "questionList")
+            */
+             do {
+             try managedContext.save()
+             //people.append(person)
+             } catch let error as NSError {
+             print("Could not save. \(error), \(error.userInfo)")
+             }
+ 
+            
+        }
+        catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+    }
+    */
+    
+    func clearButtonsOutsidePicture(){
+        
+        var indexesToRemove = [Int]()
+        var i = 0
+        for (button) in buttonOnes {
+            if (!self.scrollView.frame.contains(button.frame)) {// is outside picture scroll view
+                self.view.willRemoveSubview(button)
+                button.removeFromSuperview()
+                indexesToRemove.append(i)
+            }
+            i += 1
+        }
+        buttonOnes = removedIndicesFromButtonArray(indices: indexesToRemove, array: buttonOnes)
+        
+        indexesToRemove.removeAll()
+        i = 0
+        for button in buttonTwos {
+            if (!self.scrollView.frame.contains(button.frame)) {// is outside picture scroll view
+                self.view.willRemoveSubview(button)
+                button.removeFromSuperview()
+                indexesToRemove.append(i)
+            }
+            i += 1
+        }
+        buttonTwos = removedIndicesFromButtonArray(indices: indexesToRemove, array: buttonTwos)
+        
+        indexesToRemove.removeAll()
+        i = 0
+        for button in buttonThrees {
+            if (!self.scrollView.frame.contains(button.frame)) {// is outside picture scroll view
+                self.view.willRemoveSubview(button)
+                button.removeFromSuperview()
+                indexesToRemove.append(i)
+            }
+            i += 1
+        }
+        buttonThrees = removedIndicesFromButtonArray(indices: indexesToRemove, array: buttonThrees)
+    }
+    
+    func removedIndicesFromButtonArray(indices:[Int], array: [UIButton]) -> [UIButton] {
+        var newArray = array
+        for i in indices.reversed() {
+            newArray.remove(at: i)
+        }
+        return newArray
+    }
+    
+    @IBAction func uploadButtonPressed(_ sender: Any) {
+        self.comingSoonPopup()
     }
     
 }

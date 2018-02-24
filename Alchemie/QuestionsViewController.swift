@@ -64,19 +64,7 @@ class QuestionsViewController: UIViewController, UITableViewDelegate, UITableVie
         self.pickerView.delegate = self
         self.pickerView.dataSource = self
         
-        theQuestionTypes = [.text, .yesOrNo, .list, .listMulti, .photo, .next] // , .next ]
         theQuestions.append(Question(text: "Next Question", type: .next) )
-        
-        /*
-        theQuestions.append(Question(text: "qwerty asdfg zxcvbn") )
-        theQuestions.append(Question(text: "qwerty asdfg zxcvbn") )
-        theQuestions.append(Question(text: "qwerty asdfg zxcvbn") )
-        theQuestions.append(Question(text: "qwerty asdfg zxcvbn") )
-        theQuestions.append(Question(text: "qwerty asdfg zxcvbn") )
-        theQuestions.append(Question(text: "qwerty asdfg zxcvbn") )
-        theQuestions.append(Question(text: "qwerty asdfg zxcvbn") )
-        theQuestionTypes = [.text, .yesOrNo, .list, .listMulti, .photo, .list, .list, .list, .list, .list, .list , .list, .list, .list  ]
-        */
         
         let tNib = UINib(nibName: "TextQuestionTableViewCell", bundle: nil)
         let yNib = UINib(nibName: "YesOrNoQuestionTableViewCell", bundle: nil)
@@ -122,45 +110,55 @@ class QuestionsViewController: UIViewController, UITableViewDelegate, UITableVie
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let type = theQuestions[indexPath.row].questionType
-        // let othertype = theQuestionTypes[indexPath.row]
         let text = theQuestions[indexPath.row].questionText
-        let textString = "  \(indexPath.row+1).  \(String(describing: text!))"
+        
         
         if (type == .text) {
             let cell = tableView.dequeueReusableCell(withIdentifier: "textCell") as! TextQuestionTableViewCell
+            let textString = "  \(indexPath.row+1).  \(String(describing: text!))"
+            cell.textLabel?.text = nil
+            cell.detailTextLabel?.text = nil
+            cell.questionLabel.text = nil
             cell.questionLabel.text = textString
             return cell
         }
         else if (type == .yesOrNo) {
             let cell = tableView.dequeueReusableCell(withIdentifier: "yesrOrNoCell") as! YesOrNoQuestionTableViewCell
+            let textString = "  \(indexPath.row+1).  \(String(describing: text!))"
+            cell.textLabel?.text = nil
+            cell.questionLabel.text = nil
             cell.questionLabel.text = textString
             return cell
         }
         else if (type == .list) {
             let cell = tableView.dequeueReusableCell(withIdentifier: "listCell") as! ListQuestionTableViewCell
+            cell.reloadInputViews()
+            let textString = "  \(indexPath.row+1).  \(String(describing: text!))"
+            cell.textLabel?.text = nil
+            cell.detailTextLabel?.text = nil
+            cell.questionLabel.text = nil
             cell.questionLabel.text = textString
-            //cell.questionText.delegate = self
-            //cell.thePicker = self.pickerView
+            cell.questionText.text = nil
             cell.pickerClosureOpen = pickerClosureOpen
             cell.pickerClosureClose = pickerClosureClose
             cell.pickerPositionClosure = setPickerPositionClosure
             cell.pickerQuestionsClosure = setPickerQuestionsClosure
-            
             cell.pickerClosureCloseWithAns = pickerClosureCloseWithAns
-            //cell.row = indexPath.row
             cell.keyboardManageClosure = keyboardManageClosure
             cell.keyboardManageClosureClose = keyboardManageClosureClose
-            
             return cell
         }
         else if (type == .listMulti) {
             let cell = tableView.dequeueReusableCell(withIdentifier: "multiListCell") as! MultiListQuestionTableViewCell
+            let textString = "  \(indexPath.row+1).  \(String(describing: text!))"
+            cell.textLabel?.text = nil
+            cell.questionLabel.text = nil
             cell.questionLabel.text = textString
+            cell.questionText.text = nil
             cell.pickerClosureOpen = pickerClosureOpen
             cell.pickerClosureClose = pickerClosureClose
             cell.pickerPositionClosure = setPickerPositionClosure
             cell.pickerQuestionsClosure = setPickerQuestionsClosure
-            
             cell.pickerClosureCloseWithAnsMulti = pickerClosureCloseWithAnsMulti
             cell.keyboardManageClosure = keyboardManageClosure
             cell.keyboardManageClosureClose = keyboardManageClosureClose
@@ -168,36 +166,38 @@ class QuestionsViewController: UIViewController, UITableViewDelegate, UITableVie
         }
         else if (type == .photo) {
             let cell = tableView.dequeueReusableCell(withIdentifier: "photoCell") as! PhotoQuestionTableViewCell
+            let textString = "  \(indexPath.row+1).  \(String(describing: text!))"
+            cell.textLabel?.text = nil
+            cell.questionLabel.text = nil
             cell.questionLabel.text = textString
             cell.photoClosure = photoButtonClosure
             return cell
         }
         else if (type == .next) {
             let cell = tableView.dequeueReusableCell(withIdentifier: "nextQuestionCell") as! NextQuestionTableViewCell
-            return cell
-        }
-        else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "listCell") as! ListQuestionTableViewCell
+            let textString = text!
+            cell.textLabel?.text = nil
+            cell.detailTextLabel?.text = nil
+            cell.questionLabel.text = nil
             cell.questionLabel.text = textString
-            cell.pickerClosureOpen = pickerClosureOpen
-            cell.pickerClosureClose = pickerClosureClose
-            cell.pickerPositionClosure = setPickerPositionClosure
-            cell.pickerQuestionsClosure = setPickerQuestionsClosure
-            cell.pickerClosureCloseWithAns = pickerClosureCloseWithAns
-            cell.keyboardManageClosure = keyboardManageClosure
-            cell.keyboardManageClosureClose = keyboardManageClosureClose
+            return cell
         }
         
         let cell = UITableViewCell()
+        /*
         let theText = theQuestions[indexPath.row].questionText
         cell.textLabel?.text = "  \(indexPath.row+1).  \(String(describing: theText!))"
         cell.textLabel?.font =  UIFont(name: "Courier", size: 30.0)
         //cell.textLabel?.textAlignment = .center
+        */
         return cell
         
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if (theQuestions.count ==  6) { /// 11) {
+            return
+        }
         let type = theQuestions[indexPath.row].questionType
         if (type == .next) {
             createNextRow()
@@ -214,7 +214,10 @@ class QuestionsViewController: UIViewController, UITableViewDelegate, UITableVie
         
         // add two rows to medl
         let newQuestion = Question(text:"Wow! This is the next Question!", type: .list)
-        let nextQuestion = Question(text:"Next Question", type: .next)
+        var nextQuestion = Question(text:"Next Question", type: .next)
+        if (theQuestions.count == 4) {
+            nextQuestion = Question(text:"Done!", type: .next)
+        }
         theQuestions.append(newQuestion)
         theQuestions.append(nextQuestion)
         
@@ -230,6 +233,8 @@ class QuestionsViewController: UIViewController, UITableViewDelegate, UITableVie
         tableView.insertRows(at: [indexPathEnd, indexPathAdd], with: .bottom)
         
         tableView.endUpdates()
+        
+        // tableView.reloadData()
         
         tableView.scrollToRow(at: indexPathEnd, at: .middle, animated: true)
     }
@@ -576,5 +581,7 @@ class QuestionsViewController: UIViewController, UITableViewDelegate, UITableVie
         // self.tableView.reloadData()
         // self.navigationController?.popViewController(animated: false)
     }
+    
+    
     
 }

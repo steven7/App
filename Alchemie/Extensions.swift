@@ -31,7 +31,7 @@ extension UIButton {
         copyButton.setTitle(self.titleLabel?.text, for: .normal)
         copyButton.titleLabel?.font = UIFont(name: "System", size: 20.0)
         copyButton.setTitleColor(UIColor.lightBlue, for: .normal)
-        copyButton.backgroundColor = UIColor.white
+        copyButton.backgroundColor = UIColor.clear
         copyButton.setBackgroundImage(self.currentBackgroundImage, for: .normal)
         copyButton.setImage(self.currentImage, for: .normal)
         // copyButton.setImage(self.image(for: .normal), for: .normal)
@@ -138,4 +138,10 @@ extension UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
+    func comingSoonPopup( ) {
+        let alert = UIAlertController(title: "Upload Picture", message: "Feature comming soon!", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+        alert.addAction(okAction)
+        self.present(alert, animated: true, completion: nil)
+    }
 }

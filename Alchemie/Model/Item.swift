@@ -11,18 +11,25 @@ import UIKit
 
 class Item: NSObject {
     
-    var image:UIImage?
+    var originalImage:UIImage?
     var editedImage:UIImage?
+    var itemID:String?
     var imgPointer:String?
     var imgUUID:String?
+    var editedimgUUID:String?
     var caption:String?
     var parentSubOptionID:String?
-    
     var highlightedBackground:Bool?
     
+    var questionIconPositions:[[CGPoint]]?
+    var questionIconPositionsOne:[CGPoint]?
+    var questionIconPositionsTwo:[CGPoint]?
+    var questionIconPositionsThree:[CGPoint]?
+    
     override init () {
-        image = nil
+        originalImage = nil
         editedImage = nil
+        itemID = NSUUID().uuidString
         imgPointer = ""
         imgUUID = NSUUID().uuidString
         caption = ""

@@ -456,6 +456,38 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
                             question.setType(type: 1)
                         }
                         oneOption.questionList.append(question)
+                        
+                        // if
+                         if let dataOne = oneQuestion.value(forKey: "questionIconPositionsOne") as? Data {
+                            let unarchiveObjectOne = NSKeyedUnarchiver.unarchiveObject(with: dataOne)
+                            let arrayObjectOne = unarchiveObjectOne as AnyObject! as! [CGPoint]
+                            question.questionIconPositionsOne = arrayObjectOne
+                        }
+                        else {
+                            question.questionIconPositionsOne = [CGPoint]()
+                        }
+                        
+                        if let dataTwo = oneQuestion.value(forKey: "questionIconPositionsTwo") as? Data {
+                            let unarchiveObjectTwo = NSKeyedUnarchiver.unarchiveObject(with: dataTwo)
+                            let arrayObjectTwo = unarchiveObjectTwo as AnyObject! as! [CGPoint]
+                            question.questionIconPositionsTwo = arrayObjectTwo
+                        }
+                        else {
+                            question.questionIconPositionsTwo = [CGPoint]()
+                        }
+                        
+                        if let dataThree = oneQuestion.value(forKey: "questionIconPositionsThree") as? Data {
+                            let unarchiveObjectThree = NSKeyedUnarchiver.unarchiveObject(with: dataThree)
+                            let arrayObjectThree = unarchiveObjectThree as AnyObject! as! [CGPoint]
+                            question.questionIconPositionsThree = arrayObjectThree
+                        }
+                        else {
+                            question.questionIconPositionsThree = [CGPoint]()
+                        }
+                        
+                        //questionIconPositions = oneQuestion.value(forKeyPath:
+  
+                        
                     }
                     
                     
@@ -558,6 +590,24 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
                 self.errorPopup()
             }
         })
+         
+        /*
+        api.fetchOptionsBetter(completion: {   success, response in
+            if (success) {
+                print("lololz")
+                self.eraseOptionsFromCoreDataWithCurrentUser()
+                let downloadedOptions = self.getOptionsFromJSONBetter(withJSON: response)
+                self.options.removeAll()
+                self.options = downloadedOptions
+                self.tableView.reloadData()
+            }
+            else {
+                self.errorPopup()
+            }
+        })
+        self.questionsLoaded = true
+        */
+        
         api.fetchQuestionSet(completion: {   success, response in
             print(response)
             if (success) {
@@ -578,7 +628,7 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
                 SVProgressHUD.dismiss()
             }
         })
-        
+       
     }
     
     func getQuestionSetFromJSON(withJSON json:[[String: AnyObject]] ) -> [QuestionSet] {
@@ -664,6 +714,10 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
                 question.setType(type: qType)
                 print("hopefully added \(qText)")
                 oneQuestionSet.questionList.append(question)
+                // createSubOptionWithCoreData(with: newSubOption)
+                
+                // createQuestionListOnOptionWithCoreData(with: question, withOption: <#T##Option#>)
+                
             }
             theQuestions.append(oneQuestionSet)
         }
@@ -742,7 +796,7 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
                                 // should probably do this in queue after images download
                                 let item = Item()
                                 /// <-----  fix this ---->
-                                item.image = theimage // UIImage(named: "questionSetIcon2") // this is temporary image. change it soon
+                                item.originalImage = theimage // UIImage(named: "questionSetIcon2") // this is temporary image. change it soon
                                 item.imgUUID = imgPointer
                                 item.imgPointer = imgPointer
                                 item.parentSubOptionID = newSubOption.subOptionID
@@ -790,6 +844,125 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
         return theOptions
     }
     
+    // getoptionsEXP
+    func getOptionsFromJSONBetter(withJSON json:[[String: AnyObject]] ) -> [AnyObject] {
+        
+        let completionOperation = BlockOperation {
+            // do something
+            self.optionsLoaded = true
+            if (self.checkIfEverythingLoaded()){
+                SVProgressHUD.dismiss()
+            }
+        }
+        
+        let dispatchGroup = DispatchGroup()
+        
+        var theOptions = [AnyObject]()
+        for option in json {
+            guard let optionName = option["OptionName"] as? String else {
+                print("somethings wrong with the options data")
+                return [AnyObject]()
+            }
+            let newOption = Option()
+            newOption.title = optionName
+            newOption.user = self.currentUserName
+            theOptions.append(newOption)
+            createOptionWithCoreData(with: newOption)
+            guard let subOptions = option["Suboptions"] as? [[String: AnyObject]]else {
+                print("somethings wrong with the options data")
+                return [AnyObject]()
+            }
+            
+            // sub options
+            for suboption in subOptions  {
+                guard let suboptionName = suboption["Suboption"] as? String else {
+                    print("somethings wrong with the options data")
+                    return [AnyObject]()
+                }
+                let newSubOption = SubOption()
+                newSubOption.name = suboptionName
+                newSubOption.parentOption = newOption
+                newSubOption.parentOptionID = newOption.optionID
+                guard let imageList = suboption["ImagesList"] as? [[String: AnyObject]] else {
+                    print("somethings wrong with the options data")
+                    return [AnyObject]()
+                }
+                
+                theOptions.append(newSubOption)
+                createSubOptionWithCoreData(with: newSubOption)
+                
+                // sub option images
+                for image in imageList {
+                    
+                    let imgPointer = image["ImgPointer"] as? String
+                    
+                    // guard
+                    let title = image["Title"] as? String //
+                    
+                    let downloadURL = self.baseDownloadImageURL + "\(imgPointer!)"
+                    
+                    dispatchGroup.enter()
+                    
+                    Alamofire.request(downloadURL).responseImage { response in
+                        debugPrint(response)
+                        // let downloadOperation = BlockOperation {
+                        print(response.request)
+                        print(response.response)
+                        debugPrint(response.result)
+                        
+                        if let theimage = response.result.value {
+                            print("image downloaded: \(theimage)")
+                            
+                            // should probably do this in queue after images download
+                            let item = Item()
+                            /// <-----  fix this ---->
+                            item.originalImage = theimage // UIImage(named: "questionSetIcon2") // this is temporary image. change it soon
+                            item.imgUUID = imgPointer
+                            item.imgPointer = imgPointer
+                            item.parentSubOptionID = newSubOption.subOptionID
+                            item.caption = title
+                            
+                            print("one download complete   \(String(describing: title)) on subOtion \(String(describing: newSubOption.name)) and option \(String(describing: newOption.title)) ")
+                            
+                            DispatchQueue.main.async {
+                                self.addItemToCurrentSubOptionCoreData(subOption: newSubOption,  item: item )
+                                
+                            }
+                            
+                            dispatchGroup.leave()
+                            
+                        }
+                        
+                    }
+                    
+                    dispatchGroup.notify(queue: DispatchQueue.main) {
+                        // completion?(storedError)
+                        print("Downloads Done!!")
+                        self.optionsLoaded = true
+                        if (self.checkIfEverythingLoaded()) {
+                            SVProgressHUD.dismiss()
+                        }
+                    }
+                    
+                    //completionOperation.addDependency(downloadOperation)
+                    //self.operationQueue.addOperation(downloadOperation)
+                    //completionOperation.addDependency(downloadOperation)
+                    //operationQueue.addOperation(downloadOperation)
+                    //} // let completionOperation = BlockOperation {
+                    
+                    
+                } // for image in imageList {
+                
+            }
+            theOptions.append(CreateSubOption(withParent: newOption))
+        }
+        
+        theOptions.append(CreateOption()) ///  - dont do this its put there automatically
+        
+        operationQueue.addOperation(completionOperation)
+        
+        return theOptions
+    }
     
     func addItemToCurrentSubOptionCoreData(subOption: SubOption, item: Item ){
         
@@ -819,14 +992,13 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
             let cdItem = NSManagedObject(entity: entity,
                                          insertInto: managedContext)
             
-            
             cdItem.setValue(item.caption,            forKeyPath: "caption")
             cdItem.setValue(item.imgUUID,            forKeyPath: "imgUUID")
             cdItem.setValue(item.imgPointer,         forKeyPath: "imgPointer")
             cdItem.setValue(item.parentSubOptionID,  forKeyPath: "parentSubOptionID")
             
             // fix this
-            imageStore.setImage(item.image!, forKey: item.imgUUID!)
+            imageStore.setImage(item.originalImage!, forKey: item.imgUUID!)
             
             let set = NSSet(object: cdItem)
             
@@ -864,7 +1036,7 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
                         print("not valid question list")
                         continue
                     }
-                    o.questionSet? = self.questions
+                    // o.questionSet? = self.questions
                     //print("print questions list")
                     //self.questions[0].printQuestionSet()
                     
@@ -893,5 +1065,7 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
         else {
             return false
         }
+        
+        
     }
 }

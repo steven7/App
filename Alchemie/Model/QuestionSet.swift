@@ -21,6 +21,11 @@ class Question: NSObject {
     var questionTypeNumber:Int?      //"QuestionType": 1
     var questionType:QuestionTypes?      //"QuestionType": 1
     
+    var questionIconPositions:[[CGPoint]]?
+    var questionIconPositionsOne:[CGPoint]?
+    var questionIconPositionsTwo:[CGPoint]?
+    var questionIconPositionsThree:[CGPoint]?
+    
     enum QuestionTypes  {
         case text
         case yesOrNo
@@ -33,7 +38,7 @@ class Question: NSObject {
     var dict:[Int:QuestionTypes] = [ 1 : .text,  2 : .yesOrNo, 3 : .list, 4 : .listMulti, 5 : .photo]
     
     override init(){
-        
+        questionText = nil
     }
     
     init (text:String) {

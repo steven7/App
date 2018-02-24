@@ -28,6 +28,8 @@ class PlacementViewController: UIViewController, UICollectionViewDelegate, UICol
     @IBOutlet weak var buttonTwo: UIButton!
     @IBOutlet weak var buttonThree: UIButton!
     
+    @IBOutlet weak var uploadButton: UIButton!
+    
     var collectionViewOneContents = [AnyObject]()
     var collectionViewTwoContents = [AnyObject]()
     
@@ -78,8 +80,6 @@ class PlacementViewController: UIViewController, UICollectionViewDelegate, UICol
          
         // collectionViewOneContents.append(CreateItem())
         
-        collectionViewOneContents = fetchItemsFromCoreData()
-        
         collectionViewOne.delegate = self
         collectionViewOne.dataSource = self
         
@@ -102,11 +102,14 @@ class PlacementViewController: UIViewController, UICollectionViewDelegate, UICol
             print("current sub option not availabe")
         }
         
+        self.uploadButton.layer.cornerRadius = 15
         
+        /*
         panGestureOne   = UIPanGestureRecognizer(target: self, action: #selector(draggedButtonOne(_:) ) )
         panGestureTwo   = UIPanGestureRecognizer(target: self, action: #selector(draggedButtonTwo(_:) ) )
         panGestureThree = UIPanGestureRecognizer(target: self, action: #selector(draggedButtonThree(_:) ) )
         
+         
         self.buttonOne.isUserInteractionEnabled = true
         self.buttonOne.addGestureRecognizer(panGestureOne)
         
@@ -115,12 +118,22 @@ class PlacementViewController: UIViewController, UICollectionViewDelegate, UICol
         
         self.buttonThree.isUserInteractionEnabled = true
         self.buttonThree.addGestureRecognizer(panGestureThree)
+        */
+        
+        collectionViewOneContents = fetchItemsFromCoreData()
         
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-        //collectionViewOneContents = fetchItemsFromCoreData()
+        super.viewWillAppear(true) 
+        // collectionViewOneContents = fetchItemsFromCoreData()
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        collectionViewOneContents = fetchItemsFromCoreData()
+        self.collectionViewOne.reloadData()
     }
     
     override func didReceiveMemoryWarning() {
@@ -192,7 +205,7 @@ class PlacementViewController: UIViewController, UICollectionViewDelegate, UICol
                 bigImageView.image = item.editedImage
             }
             else {
-                bigImageView.image = item.image
+                bigImageView.image = item.originalImage
             }
             collectionViewOne.reloadData()
         }
@@ -267,79 +280,65 @@ class PlacementViewController: UIViewController, UICollectionViewDelegate, UICol
         
         var theItems = [AnyObject]()
         var theManagedItems = [NSManagedObject]()
+        
         do {
+            
             theManagedItems = try managedContext.fetch(fetchRequest)
             print("begin fetch")
+            
             for oneManagedItem in theManagedItems {
                 let oneItem = Item()
+                oneItem.itemID     = oneManagedItem.value(forKeyPath: "itemID")   as? String
                 oneItem.caption    = oneManagedItem .value(forKeyPath: "caption") as? String
                 oneItem.imgUUID    = oneManagedItem .value(forKeyPath: "imgUUID") as? String
                 oneItem.imgPointer = oneManagedItem .value(forKeyPath: "imgPointer") as? String
+                oneItem.editedimgUUID = oneManagedItem.value(forKeyPath: "editedimgPointer") as? String
+                //oneItem.questionIconPositionsThree = oneManagedItem.value( forKeyPath: "questionIconPositionsThree") as? String
                 
+                if let dataOne = oneManagedItem.value(forKey: "questionIconPositionsOne") as? Data {
+                    let unarchiveObjectOne = NSKeyedUnarchiver.unarchiveObject(with: dataOne)
+                    let arrayObjectOne = unarchiveObjectOne as AnyObject! as! [CGPoint]
+                    oneItem.questionIconPositionsOne = arrayObjectOne
+                }
+                else {
+                    oneItem.questionIconPositionsOne = [CGPoint]()
+                }
                 
-                oneItem.image = imageStore.image(forKey: oneItem.imgUUID!)
+                if let dataTwo = oneManagedItem.value(forKey: "questionIconPositionsTwo") as? Data {
+                    let unarchiveObjectTwo = NSKeyedUnarchiver.unarchiveObject(with: dataTwo)
+                    let arrayObjectTwo = unarchiveObjectTwo as AnyObject! as! [CGPoint]
+                    oneItem.questionIconPositionsTwo = arrayObjectTwo
+                }
+                else {
+                    oneItem.questionIconPositionsTwo = [CGPoint]()
+                }
                 
+                if let dataThree = oneManagedItem.value(forKey: "questionIconPositionsThree") as? Data {
+                    let unarchiveObjectThree = NSKeyedUnarchiver.unarchiveObject(with: dataThree)
+                    let arrayObjectThree = unarchiveObjectThree as AnyObject! as! [CGPoint]
+                    oneItem.questionIconPositionsThree = arrayObjectThree
+                }
+                else {
+                    oneItem.questionIconPositionsThree = [CGPoint]()
+                }
+                
+                oneItem.originalImage = imageStore.image(forKey: oneItem.imgUUID!)
+                if let editedImageID = oneItem.editedimgUUID {
+                    oneItem.editedImage = imageStore.image(forKey: editedImageID)
+                }
+                else {
+                    oneItem.editedImage = nil
+                }
                 
                 print("one item!!")
                 print("  -  \(oneItem.caption)")
                 print("  -  \(oneItem.imgUUID)")
-                print("  -  \(oneItem.image)")
-                
-                /*
-                get image
- 
-                */
+                print("  -  \(oneItem.originalImage)")
                 
                 theItems.append(oneItem)
-                /*
-                let itemfetchRequest =
-                    NSFetchRequest<NSManagedObject>(entityName: "CDItem")
-                let userToSearch = "e@e.com"
-                itemfetchRequest.predicate = NSPredicate(format: "parentOptionID == %@", (currentSubOption?.subOptionID!)!)
-                do {
-                    let theManaged_SubOptions = try managedContext.fetch(itemfetchRequest)
-                    for oneManaged_SubOption in theManaged_SubOptions {
-                        let oneSubOption = SubOption()
-                 
-                        oneSubOption.name = oneManaged_SubOption.value(forKeyPath: "name") as? String
-                        oneSubOption.city = oneManaged_SubOption.value(forKeyPath: "city") as? String
-                        oneSubOption.country = oneManaged_SubOption.value(forKeyPath: "country") as? String
-                        oneSubOption.street = oneManaged_SubOption.value(forKeyPath: "street") as? String
-                        oneSubOption.subOptionStatus = oneManaged_SubOption.value(forKeyPath: "subOptionStatus") as? String
-                        oneSubOption.state = oneManaged_SubOption.value(forKeyPath: "state") as? String
-                        oneSubOption.postalCode = oneManaged_SubOption.value(forKeyPath: "postalCode") as? String
-                        oneSubOption.pocPhone = oneManaged_SubOption.value(forKeyPath: "pocPhone") as? String
-                        oneSubOption.pocName = oneManaged_SubOption.value(forKeyPath: "pocName") as? String
-                        oneSubOption.pocEmail = oneManaged_SubOption.value(forKeyPath: "pocEmail") as? String
-                        oneSubOption.subOptionID = oneManaged_SubOption.value(forKeyPath: "subOptionID") as? String
-                        oneSubOption.parentOptionID = oneManaged_SubOption.value(forKeyPath: "parentOptionID") as? String
-                 
-                        theItems.append(oneSubOption)
-                    }
-                }
-                     subOption.name,            forKeyPath: "name")
-                     cdSubOption.setValue(subOption.city,            forKeyPath: "city")
-                     cdSubOption.setValue(subOption.country,         forKeyPath: "country")
-                     cdSubOption.setValue(subOption.street,          forKeyPath: "street")
-                     cdSubOption.setValue(subOption.subOptionStatus, forKeyPath: "subOptionStatus")
-                     cdSubOption.setValue(subOption.state,           forKeyPath: "state")
-                     cdSubOption.setValue(subOption.postalCode,      forKeyPath: "postalCode")
-                     cdSubOption.setValue(subOption.pocPhone,        forKeyPath: "pocPhone")
-                     cdSubOption.setValue(subOption.pocName,         forKeyPath: "pocName")
-                     cdSubOption.setValue(subOption.pocEmail,        forKeyPath: "pocEmail")
-                     cdSubOption.setValue(subOption.subOptionID,     forKeyPath: "subOptionID")
-                     cdSubOption.setValue(subOption.parentOptionID
-                catch  let error as NSError {
-                    print("Could not fetch. \(error), \(error.userInfo)")
-                }
-                
-                //let theSubOptions = oneManagedOption.value(forKey: "subOptions")
-                //for sub in theSubOptions {
-                //    print(sub)
-                //}
-                */
                 
             }
+            
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
@@ -349,6 +348,7 @@ class PlacementViewController: UIViewController, UICollectionViewDelegate, UICol
         return theItems
     }
     
+    /*
     func fetchItemsFromCoreData(with subOptionID:String) -> [AnyObject] {
         
         guard let appDelegate =
@@ -373,11 +373,16 @@ class PlacementViewController: UIViewController, UICollectionViewDelegate, UICol
             theManagedItems = try managedContext.fetch(fetchRequest)
             for oneManagedItem in theManagedItems {
                 let oneItem = Item()
-                oneItem.caption    = oneManagedItem .value(forKeyPath: "caption") as? String
-                oneItem.imgUUID    = oneManagedItem .value(forKeyPath: "imgUUID") as? String
-                oneItem.imgPointer = oneManagedItem .value(forKeyPath: "imgPointer") as? String
+                oneItem.caption    = oneManagedItem.value(forKeyPath: "caption")    as? String
+                oneItem.imgUUID    = oneManagedItem.value(forKeyPath: "imgUUID")    as? String
+                oneItem.imgPointer = oneManagedItem.value(forKeyPath: "imgPointer") as? String
+                oneItem.itemID     = oneManagedItem.value(forKeyPath: "itemID")     as? String
+                // oneItem.questionIconPositionsOne   = oneManagedItem.value( forKeyPath: "questionIconPositionsOne")   as? String
+                // oneItem.questionIconPositionsTwo   = oneManagedItem.value( forKeyPath: "questionIconPositionsTwo")   as? String
+                // oneItem.questionIconPositionsThree = oneManagedItem.value( forKeyPath: "questionIconPositionsThree") as? String
                 
-                oneItem.image = imageStore.image(forKey: oneItem.imgUUID!)
+                oneItem.originalImage = imageStore.image(forKey: oneItem.imgUUID!)
+                oneItem.editedImage = imageStore.image(forKey: oneItem.editedimgUUID!)
                 
                 /*
                  get image
@@ -395,8 +400,10 @@ class PlacementViewController: UIViewController, UICollectionViewDelegate, UICol
         
         return theItems
     }
+    */
     
     func addItemToCurrentSubOptionCoreData(item: Item ){
+        
         guard let appDelegate =
             UIApplication.shared.delegate as? AppDelegate else {
                 return
@@ -424,11 +431,13 @@ class PlacementViewController: UIViewController, UICollectionViewDelegate, UICol
             
             
             cdItem.setValue(item.caption,            forKeyPath: "caption")
+            cdItem.setValue(item.itemID,             forKeyPath: "itemID")
             cdItem.setValue(item.imgUUID,            forKeyPath: "imgUUID")
             cdItem.setValue(item.imgPointer,         forKeyPath: "imgPointer")
-            cdItem.setValue(item.parentSubOptionID,  forKeyPath: "parentSubOptionID")
+            cdItem.setValue(subOptionID,             forKeyPath: "parentSubOptionID")
+            //cdItem.setValue(item.parentSubOptionID,  forKeyPath: "parentSubOptionID")
  
-            imageStore.setImage(item.image!, forKey: item.imgUUID!)
+            imageStore.setImage(item.originalImage!, forKey: item.imgUUID!)
             
             let set = NSSet(object: cdItem)
             
@@ -453,7 +462,7 @@ class PlacementViewController: UIViewController, UICollectionViewDelegate, UICol
         collectionViewOneContents.removeLast()
         // collectionViewOneContents.insert(Item(), at: indexPath.row-1)
         let item = Item()
-        item.image = image
+        item.originalImage = image
         item.parentSubOptionID = currentSubOption?.subOptionID
         item.caption = caption
         collectionViewOneContents.append(item)
@@ -495,11 +504,60 @@ class PlacementViewController: UIViewController, UICollectionViewDelegate, UICol
         let croppedCGImage:CGImage = (image!.cgImage?.cropping(to: boundingBox))!
         let croppedImage = UIImage(cgImage: croppedCGImage)
         
+        self.currentItem!.editedImage = croppedImage
+        self.currentItem?.editedimgUUID = NSUUID().uuidString
         
+        saveCroppedImage()
+        
+        collectionViewOneContents = fetchItemsFromCoreData()
+        self.collectionViewOne.reloadData()
         
         return croppedImage
     }
 
+    func saveCroppedImage(){
+        
+        guard let appDelegate =
+            UIApplication.shared.delegate as? AppDelegate else {
+                return
+        }
+        
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        let currentItemId = self.currentItem?.itemID
+        
+        
+        do {
+            
+            let itemfetchRequest = NSFetchRequest<NSManagedObject>(entityName: "CDItem")
+            
+            itemfetchRequest.predicate = NSPredicate(format: "itemID == %@", currentItemId!)
+            
+            let themanaged_Items = try managedContext.fetch(itemfetchRequest)
+            
+            if  themanaged_Items.count > 0 {
+                
+                let onemanaged_Item = themanaged_Items[0]
+                
+                onemanaged_Item.setValue(self.currentItem?.editedimgUUID,  forKeyPath: "editedimgPointer")
+                
+                imageStore.setImage(self.currentItem!.editedImage!, forKey: self.currentItem!.editedimgUUID!)
+                
+                //optionToUpdate.setValue(NSSet(object: cdQuestionList), forKey: "questionList")
+                
+                do {
+                    try managedContext.save()
+                    //people.append(person)
+                } catch let error as NSError {
+                    print("Could not save. \(error), \(error.userInfo)")
+                }
+            }
+        }
+        catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "toCreateItem" ) {
             let createItem = segue.destination as! CreateItemViewController
@@ -509,15 +567,14 @@ class PlacementViewController: UIViewController, UICollectionViewDelegate, UICol
             collectionViewOne.reloadData()
         }
         if (segue.identifier == "toBigImage" ) {
+            // collectionViewOneContents = fetchItemsFromCoreData()
             let viewController = segue.destination as! BigImageViewController
-            viewController.theImage = bigImageView.image
-                // currentItem?.image
-                // bigImageView.image
+            viewController.theImage = currentItem?.originalImage
             if let option = currentOption {
                 viewController.currentOption = option
                 viewController.thumbnailImageView = bigImageView
-                viewController.onDismiss = captureImage
                 viewController.currentItem = self.currentItem
+                viewController.onDismiss = captureImage
             }
         }
         if (segue.identifier == "toQuestions") {
@@ -538,6 +595,10 @@ class PlacementViewController: UIViewController, UICollectionViewDelegate, UICol
         self.navigationController?.popViewController(animated: true)
     }
     
+    @IBAction func uploadToCloudButtonPressed(_ sender: Any) {
+        self.comingSoonPopup()
+    }
+    /*
     @IBAction func buttonOnePressed(_ sender: Any) {
         print(" one pressed")
         //if (bigImageView.image != nil ) { //&&
@@ -560,13 +621,14 @@ class PlacementViewController: UIViewController, UICollectionViewDelegate, UICol
         //}
         
     }
+    */
     
     ///////////////////
     //
     //    drop and drag
     //
     ///////////////////
-    
+    /*
     @objc func draggedButtonOne(_ sender:UIPanGestureRecognizer) {
         print(" one dragged")
         //self.view.bringSubview(toFront: self.buttonOne)
@@ -590,6 +652,7 @@ class PlacementViewController: UIViewController, UICollectionViewDelegate, UICol
         buttonThree.center = CGPoint(x: buttonThree.center.x + translation.x, y: buttonThree.center.y + translation.y)
         sender.setTranslation(CGPoint.zero, in: self.view)
     }
+    */
     
     /*
     func draggedView(_ send:UIPanGestureRecognizer) {
