@@ -330,10 +330,13 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func createQuestionListOnOptionWithCoreData(with question:Question, withOption option: Option){
         
-        guard let appDelegate =
-            UIApplication.shared.delegate as? AppDelegate else {
-                return
-        }
+        //DispatchQueue.main.async(execute: {
+            guard let appDelegate =
+                UIApplication.shared.delegate as? AppDelegate else {
+                    return
+            }
+        //})
+        
         let managedContext =
             appDelegate.persistentContainer.viewContext
         
@@ -577,6 +580,7 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
         SVProgressHUD.show()
         let api = AlchemieAPI()
         
+        /*
         api.fetchOptions(completion: {   success, response in
             if (success) {
                 print("lololz")
@@ -590,8 +594,8 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
                 self.errorPopup()
             }
         })
-         
-        /*
+         */
+        
         api.fetchOptionsBetter(completion: {   success, response in
             if (success) {
                 print("lololz")
@@ -606,7 +610,7 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
             }
         })
         self.questionsLoaded = true
-        */
+ 
         
         api.fetchQuestionSet(completion: {   success, response in
             print(response)
@@ -954,8 +958,90 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
                 } // for image in imageList {
                 
             }
+            
+            guard let questionSets = option["Questionsets"] as? [[String: AnyObject]]else {
+                print("somethings wrong with the options data")
+                return [AnyObject]()
+            }
+            
+            for oneQuestionSet in questionSets {
+                
+                guard let companyNum = oneQuestionSet["CompanyNum"] as? Int else {
+                    print("somethings wrong with the options data")
+                    return [AnyObject]()
+                }
+                guard let questionID = oneQuestionSet["ID"] as? String else {
+                    print("somethings wrong with the options data")
+                    return [AnyObject]()
+                }
+                guard let quesList = oneQuestionSet["QuesList"] as? [[String: AnyObject]] else {
+                    print("somethings wrong with the options data")
+                    return [AnyObject]()
+                }
+                
+                print("\(companyNum)")
+                print("\(questionID)")
+                
+                
+                for question in quesList {
+                    
+                    print("\(question)")
+                    
+                    guard let quescompamyNum = question["CompanyNum"] as? Int else {
+                        print("somethings wrong with the options data")
+                        return [AnyObject]()
+                    }
+                    
+                    if let quesListID = question["ListID"] as? String {
+                        //print("somethings wrong with the options data")
+                        //return [AnyObject]()
+                    }
+                    else {
+                        let quesListID = ""
+                    }
+                    /*
+                    guard let quesList = oneQuestionSet["OptionList"] as? [[String: AnyObject]]else {
+                        print("somethings wrong with the options data")
+                        return [AnyObject]()
+                    }
+                    */
+                    /*
+                    guard let quesList = oneQuestionSet["QuestionNotes"] as? [[String: AnyObject]]else {
+                        print("somethings wrong with the options data")
+                        return [AnyObject]()
+                    }
+                    */
+                    guard let quesNum = question["QuestionNum"] as? Int else {
+                        print("somethings wrong with the options data")
+                        return [AnyObject]()
+                    }
+                    
+                    guard let quesSetID = question["QuestionSetID"] as? String else {
+                        print("somethings wrong with the options data")
+                        return [AnyObject]()
+                    }
+                    
+                    guard let quesText = question["QuestionText"] as? String else {
+                        print("somethings wrong with the options data")
+                        return [AnyObject]()
+                    }
+                    
+                    guard let quesType = question["QuestionType"] as? Int else {
+                        print("somethings wrong with the options data")
+                        return [AnyObject]()
+                    }
+                    
+                    ///
+                    //
+                    //
+                }
+                
+            }
+            
             theOptions.append(CreateSubOption(withParent: newOption))
         }
+        
+        
         
         theOptions.append(CreateOption()) ///  - dont do this its put there automatically
         
@@ -992,6 +1078,7 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
             let cdItem = NSManagedObject(entity: entity,
                                          insertInto: managedContext)
             
+            cdItem.setValue(item.itemID,             forKeyPath: "itemID")
             cdItem.setValue(item.caption,            forKeyPath: "caption")
             cdItem.setValue(item.imgUUID,            forKeyPath: "imgUUID")
             cdItem.setValue(item.imgPointer,         forKeyPath: "imgPointer")

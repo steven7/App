@@ -209,6 +209,7 @@ class PlacementViewController: UIViewController, UICollectionViewDelegate, UICol
             }
             collectionViewOne.reloadData()
         }
+        
     }
     
     func clearBackgroundColors(){
