@@ -33,8 +33,8 @@ extension UIButton {
         copyButton.setTitleColor(UIColor.lightBlue, for: .normal)
         copyButton.backgroundColor = UIColor.clear
         copyButton.setBackgroundImage(self.currentBackgroundImage, for: .normal)
-        copyButton.setImage(self.currentImage, for: .normal)
-        // copyButton.setImage(self.image(for: .normal), for: .normal)
+        //copyButton.setImage(self.currentImage, for: .normal)
+        copyButton.setImage(self.image(for: .normal), for: .normal)
         copyButton.imageView?.layer.cornerRadius = 10
         copyButton.layer.cornerRadius = 10
         copyButton.frame = self.frame

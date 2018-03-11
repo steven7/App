@@ -16,8 +16,13 @@ class Option: NSObject {
     var status:String?
     var optionDescription:String?
     var type:String?
-    // var questionSet:[QuestionSet]? // not in use for now
+    var questionSetList = [QuestionSet]() // not in use for now
     var questionList = [Question]()
+    
+    var numberOfQuestionLists:Int?
+    var questionIconImgPointerOne:String?
+    var questionIconImgPointerTwo:String?
+    var questionIconImgPointerThree:String?
     
     override init() {
         title = ""

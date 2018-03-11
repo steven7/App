@@ -378,6 +378,150 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
         
     }
     
+    func createQuestionSetOnOptionWithCoreData(with questionSet:QuestionSet, withOption option: Option){
+        
+        //DispatchQueue.main.async(execute: {
+        guard let appDelegate =
+            UIApplication.shared.delegate as? AppDelegate else {
+                return
+        }
+        //})
+        
+        let managedContext =
+            appDelegate.persistentContainer.viewContext
+        
+        let parentOptionID = option.optionID
+        let fetchRequest =
+            NSFetchRequest<NSManagedObject>(entityName: "CDOption")
+        
+        fetchRequest.predicate = NSPredicate(format: "optionID == %@", parentOptionID!)
+        
+        do {
+            
+            let optionsToUpdate = try managedContext.fetch(fetchRequest)
+            let optionToUpdate = optionsToUpdate[0]
+            
+            let entity =
+                NSEntityDescription.entity(forEntityName: "CDQuestionSet",
+                                           in: managedContext)!
+            
+            let cdQuestionSet = NSManagedObject(entity: entity,
+                                                 insertInto: managedContext)
+            
+            cdQuestionSet.setValue(questionSet.companyNum,           forKeyPath: "companyNum")
+            cdQuestionSet.setValue(questionSet.surveyIconPointer,    forKeyPath: "iconImgPointer")
+            cdQuestionSet.setValue(questionSet.surveyName,           forKeyPath: "surveyName")
+            cdQuestionSet.setValue(questionSet.theID,           forKeyPath:"questionSetID")
+            cdQuestionSet.setValue(option.optionID,                  forKeyPath: "parentOptionID")
+            
+            
+            for oneQuestion in questionSet.questionList {
+                
+                let entityList =
+                    NSEntityDescription.entity(forEntityName: "CDQuestionList",
+                                               in: managedContext)!
+                let cdQuestionList = NSManagedObject(entity: entityList,
+                                                     insertInto: managedContext)
+                
+                cdQuestionList.setValue(oneQuestion.questionText,     forKeyPath: "questionText")
+                cdQuestionList.setValue(oneQuestion.questionSetID,    forKeyPath: "questionSetID")
+                cdQuestionList.setValue(questionSet.theID,            forKeyPath: "parentQuestionSetID")
+                cdQuestionList.setValue(option.optionID,              forKeyPath: "parentOptionID")
+                
+                cdQuestionList.setValue(oneQuestion.questionTypeNumber,   forKeyPath: "questionTypeNumber")
+                
+                cdQuestionSet.setValue(NSSet(object: cdQuestionList), forKey: "questionList")
+            }
+            
+            /*
+            
+                let entityList =
+                    NSEntityDescription.entity(forEntityName: "CDQuestionList",
+                                               in: managedContext)!
+                let cdQuestionList = NSManagedObject(entity: entityList,
+                                                     insertInto: managedContext)
+            
+                cdQuestionList.setValue(question.questionText,     forKeyPath: "questionText")
+                cdQuestionList.setValue(question.questionSetID,    forKeyPath: "questionSetID")
+                cdQuestionList.setValue(option.optionID,           forKeyPath: "parentOptionID")
+            
+                cdQuestionList.setValue(question.questionTypeNumber,   forKeyPath: "questionTypeNumber")
+            
+                optionToUpdate.setValue(NSSet(object: cdQuestionList), forKey: "questionList")
+            */
+            
+            optionToUpdate.setValue(NSSet(object: cdQuestionSet), forKey: "questionSet")
+            
+                do {
+                    try managedContext.save()
+                    //people.append(person)
+                } catch let error as NSError {
+                    print("Could not save. \(error), \(error.userInfo)")
+                }
+            
+        }
+        catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+        
+    }
+    
+    func addItemToCurrentSubOptionCoreData(subOption: SubOption, item: Item ){
+        
+        guard let appDelegate =
+            UIApplication.shared.delegate as? AppDelegate else {
+                return
+        }
+        
+        let managedContext =
+            appDelegate.persistentContainer.viewContext
+        
+        
+        let subOptionID = subOption.subOptionID
+        let fetchRequest =
+            NSFetchRequest<NSManagedObject>(entityName: "CDSubOption")
+        
+        fetchRequest.predicate = NSPredicate(format: "subOptionID == %@", subOptionID!)
+        
+        do {
+            
+            let subOptionsToUpdate = try managedContext.fetch(fetchRequest)
+            let subOptionToUpdate = subOptionsToUpdate[0]
+            
+            let entity =
+                NSEntityDescription.entity(forEntityName: "CDItem",
+                                           in: managedContext)!
+            let cdItem = NSManagedObject(entity: entity,
+                                         insertInto: managedContext)
+            
+            cdItem.setValue(item.itemID,             forKeyPath: "itemID")
+            cdItem.setValue(item.caption,            forKeyPath: "caption")
+            cdItem.setValue(item.imgUUID,            forKeyPath: "imgUUID")
+            cdItem.setValue(item.imgPointer,         forKeyPath: "imgPointer")
+            cdItem.setValue(item.parentSubOptionID,  forKeyPath: "parentSubOptionID")
+            
+            // fix this
+            imageStore.setImage(item.originalImage!, forKey: item.imgUUID!)
+            
+            let set = NSSet(object: cdItem)
+            
+            subOptionToUpdate.setValue(set, forKey: "items")
+            
+            do {
+                try managedContext.save()
+                //people.append(person)
+            } catch let error as NSError {
+                print("Could not save. \(error), \(error.userInfo)")
+            }
+            
+        }
+        catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+        
+        
+    }
+    
     ///////
     //
     // fetch from core data
@@ -411,8 +555,10 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
                 oneOption.status = oneManagedOption.value(forKeyPath: "status") as? String
                 oneOption.optionDescription = oneManagedOption.value(forKeyPath: "optionDescription") as? String
                 oneOption.type = oneManagedOption.value(forKeyPath: "type") as? String
+                oneOption.questionIconImgPointerOne = oneManagedOption.value(forKeyPath: "questionIconImgPointerOne") as? String
+                oneOption.questionIconImgPointerTwo = oneManagedOption.value(forKeyPath: "questionIconImgPointerTwo") as? String
+                oneOption.questionIconImgPointerThree = oneManagedOption.value(forKeyPath: "questionIconImgPointerThree") as? String
                 
-                theOptions.append(oneOption)
                 
                 // get sub options
                 let subfetchRequest =
@@ -426,28 +572,88 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
                 
                 questionfetchRequest.predicate = NSPredicate(format: "parentOptionID == %@", oneOption.optionID!)
                 
+                // get question sets
+                let questionSetfetchRequest =
+                    NSFetchRequest<NSManagedObject>(entityName: "CDQuestionSet")
+                
+                questionSetfetchRequest.predicate = NSPredicate(format: "parentOptionID == %@", oneOption.optionID!)
+                
+                
                 do {
-                    let theManaged_SubOptions = try managedContext.fetch(subfetchRequest)
-                    for oneManaged_SubOption in theManaged_SubOptions {
-                        let oneSubOption = SubOption()
-                        oneSubOption.name = oneManaged_SubOption.value(forKeyPath: "name") as? String
-                        oneSubOption.city = oneManaged_SubOption.value(forKeyPath: "city") as? String
-                        oneSubOption.country = oneManaged_SubOption.value(forKeyPath: "country") as? String
-                        oneSubOption.street = oneManaged_SubOption.value(forKeyPath: "street") as? String
-                        oneSubOption.subOptionStatus = oneManaged_SubOption.value(forKeyPath: "subOptionStatus") as? String
-                        oneSubOption.state = oneManaged_SubOption.value(forKeyPath: "state") as? String
-                        oneSubOption.postalCode = oneManaged_SubOption.value(forKeyPath: "postalCode") as? String
-                        oneSubOption.pocPhone = oneManaged_SubOption.value(forKeyPath: "pocPhone") as? String
-                        oneSubOption.pocName = oneManaged_SubOption.value(forKeyPath: "pocName") as? String
-                        oneSubOption.pocEmail = oneManaged_SubOption.value(forKeyPath: "pocEmail") as? String
-                        oneSubOption.subOptionID = oneManaged_SubOption.value(forKeyPath: "subOptionID") as? String
-                        oneSubOption.parentOptionID = oneManaged_SubOption.value(forKeyPath: "parentOptionID") as? String
-                        oneSubOption.parentOption = oneOption
-                        theOptions.append(oneSubOption)
+                    /////
+                    
+                    let theManaged_QuestionSets = try managedContext.fetch(questionSetfetchRequest)
+                    for oneQuestionSet in theManaged_QuestionSets {
+                        let questionSet = QuestionSet()
+                        questionSet.companyNum  = oneQuestionSet.value(forKeyPath: "companyNum") as? Int
+                        questionSet.surveyIconPointer   = oneQuestionSet.value(forKeyPath: "iconImgPointer") as? String
+                        questionSet.surveyName  = oneQuestionSet.value(forKeyPath: "surveyName") as? String
+                        questionSet.theID = oneQuestionSet.value(forKeyPath: "questionSetID") as? String
+                        questionSet.parentOptionID   = oneQuestionSet.value(forKeyPath: "parentOptionID") as? String
+                        
+                        // get questions
+                        let questionfetchRequest =
+                            NSFetchRequest<NSManagedObject>(entityName: "CDQuestionList")
+                        
+                        questionfetchRequest.predicate = NSPredicate(format: "parentQuestionSetID == %@", questionSet.theID!)
+                        
+                        
+                        let theManaged_Questions = try managedContext.fetch(questionfetchRequest)
+                        for oneQuestion in theManaged_Questions {
+                            
+                            let question = Question()
+                            question.questionSetID  = oneQuestion.value(forKeyPath: "questionSetID") as? String // question id not actually the set id
+                            question.questionText   = oneQuestion.value(forKeyPath: "questionText") as? String
+                            if let qTypeNumber   = oneQuestion.value(forKeyPath: "questionTypeNumber") as? Int {
+                                question.setType(type: qTypeNumber)
+                            }
+                            else {
+                                question.setType(type: 1)
+                            }
+                            oneOption.questionList.append(question)
+                            
+                            // if
+                            if let dataOne = oneQuestion.value(forKey: "questionIconPositionsOne") as? Data {
+                                let unarchiveObjectOne = NSKeyedUnarchiver.unarchiveObject(with: dataOne)
+                                let arrayObjectOne = unarchiveObjectOne as AnyObject! as! [CGPoint]
+                                question.questionIconPositionsOne = arrayObjectOne
+                            }
+                            else {
+                                question.questionIconPositionsOne = [CGPoint]()
+                            }
+                            
+                            if let dataTwo = oneQuestion.value(forKey: "questionIconPositionsTwo") as? Data {
+                                let unarchiveObjectTwo = NSKeyedUnarchiver.unarchiveObject(with: dataTwo)
+                                let arrayObjectTwo = unarchiveObjectTwo as AnyObject! as! [CGPoint]
+                                question.questionIconPositionsTwo = arrayObjectTwo
+                            }
+                            else {
+                                question.questionIconPositionsTwo = [CGPoint]()
+                            }
+                            
+                            if let dataThree = oneQuestion.value(forKey: "questionIconPositionsThree") as? Data {
+                                let unarchiveObjectThree = NSKeyedUnarchiver.unarchiveObject(with: dataThree)
+                                let arrayObjectThree = unarchiveObjectThree as AnyObject! as! [CGPoint]
+                                question.questionIconPositionsThree = arrayObjectThree
+                            }
+                            else {
+                                question.questionIconPositionsThree = [CGPoint]()
+                            }
+                            
+                            questionSet.questionList.append(question)
+                        }
+                         
+                        
+                        oneOption.questionSetList.append(questionSet)
                     }
                     
+                    /////
+                    
+                    
                     // asigns to question list and not the question set
+                    // will probably take out
                     let theManaged_Questions = try managedContext.fetch(questionfetchRequest)
+                    var numOfQuestionLists = 0
                     for oneQuestion in theManaged_Questions {
                         let question = Question()
                         question.questionSetID  = oneQuestion.value(forKeyPath: "questionSetID") as? String
@@ -490,7 +696,33 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
                         
                         //questionIconPositions = oneQuestion.value(forKeyPath:
   
-                        
+                        numOfQuestionLists  += 1
+                    }
+                    
+                    oneOption.numberOfQuestionLists = numOfQuestionLists
+                    
+                    theOptions.append(oneOption)
+                    
+                    
+                    // sub options
+                    
+                    let theManaged_SubOptions = try managedContext.fetch(subfetchRequest)
+                    for oneManaged_SubOption in theManaged_SubOptions {
+                        let oneSubOption = SubOption()
+                        oneSubOption.name = oneManaged_SubOption.value(forKeyPath: "name") as? String
+                        oneSubOption.city = oneManaged_SubOption.value(forKeyPath: "city") as? String
+                        oneSubOption.country = oneManaged_SubOption.value(forKeyPath: "country") as? String
+                        oneSubOption.street = oneManaged_SubOption.value(forKeyPath: "street") as? String
+                        oneSubOption.subOptionStatus = oneManaged_SubOption.value(forKeyPath: "subOptionStatus") as? String
+                        oneSubOption.state = oneManaged_SubOption.value(forKeyPath: "state") as? String
+                        oneSubOption.postalCode = oneManaged_SubOption.value(forKeyPath: "postalCode") as? String
+                        oneSubOption.pocPhone = oneManaged_SubOption.value(forKeyPath: "pocPhone") as? String
+                        oneSubOption.pocName = oneManaged_SubOption.value(forKeyPath: "pocName") as? String
+                        oneSubOption.pocEmail = oneManaged_SubOption.value(forKeyPath: "pocEmail") as? String
+                        oneSubOption.subOptionID = oneManaged_SubOption.value(forKeyPath: "subOptionID") as? String
+                        oneSubOption.parentOptionID = oneManaged_SubOption.value(forKeyPath: "parentOptionID") as? String
+                        oneSubOption.parentOption = oneOption
+                        theOptions.append(oneSubOption)
                     }
                     
                     
@@ -505,7 +737,7 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
             print("Could not fetch. \(error), \(error.userInfo)")
         }
         
-        theOptions.append(CreateOption())
+        // theOptions.append(CreateOption())
         
         return theOptions
     }
@@ -608,10 +840,14 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
             else {
                 self.errorPopup()
             }
+            self.questionsLoaded = true
+            if (self.checkIfEverythingLoaded()){
+                SVProgressHUD.dismiss()
+            }
         })
         self.questionsLoaded = true
  
-        
+        /*
         api.fetchQuestionSet(completion: {   success, response in
             print(response)
             if (success) {
@@ -632,102 +868,10 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
                 SVProgressHUD.dismiss()
             }
         })
-       
+       */
     }
     
-    func getQuestionSetFromJSON(withJSON json:[[String: AnyObject]] ) -> [QuestionSet] {
-        
-        var theQuestions = [QuestionSet]()
-        for questionSet in json {
-            //guard let optionName = option["OptionName"] as? String else {
-            //    print("somethings wrong with the data")
-           //     return [AnyObject]()
-            //}
-            let oneQuestionSet = QuestionSet()
-            
-            var setCompanyNum = 0
-            var setID         = " "
-            var setSurveyIcon = " "
-            var setSurveyName = " "
-            var setSurveyType = " "
-            
-            if let questionSetCompanyNum = questionSet["CompanyNum"] as? Int {
-                setCompanyNum = questionSetCompanyNum
-            }
-            else {
-                setCompanyNum = 0
-            }
-            if let  questionSetID = questionSet["ID"] as? String   {
-                setID = questionSetID
-            }
-            
-            if let questionSetSurveyIcon = questionSet["SurveyIcon"] as? String  {
-                setSurveyIcon = questionSetSurveyIcon
-            }
-            else {
-                
-            }
-            
-            if let  questionSetSurveyName = questionSet["SurveyName"] as? String {
-                setSurveyName = questionSetSurveyName
-                // return [QuestionSet]()
-            }
-            else {
-                print("somethings wrong with the question data")
-                setSurveyName  = "  "
-            }
-            
-            if let  questionSetSurveyType = questionSet["SurveyType"] as? String  {
-                //print("somethings wrong with the data")
-                //return [QuestionSet]()
-                setSurveyType = questionSetSurveyType
-            }
-            
-            oneQuestionSet.companyNum = setCompanyNum
-            oneQuestionSet.theID      = setID
-            oneQuestionSet.surveyIcon = setSurveyIcon
-            oneQuestionSet.surveyName = setSurveyName
-            oneQuestionSet.surveyType = setSurveyType
-            
-            guard let questionList = questionSet["QuesList"] as? [[String: AnyObject]] else {
-                print("somethings wrong with the  question data")
-                return [QuestionSet]()
-            }
-            
-            for oneQuestion in questionList  {
-                
-                let question = Question()
-                var qSetID = " "
-                var qText = " "
-                var qType = 1
-                
-                if let questionSetID = oneQuestion["QuestionSetID"] as? String  {
-                    qSetID = questionSetID
-                }
-            
-                if let questionText = oneQuestion["QuestionText"] as? String {
-                    qText = questionText
-                }
-                
-                if let questionType = oneQuestion["QuestionType"] as? Int {
-                    qType = questionType
-                }
-                
-                question.questionSetID = qSetID
-                question.questionText = qText
-                question.setType(type: qType)
-                print("hopefully added \(qText)")
-                oneQuestionSet.questionList.append(question)
-                // createSubOptionWithCoreData(with: newSubOption)
-                
-                // createQuestionListOnOptionWithCoreData(with: question, withOption: <#T##Option#>)
-                
-            }
-            theQuestions.append(oneQuestionSet)
-        }
-        return theQuestions
-        
-    }
+    
     
     func getOptionsFromJSON(withJSON json:[[String: AnyObject]] ) -> [AnyObject] {
         
@@ -958,14 +1102,106 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
                 } // for image in imageList {
                 
             }
+            /*
+            guard let questionSets = option["Questionsets"] as? [[String: AnyObject]]else {
+                print("somethings wrong with the options data")
+                return [AnyObject]()
+            }
+            
+            self.questions = self.getQuestionSetFromJSON(withJSON: questionSets)
+            */
             
             guard let questionSets = option["Questionsets"] as? [[String: AnyObject]]else {
                 print("somethings wrong with the options data")
                 return [AnyObject]()
             }
             
-            for oneQuestionSet in questionSets {
+            var theQuestions = [QuestionSet]()
+            var numberOfQuestionLists = 0
+            for questionSet in questionSets {
                 
+                let oneQuestionSet = QuestionSet()
+                
+                var setCompanyNum = 0
+                var setID         = " "
+                var setSurveyIcon = " "
+                var setSurveyName = " "
+                var setSurveyType = " "
+                
+                if let questionSetCompanyNum = questionSet["CompanyNum"] as? Int {
+                    setCompanyNum = questionSetCompanyNum
+                }
+                else {
+                    setCompanyNum = 0
+                }
+                if let  questionSetID = questionSet["ID"] as? String   {
+                    setID = questionSetID
+                }
+                
+                if let questionSetSurveyIcon = questionSet["SurveyIconPointer"] as? String  {
+                    setSurveyIcon = questionSetSurveyIcon
+                }
+                else {
+                    
+                }
+                
+                if let  questionSetSurveyName = questionSet["SurveyName"] as? String {
+                    setSurveyName = questionSetSurveyName
+                    // return [QuestionSet]()
+                }
+                else {
+                    print("somethings wrong with the question data")
+                    setSurveyName  = "  "
+                }
+                
+                if let  questionSetSurveyType = questionSet["SurveyType"] as? String  {
+                    //print("somethings wrong with the data")
+                    //return [QuestionSet]()
+                    setSurveyType = questionSetSurveyType
+                }
+                
+                oneQuestionSet.companyNum = setCompanyNum
+                // oneQuestionSet.theID      = setID
+                oneQuestionSet.surveyIconPointer = setSurveyIcon
+                oneQuestionSet.surveyName = setSurveyName
+                oneQuestionSet.surveyType = setSurveyType
+                oneQuestionSet.parentOptionID = newOption.optionID
+                
+                
+                
+                let downloadURL = self.baseDownloadImageURL + "\(setSurveyIcon)"
+                
+                dispatchGroup.enter()
+                
+                Alamofire.request(downloadURL).responseImage { response in
+                    debugPrint(response)
+                    // let downloadOperation = BlockOperation {
+                    print(response.request)
+                    print(response.response)
+                    debugPrint(response.result)
+                    
+                    if let theimage = response.result.value {
+                        
+                        if let iconPointer = oneQuestionSet.surveyIconPointer {
+                            self.imageStore.setImage(theimage, forKey: iconPointer)
+                        }
+                        
+                        dispatchGroup.leave()
+                        
+                    }
+                    
+                }
+                
+                dispatchGroup.notify(queue: DispatchQueue.main) {
+                    // completion?(storedError)
+                    print("Downloads Done!!")
+                    self.optionsLoaded = true
+                    if (self.checkIfEverythingLoaded()) {
+                        SVProgressHUD.dismiss()
+                    }
+                }
+                
+                /*
                 guard let companyNum = oneQuestionSet["CompanyNum"] as? Int else {
                     print("somethings wrong with the options data")
                     return [AnyObject]()
@@ -982,8 +1218,15 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
                 print("\(companyNum)")
                 print("\(questionID)")
                 
+                */
                 
-                for question in quesList {
+                guard let questionList = questionSet["QuesList"] as? [[String: AnyObject]] else {
+                    print("somethings wrong with the  question data")
+                    return [QuestionSet]()
+                }
+                
+                /*
+                for question in questionList {
                     
                     print("\(question)")
                     
@@ -999,18 +1242,7 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
                     else {
                         let quesListID = ""
                     }
-                    /*
-                    guard let quesList = oneQuestionSet["OptionList"] as? [[String: AnyObject]]else {
-                        print("somethings wrong with the options data")
-                        return [AnyObject]()
-                    }
-                    */
-                    /*
-                    guard let quesList = oneQuestionSet["QuestionNotes"] as? [[String: AnyObject]]else {
-                        print("somethings wrong with the options data")
-                        return [AnyObject]()
-                    }
-                    */
+                 
                     guard let quesNum = question["QuestionNum"] as? Int else {
                         print("somethings wrong with the options data")
                         return [AnyObject]()
@@ -1034,75 +1266,162 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
                     ///
                     //
                     //
+                    
+                    
+                    DispatchQueue.main.async {
+                        //self.addItemToCurrentSubOptionCoreData(subOption: newSubOption,  item: item )
+                        //self.
+                    }
+                    
+                    createQuestionListOnOptionWithCoreData()
+                }
+                */
+                
+                for oneQuestion in questionList  {
+                    
+                    let question = Question()
+                    var qSetID = " "
+                    var qText = " "
+                    var qType = 1
+                    
+                    if let questionSetID = oneQuestion["QuestionSetID"] as? String  {
+                        qSetID = questionSetID
+                    }
+                    
+                    if let questionText = oneQuestion["QuestionText"] as? String {
+                        qText = questionText
+                    }
+                    
+                    if let questionType = oneQuestion["QuestionType"] as? Int {
+                        qType = questionType
+                    }
+                    
+                    question.questionSetID = qSetID
+                    question.questionText = qText
+                    question.parentQuestionSetID = oneQuestionSet.theID
+                    question.setType(type: qType)
+                    print("hopefully added \(qText)")
+                    oneQuestionSet.questionList.append(question)
+                    // createSubOptionWithCoreData(with: newSubOption)
+                    
+                    numberOfQuestionLists += 1
+                    createQuestionListOnOptionWithCoreData(with: question, withOption: newOption)
+                    
                 }
                 
+                
+                theQuestions.append(oneQuestionSet)
+                createQuestionSetOnOptionWithCoreData(with: oneQuestionSet, withOption: newOption)
             }
+            
             
             theOptions.append(CreateSubOption(withParent: newOption))
         }
         
         
         
-        theOptions.append(CreateOption()) ///  - dont do this its put there automatically
+        
+        // theOptions.append(CreateOption()) ///  - dont do this its put there automatically
         
         operationQueue.addOperation(completionOperation)
         
         return theOptions
     }
     
-    func addItemToCurrentSubOptionCoreData(subOption: SubOption, item: Item ){
+    
+    
+    
+    func getQuestionSetFromJSON(withJSON json:[[String: AnyObject]] ) -> [QuestionSet] {
         
-        guard let appDelegate =
-            UIApplication.shared.delegate as? AppDelegate else {
-                return
-        }
-        
-        let managedContext =
-            appDelegate.persistentContainer.viewContext
-        
-        
-        let subOptionID = subOption.subOptionID
-        let fetchRequest =
-            NSFetchRequest<NSManagedObject>(entityName: "CDSubOption")
-        
-        fetchRequest.predicate = NSPredicate(format: "subOptionID == %@", subOptionID!)
-        
-        do {
+        var theQuestions = [QuestionSet]()
+        for questionSet in json {
+            //guard let optionName = option["OptionName"] as? String else {
+            //    print("somethings wrong with the data")
+            //     return [AnyObject]()
+            //}
+            let oneQuestionSet = QuestionSet()
             
-            let subOptionsToUpdate = try managedContext.fetch(fetchRequest)
-            let subOptionToUpdate = subOptionsToUpdate[0]
+            var setCompanyNum = 0
+            var setID         = " "
+            var setSurveyIcon = " "
+            var setSurveyName = " "
+            var setSurveyType = " "
             
-            let entity =
-                NSEntityDescription.entity(forEntityName: "CDItem",
-                                           in: managedContext)!
-            let cdItem = NSManagedObject(entity: entity,
-                                         insertInto: managedContext)
-            
-            cdItem.setValue(item.itemID,             forKeyPath: "itemID")
-            cdItem.setValue(item.caption,            forKeyPath: "caption")
-            cdItem.setValue(item.imgUUID,            forKeyPath: "imgUUID")
-            cdItem.setValue(item.imgPointer,         forKeyPath: "imgPointer")
-            cdItem.setValue(item.parentSubOptionID,  forKeyPath: "parentSubOptionID")
-            
-            // fix this
-            imageStore.setImage(item.originalImage!, forKey: item.imgUUID!)
-            
-            let set = NSSet(object: cdItem)
-            
-            subOptionToUpdate.setValue(set, forKey: "items")
-            
-            do {
-                try managedContext.save()
-                //people.append(person)
-            } catch let error as NSError {
-                print("Could not save. \(error), \(error.userInfo)")
+            if let questionSetCompanyNum = questionSet["CompanyNum"] as? Int {
+                setCompanyNum = questionSetCompanyNum
+            }
+            else {
+                setCompanyNum = 0
+            }
+            if let  questionSetID = questionSet["ID"] as? String   {
+                setID = questionSetID
             }
             
+            if let questionSetSurveyIcon = questionSet["SurveyIcon"] as? String  {
+                setSurveyIcon = questionSetSurveyIcon
+            }
+            else {
+                
+            }
+            
+            if let  questionSetSurveyName = questionSet["SurveyName"] as? String {
+                setSurveyName = questionSetSurveyName
+                // return [QuestionSet]()
+            }
+            else {
+                print("somethings wrong with the question data")
+                setSurveyName  = "  "
+            }
+            
+            if let  questionSetSurveyType = questionSet["SurveyType"] as? String  {
+                //print("somethings wrong with the data")
+                //return [QuestionSet]()
+                setSurveyType = questionSetSurveyType
+            }
+            
+            oneQuestionSet.companyNum = setCompanyNum
+            oneQuestionSet.theID      = setID
+            oneQuestionSet.surveyIconPointer = setSurveyIcon
+            oneQuestionSet.surveyName = setSurveyName
+            oneQuestionSet.surveyType = setSurveyType
+            
+            guard let questionList = questionSet["QuesList"] as? [[String: AnyObject]] else {
+                print("somethings wrong with the  question data")
+                return [QuestionSet]()
+            }
+            
+            for oneQuestion in questionList  {
+                
+                let question = Question()
+                var qSetID = " "
+                var qText = " "
+                var qType = 1
+                
+                if let questionSetID = oneQuestion["QuestionSetID"] as? String  {
+                    qSetID = questionSetID
+                }
+                
+                if let questionText = oneQuestion["QuestionText"] as? String {
+                    qText = questionText
+                }
+                
+                if let questionType = oneQuestion["QuestionType"] as? Int {
+                    qType = questionType
+                }
+                
+                question.questionSetID = qSetID
+                question.questionText = qText
+                question.setType(type: qType)
+                print("hopefully added \(qText)")
+                oneQuestionSet.questionList.append(question)
+                // createSubOptionWithCoreData(with: newSubOption)
+                
+                // createQuestionListOnOptionWithCoreData(with: question, withOption: <#T##Option#>)
+                
+            }
+            theQuestions.append(oneQuestionSet)
         }
-        catch let error as NSError {
-            print("Could not fetch. \(error), \(error.userInfo)")
-        }
-        
+        return theQuestions
         
     }
     

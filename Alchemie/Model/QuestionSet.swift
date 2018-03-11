@@ -21,6 +21,8 @@ class Question: NSObject {
     var questionTypeNumber:Int?      //"QuestionType": 1
     var questionType:QuestionTypes?      //"QuestionType": 1
     
+    var parentQuestionSetID:String?
+    
     var questionIconPositions:[[CGPoint]]?
     var questionIconPositionsOne:[CGPoint]?
     var questionIconPositionsTwo:[CGPoint]?
@@ -66,14 +68,20 @@ class QuestionSet: NSObject {
     var companyNum:Int? //"CompanyNum": 0,
     var theID:String? //"ID": "ac215129-d606-4fe3-813d-da73cb591eae",
     var questionList = [Question]()
-    var surveyIcon:String?  //"SurveyIcon": null,
+    var surveyIconImage:UIImage?
+    var surveyIconPointer:String?  //"SurveyIcon": null,
     var surveyName:String?  //"SurveyName": "Photo Adventure",
     var surveyType:String?
+    var parentOptionID:String?
+    
+    override init() {
+        theID = NSUUID().uuidString
+    }
     
     func printQuestionSet(){
         print("companyNum = \(companyNum)")
         print("theID      = \(theID)")
-        print("surveyIcon = \(surveyIcon)")
+        print("surveyIcon = \(surveyIconPointer)")
         print("surveyName = \(surveyName)")
         print("surveyType = \(surveyType)")
     }
