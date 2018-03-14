@@ -812,22 +812,6 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
         SVProgressHUD.show()
         let api = AlchemieAPI()
         
-        /*
-        api.fetchOptions(completion: {   success, response in
-            if (success) {
-                print("lololz")
-                self.eraseOptionsFromCoreDataWithCurrentUser()
-                let downloadedOptions = self.getOptionsFromJSON(withJSON: response)
-                self.options.removeAll()
-                self.options = downloadedOptions
-                self.tableView.reloadData()
-            }
-            else {
-                self.errorPopup()
-            }
-        })
-         */
-        
         api.fetchOptionsBetter(completion: {   success, response in
             if (success) {
                 print("lololz")
@@ -838,14 +822,15 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
                 self.tableView.reloadData()
             }
             else {
+                SVProgressHUD.dismiss()
                 self.errorPopup()
             }
-            self.questionsLoaded = true
-            if (self.checkIfEverythingLoaded()){
-                SVProgressHUD.dismiss()
-            }
+            // self.questionsLoaded = true
+            //if (self.checkIfEverythingLoaded()){
+            //    SVProgressHUD.dismiss()
+            //}
         })
-        self.questionsLoaded = true
+        //self.questionsLoaded = true
  
         /*
         api.fetchQuestionSet(completion: {   success, response in
@@ -1058,13 +1043,14 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
                         print(response.response)
                         debugPrint(response.result)
                         
+                        dispatchGroup.leave()
+                        
                         if let theimage = response.result.value {
                             print("image downloaded: \(theimage)")
                             
                             // should probably do this in queue after images download
                             let item = Item()
-                            /// <-----  fix this ---->
-                            item.originalImage = theimage // UIImage(named: "questionSetIcon2") // this is temporary image. change it soon
+                            item.originalImage = theimage //
                             item.imgUUID = imgPointer
                             item.imgPointer = imgPointer
                             item.parentSubOptionID = newSubOption.subOptionID
@@ -1072,44 +1058,19 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
                             
                             print("one download complete   \(String(describing: title)) on subOtion \(String(describing: newSubOption.name)) and option \(String(describing: newOption.title)) ")
                             
-                            DispatchQueue.main.async {
+                            //DispatchQueue.main.async {
                                 self.addItemToCurrentSubOptionCoreData(subOption: newSubOption,  item: item )
                                 
-                            }
-                            
-                            dispatchGroup.leave()
+                            //}
                             
                         }
                         
                     }
                     
-                    dispatchGroup.notify(queue: DispatchQueue.main) {
-                        // completion?(storedError)
-                        print("Downloads Done!!")
-                        self.optionsLoaded = true
-                        if (self.checkIfEverythingLoaded()) {
-                            SVProgressHUD.dismiss()
-                        }
-                    }
-                    
-                    //completionOperation.addDependency(downloadOperation)
-                    //self.operationQueue.addOperation(downloadOperation)
-                    //completionOperation.addDependency(downloadOperation)
-                    //operationQueue.addOperation(downloadOperation)
-                    //} // let completionOperation = BlockOperation {
-                    
-                    
                 } // for image in imageList {
                 
             }
-            /*
-            guard let questionSets = option["Questionsets"] as? [[String: AnyObject]]else {
-                print("somethings wrong with the options data")
-                return [AnyObject]()
-            }
             
-            self.questions = self.getQuestionSetFromJSON(withJSON: questionSets)
-            */
             
             guard let questionSets = option["Questionsets"] as? [[String: AnyObject]]else {
                 print("somethings wrong with the options data")
@@ -1172,53 +1133,28 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
                 let downloadURL = self.baseDownloadImageURL + "\(setSurveyIcon)"
                 
                 dispatchGroup.enter()
-                
+                // dispatchGroup.e
                 Alamofire.request(downloadURL).responseImage { response in
                     debugPrint(response)
-                    // let downloadOperation = BlockOperation {
+                    
+                    print("  -- one icon!!!")
                     print(response.request)
                     print(response.response)
                     debugPrint(response.result)
+                    
                     
                     if let theimage = response.result.value {
                         
                         if let iconPointer = oneQuestionSet.surveyIconPointer {
                             self.imageStore.setImage(theimage, forKey: iconPointer)
                         }
-                        
-                        dispatchGroup.leave()
-                        
                     }
+                    
+                    dispatchGroup.leave()
+                    
                     
                 }
                 
-                dispatchGroup.notify(queue: DispatchQueue.main) {
-                    // completion?(storedError)
-                    print("Downloads Done!!")
-                    self.optionsLoaded = true
-                    if (self.checkIfEverythingLoaded()) {
-                        SVProgressHUD.dismiss()
-                    }
-                }
-                
-                /*
-                guard let companyNum = oneQuestionSet["CompanyNum"] as? Int else {
-                    print("somethings wrong with the options data")
-                    return [AnyObject]()
-                }
-                guard let questionID = oneQuestionSet["ID"] as? String else {
-                    print("somethings wrong with the options data")
-                    return [AnyObject]()
-                }
-                guard let quesList = oneQuestionSet["QuesList"] as? [[String: AnyObject]] else {
-                    print("somethings wrong with the options data")
-                    return [AnyObject]()
-                }
-                
-                print("\(companyNum)")
-                print("\(questionID)")
-                
-                */
                 
                 guard let questionList = questionSet["QuesList"] as? [[String: AnyObject]] else {
                     print("somethings wrong with the  question data")
@@ -1311,14 +1247,21 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
                 
                 
                 theQuestions.append(oneQuestionSet)
+                newOption.questionSetList.append(oneQuestionSet)
                 createQuestionSetOnOptionWithCoreData(with: oneQuestionSet, withOption: newOption)
             }
             
             
             theOptions.append(CreateSubOption(withParent: newOption))
+            
+            
+            dispatchGroup.notify(queue: DispatchQueue.main) {
+                print("Downloads Done!!")
+                self.optionsLoaded = true
+                SVProgressHUD.dismiss()
+            }
+            
         }
-        
-        
         
         
         // theOptions.append(CreateOption()) ///  - dont do this its put there automatically

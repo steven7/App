@@ -19,6 +19,8 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
     
     @IBOutlet weak var scrollView: UIScrollView!
     
+    @IBOutlet weak var bottomBackgroundView: UIView!
+    
     @IBOutlet weak var uploadButton: UIButton!
     
     var theImage:UIImage?
@@ -38,6 +40,10 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var buttonOne: UIButton!
     @IBOutlet weak var buttonTwo: UIButton!
     @IBOutlet weak var buttonThree: UIButton!
+    
+    var buttonImageOne: UIImage?
+    var buttonImageTwo: UIImage?
+    var buttonImageThree: UIImage?
     
     var onDismiss: ( (UIView)  -> (UIImage) )?
     
@@ -61,8 +67,8 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
         bigImage.image = theImage
         
         // Do any additional setup after loading the view.
-        self.scrollView.minimumZoomScale = 0.2;
-        self.scrollView.maximumZoomScale = 5.0;
+        self.scrollView.minimumZoomScale = 0.95;
+        self.scrollView.maximumZoomScale = 1.15;
         self.scrollView.delegate = self;
         
         self.view.isUserInteractionEnabled = true
@@ -89,17 +95,7 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
         
         self.buttonThree.isUserInteractionEnabled = true
         self.buttonThree.addGestureRecognizer(panGestureThree)
-        
-        /*
-        DispatchQueue.main.async {
-            self.setUpInitialPanGestures()
-        }*/
-        //setUpInitialPanGestures()
-        
-       // self.buttonThree.sendActions(for: <#T##UIControlEvents#>)
-        //self.buttonThree.sendActions(for: .touchDragInside)
-        //panGestureThree()
-        //self.draggedButtonThree(<#T##sender: UIPanGestureRecognizer##UIPanGestureRecognizer#>)
+      
         
         self.view.bringSubview(toFront: eraseIconsButton)
         
@@ -107,19 +103,21 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
         self.uploadButton.layer.cornerRadius = 15
         
         
-        getThreeButtonPositionOnImage()
-        
         let questionSetCount = self.currentOption?.questionSetList.count
         print("we have \(questionSetCount!) questions sets here")
         
+        
         if (questionSetCount! >= 3 ) {
+            let keyOne = self.currentOption?.questionSetList[1].surveyIconPointer
+            self.buttonImageOne = self.imageStore.image(forKey: keyOne!)
+            let keyTwo = self.currentOption?.questionSetList[0].surveyIconPointer
+            self.buttonImageTwo = self.imageStore.image(forKey: keyTwo!)
+            let keyThree = self.currentOption?.questionSetList[2].surveyIconPointer
+            self.buttonImageThree = self.imageStore.image(forKey: keyThree!)
             DispatchQueue.main.async {
-                let keyOne = self.currentOption?.questionSetList[0].surveyIconPointer
-                let keyTwo = self.currentOption?.questionSetList[1].surveyIconPointer
-                let keyThree = self.currentOption?.questionSetList[2].surveyIconPointer
-                //self.buttonOne.imageView?.image = self.imageStore.image(forKey: keyOne!)
-                //self.buttonTwo.imageView?.image = self.imageStore.image(forKey: keyTwo!)
-                //self.buttonThree.imageView?.image = self.imageStore.image(forKey: keyThree!)
+                self.buttonOne.setImage(self.buttonImageOne, for: .normal)
+                self.buttonTwo.setImage(self.buttonImageTwo, for: .normal)
+                self.buttonThree.setImage(self.buttonImageThree, for: .normal)
                 self.setUpInitialPanGesturesOne()
                 self.setUpInitialPanGesturesTwo()
                 self.setUpInitialPanGesturesThree()
@@ -129,11 +127,13 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
             self.buttonThree.isEnabled = false
             self.buttonThree.isHidden = true
             removeButtonThrees()
+            let keyOne = self.currentOption?.questionSetList[1].surveyIconPointer
+            self.buttonImageOne = self.imageStore.image(forKey: keyOne!)
+            let keyTwo = self.currentOption?.questionSetList[0].surveyIconPointer
+            self.buttonImageTwo = self.imageStore.image(forKey: keyTwo!)
             DispatchQueue.main.async {
-                let keyOne = self.currentOption?.questionSetList[0].surveyIconPointer
-                let keyTwo = self.currentOption?.questionSetList[1].surveyIconPointer
-                //self.buttonOne.imageView?.image = self.imageStore.image(forKey: keyOne!)
-                //self.buttonTwo.imageView?.image = self.imageStore.image(forKey: keyTwo!)
+                self.buttonOne.setImage(self.buttonImageOne, for: .normal)
+                self.buttonTwo.setImage(self.buttonImageTwo, for: .normal)
                 self.setUpInitialPanGesturesOne()
                 self.setUpInitialPanGesturesTwo() 
             }
@@ -145,9 +145,10 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
             self.buttonThree.isHidden = true
             removeButtonOnes()
             removeButtonThrees()
+            let keyTwo = self.currentOption?.questionSetList[0].surveyIconPointer
+            self.buttonImageTwo = self.imageStore.image(forKey: keyTwo!)
             DispatchQueue.main.async {
-                let keyTwo = self.currentOption?.questionSetList[0].surveyIconPointer
-                //self.buttonTwo.imageView?.image = self.imageStore.image(forKey: keyTwo!)
+                self.buttonTwo.setImage(self.buttonImageTwo, for: .normal)
                 self.setUpInitialPanGesturesTwo()
             }
         }
@@ -162,9 +163,14 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
             removeButtonTwos()
             removeButtonThrees()
         }
-        // DispatchQueue.main.async {
         
-        // }
+        
+        getThreeButtonPositionOnImage()
+        
+        
+        
+        printIconPositions()
+        
     }
     
 
@@ -212,8 +218,8 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
         let panGestureTwo   = UIPanGestureRecognizer(target: self, action: #selector(draggedButtonEvery(_:) ) )
         copyButtonTwo.addGestureRecognizer(panGestureTwo)
         copyButtonTwo.addTarget(self, action: #selector(buttonPressed(_:)), for: .touchUpInside)
-        let keyTwo = self.currentOption?.questionSetList[0].surveyIconPointer
-        //copyButtonTwo.imageView?.image = self.imageStore.image(forKey: keyTwo!)
+        // copyButtonTwo.imageView?.image = self.buttonImageTwo
+        copyButtonTwo.setImage(self.buttonImageTwo, for: .normal)
         self.buttonTwos.append(copyButtonTwo)
         self.view.addSubview(copyButtonTwo)
     }
@@ -374,7 +380,14 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
     
     @objc func buttonPressed(_ sender: Any) {
         //print("copy button pressed!!")
-        self.performSegue(withIdentifier: "toQuestions", sender: self)
+        let button = sender as! UIButton
+        let point = button.center
+        let rect = scrollView.frame
+        
+        if (rect.contains(point)) {
+            self.performSegue(withIdentifier: "toQuestions", sender: self)
+        }
+        
     }
     
     @IBAction func closeButtonPressed(_ sender: Any) {
@@ -491,7 +504,10 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
         buttonView.isUserInteractionEnabled = true
         buttonView.addGestureRecognizer(newPanGestureOne)
         buttonView.addTarget(self, action: #selector(buttonPressed(_:)), for: .touchUpInside)
-        buttonView.center   = positionCenter 
+        buttonView.center   = positionCenter
+        let keyOne = self.currentOption?.questionSetList[0].surveyIconPointer
+        //buttonView.imageView?.image = self.imageStore.image(forKey: keyOne!)
+        buttonView.setImage(self.buttonImageOne, for: .normal)
         buttonTypeArray.append(buttonView)
         self.bigImage.addSubview(buttonView)
         //view.addSubview(buttonView)
@@ -504,6 +520,9 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
         buttonView.addGestureRecognizer(newPanGestureOne)
         buttonView.addTarget(self, action: #selector(buttonPressed(_:)), for: .touchUpInside)
         buttonView.center   = positionCenter
+        let keyTwo = self.currentOption?.questionSetList[0].surveyIconPointer
+        //buttonView.imageView?.image = self.imageStore.image(forKey: keyTwo!)
+        buttonView.setImage(self.buttonImageTwo, for: .normal)
         buttonTypeArray.append(buttonView)
         self.bigImage.addSubview(buttonView)
         //view.addSubview(buttonView)
@@ -516,6 +535,9 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
         buttonView.addGestureRecognizer(newPanGestureOne)
         buttonView.addTarget(self, action: #selector(buttonPressed(_:)), for: .touchUpInside)
         buttonView.center   = positionCenter
+        let keyThree = self.currentOption?.questionSetList[2].surveyIconPointer
+        // buttonView.imageView?.image = self.imageStore.image(forKey: keyThree!)
+        buttonView.setImage(self.buttonImageThree, for: .normal)
         buttonTypeArray.append(buttonView)
         self.bigImage.addSubview(buttonView)
         //view.addSubview(buttonView)
@@ -528,25 +550,58 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
     ///////////////////
     
     @objc func draggedButtonEvery(_ sender:UIPanGestureRecognizer) {
-        //print(" one !!dupe!! dragged")
-        
+       
         let location = sender.location(in: bigImage)
-        print("the location: \(location)")
-        // let locationsv = sender.location(in: scrollView)
-        // print("the location sv: \(locationsv)")
+        // print("the location: \(location)")
+        
+        let locationv = sender.location(in: self.view)
+        // print("the location in view: \(locationv)")
         
         let buttonView = sender.view as! UIButton
-        //let translation = sender.translation(in: self.bigImage)
-        let translation = sender.translation(in: self.bigImage)
-        buttonView.center   = CGPoint(x: buttonView.center.x + translation.x , y: buttonView.center.y + translation.y)
-        //sender.setTranslation(CGPoint.zero, in: self.view)
-        //sender.setTranslation(CGPoint.zero, in: self.bigImage)
-        sender.setTranslation(CGPoint.zero, in: self.bigImage)
-        // clearButtonsOutsidePicture()
+        let point = buttonView.center
+        let rect = scrollView.frame
         
+        
+        if sender.state == .began || sender.state == .changed {
+        
+            let translation = sender.translation(in: self.bigImage)
+            
+            buttonView.center   = CGPoint(x: buttonView.center.x + translation.x , y: buttonView.center.y + translation.y)
+            
+            sender.setTranslation(CGPoint.zero, in: self.bigImage)
+            
+        }
+        else if sender.state == .ended {
+            //print("pan ended?")
+            if (rect.contains(point)) {
+                if (!bigImage.subviews.contains(buttonView)) {
+                    //self.bigImage.addSubview(buttonView )
+                    
+                    // i dont this is the offiial apple way to convert between different coordinate systems but it works
+                    let xDif = location.x - locationv.x
+                    let yDif = location.y - locationv.y
+                    
+                    buttonView.center   = CGPoint(x: buttonView.center.x + xDif,
+                                                  y: buttonView.center.y + yDif)
+                   
+                    self.view.willRemoveSubview(buttonView)
+                    self.bigImage.addSubview(buttonView )
+                    
+                    // print("icon added to pic")
+                }
+            }
+            else {
+                self.view.addSubview(buttonView )
+            }
+            return
+        }
+        
+        // if (!self.view.bounds.intersects(copyButton.frame) ){
         //if (self.bigImage.bounds.intersects(buttonView.frame) ){
-        if (self.bigImage.bounds.contains(buttonView.center) ){
-            // .contains(copyButton.frame)) {
+        //if (self.bigImage.bounds.contains(buttonView.center) ){
+        //if (!self.bottomBackgroundView.bounds.contains(buttonView.frame)) {
+        /*
+        if (!self.bottomBackgroundView.bounds.contains(buttonView.frame)) {
             if (!bigImage.subviews.contains(buttonView)) {
                 self.bigImage.addSubview(buttonView )
             }
@@ -554,22 +609,50 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
         else {
             self.view.addSubview(buttonView )
         }
+        */
+        
+        /*
+        if (rect.contains(point)) {
+            //if (!scrollView.subviews.contains(buttonView)) {
+            //    self.scrollView.addSubview(buttonView )
+            //}
+            if (!bigImage.subviews.contains(buttonView)) {
+                self.bigImage.addSubview(buttonView )
+            }
+        }
+        else {
+            self.view.addSubview(buttonView )
+        }
+        */
+        
+        //self.view.addSubview(buttonView )
         
     }
     
     @objc func draggedButtonOne(_ sender:UIPanGestureRecognizer) {
+        print("the llzololz ")
         let copyButton = buttonOne.copyButton()
         let panGesture   = UIPanGestureRecognizer(target: self, action: #selector(draggedButtonEvery(_:) ) )
         copyButton.isUserInteractionEnabled = true
         copyButton.addGestureRecognizer(panGesture)
         copyButton.addTarget(self, action: #selector(buttonPressed(_:)), for: .touchUpInside)
+        let keyOne = self.currentOption?.questionSetList[1].surveyIconPointer
+        copyButton.imageView?.image = self.imageStore.image(forKey: keyOne!)
+        copyButton.setImage(self.buttonImageOne, for: .normal)
         buttonOnes.append(copyButton)
-        if (self.scrollView.bounds.intersects(copyButton.frame) ){
+        self.view.addSubview(copyButton)
+        /*
+        //if (self.scrollView.bounds.intersects(copyButton.frame) ){
+        // if (self.bigImage.bounds.intersects(copyButton.frame) ){
+        if (!self.view.bounds.contains(copyButton.frame) ){
+        //if (!self.bottomBackgroundView.bounds.intersects(copyButton.frame)) {
+        //if (self.bigImage.bounds.contains(copyButton.center) ){
             self.bigImage.addSubview(copyButton)
+            //self.scrollView.addSubview(copyButton)
         }
         else {
             self.view.addSubview(copyButton)
-        }
+        }*/
     }
     
     @objc func draggedButtonTwo(_ sender:UIPanGestureRecognizer) {
@@ -580,15 +663,21 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
         copyButton.addTarget(self, action: #selector(buttonPressed(_:)), for: .touchUpInside)
         let keyTwo = self.currentOption?.questionSetList[0].surveyIconPointer
         copyButton.imageView?.image = self.imageStore.image(forKey: keyTwo!)
+        copyButton.setImage(self.buttonImageTwo, for: .normal)
         buttonTwos.append(copyButton)
-        //self.view.addSubview(copyButton)
-        //if (self.bigImage.frame.contains(copyButton.center)) {
-        if (self.scrollView.bounds.intersects(copyButton.frame) ){
+        self.view.addSubview(copyButton)
+        /*
+        if (!self.view.bounds.contains(copyButton.frame) ){
             self.bigImage.addSubview(copyButton)
         }
+        /*
+        if (self.scrollView.bounds.contains(copyButton.frame) ){
+            self.bigImage.addSubview(copyButton)
+        }*/
         else {
             self.view.addSubview(copyButton)
         }
+        */
     }
     
     @objc func draggedButtonThree(_ sender:UIPanGestureRecognizer) {
@@ -597,16 +686,18 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
         copyButton.isUserInteractionEnabled = true
         copyButton.addGestureRecognizer(newPanGestureOne)
         copyButton.addTarget(self, action: #selector(buttonPressed(_:)), for: .touchUpInside)
+        let keyThree = self.currentOption?.questionSetList[2].surveyIconPointer
+        copyButton.imageView?.image = self.imageStore.image(forKey: keyThree!)
+        copyButton.setImage(self.buttonImageThree, for: .normal)
         buttonThrees.append(copyButton)
-        //self.bigImage.addSubview(copyButton)
-        
-        //if (self.bigImage.frame.contains(copyButton.center)) {
+        self.view.addSubview(copyButton)
+        /*
         if (self.scrollView.bounds.intersects(copyButton.frame) ){
             self.bigImage.addSubview(copyButton)
         }
         else {
             self.view.addSubview(copyButton)
-        }
+        }*/
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
