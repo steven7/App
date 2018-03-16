@@ -330,11 +330,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Alchemie/BigImageViewController.swift"
-            timestampString = "542732225.401719"
+            timestampString = "542917301.19944"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "990"
-            endingLineNumber = "990"
+            startingLineNumber = "1035"
+            endingLineNumber = "1035"
             landmarkName = "removedIndicesFromButtonArray(indices:array:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -346,7 +346,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Alchemie/BigImageViewController.swift"
-            timestampString = "542732225.402729"
+            timestampString = "542917301.199949"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "468"
@@ -522,11 +522,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Alchemie/BigImageViewController.swift"
-            timestampString = "542732225.4036191"
+            timestampString = "542917301.2003599"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "861"
-            endingLineNumber = "861"
+            startingLineNumber = "906"
+            endingLineNumber = "906"
             landmarkName = "BigImageViewController"
             landmarkType = "3">
          </BreakpointContent>
@@ -538,11 +538,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Alchemie/BigImageViewController.swift"
-            timestampString = "542732225.404355"
+            timestampString = "542917301.200714"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "879"
-            endingLineNumber = "879"
+            startingLineNumber = "924"
+            endingLineNumber = "924"
             landmarkName = "BigImageViewController"
             landmarkType = "3">
          </BreakpointContent>
@@ -554,11 +554,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Alchemie/BigImageViewController.swift"
-            timestampString = "542732225.405109"
+            timestampString = "542917301.201041"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "866"
-            endingLineNumber = "866"
+            startingLineNumber = "911"
+            endingLineNumber = "911"
             landmarkName = "BigImageViewController"
             landmarkType = "3">
          </BreakpointContent>
@@ -570,11 +570,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Alchemie/BigImageViewController.swift"
-            timestampString = "542732225.405836"
+            timestampString = "542917301.201365"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "864"
-            endingLineNumber = "864"
+            startingLineNumber = "909"
+            endingLineNumber = "909"
             landmarkName = "BigImageViewController"
             landmarkType = "3">
          </BreakpointContent>
@@ -586,55 +586,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Alchemie/BigImageViewController.swift"
-            timestampString = "542732225.4065239"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "875"
-            endingLineNumber = "875"
-            landmarkName = "BigImageViewController"
-            landmarkType = "3">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Alchemie/BigImageViewController.swift"
-            timestampString = "542732225.407182"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "877"
-            endingLineNumber = "877"
-            landmarkName = "BigImageViewController"
-            landmarkType = "3">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Alchemie/BigImageViewController.swift"
-            timestampString = "542732225.407817"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "883"
-            endingLineNumber = "883"
-            landmarkName = "BigImageViewController"
-            landmarkType = "3">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Alchemie/BigImageViewController.swift"
-            timestampString = "542732225.40846"
+            timestampString = "542917301.201689"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "920"
@@ -650,11 +602,59 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Alchemie/BigImageViewController.swift"
-            timestampString = "542732225.409099"
+            timestampString = "542917301.202013"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "886"
-            endingLineNumber = "886"
+            startingLineNumber = "922"
+            endingLineNumber = "922"
+            landmarkName = "BigImageViewController"
+            landmarkType = "3">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Alchemie/BigImageViewController.swift"
+            timestampString = "542917301.20234"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "928"
+            endingLineNumber = "928"
+            landmarkName = "BigImageViewController"
+            landmarkType = "3">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Alchemie/BigImageViewController.swift"
+            timestampString = "542917301.202664"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "965"
+            endingLineNumber = "965"
+            landmarkName = "BigImageViewController"
+            landmarkType = "3">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Alchemie/BigImageViewController.swift"
+            timestampString = "542917301.202987"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "931"
+            endingLineNumber = "931"
             landmarkName = "BigImageViewController"
             landmarkType = "3">
          </BreakpointContent>
@@ -746,11 +746,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Alchemie/BigImageViewController.swift"
-            timestampString = "542732225.409767"
+            timestampString = "542917301.203341"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "863"
-            endingLineNumber = "863"
+            startingLineNumber = "908"
+            endingLineNumber = "908"
             landmarkName = "BigImageViewController"
             landmarkType = "3">
          </BreakpointContent>
@@ -922,7 +922,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Alchemie/BigImageViewController.swift"
-            timestampString = "542732225.4105099"
+            timestampString = "542917301.203755"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "249"
@@ -938,11 +938,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Alchemie/BigImageViewController.swift"
-            timestampString = "542732225.4111331"
+            timestampString = "542917301.204074"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "905"
-            endingLineNumber = "905"
+            startingLineNumber = "950"
+            endingLineNumber = "950"
             landmarkName = "BigImageViewController"
             landmarkType = "3">
          </BreakpointContent>
@@ -954,11 +954,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Alchemie/BigImageViewController.swift"
-            timestampString = "542732225.4117661"
+            timestampString = "542917301.204397"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "851"
-            endingLineNumber = "851"
+            startingLineNumber = "896"
+            endingLineNumber = "896"
             landmarkName = "saveButtonPositionsToCoreData(buttonOneCenters:buttonTwoCenters:buttonThreeCenters:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1002,7 +1002,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Alchemie/BigImageViewController.swift"
-            timestampString = "542732225.41243"
+            timestampString = "542917301.204746"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "453"
@@ -1018,7 +1018,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Alchemie/BigImageViewController.swift"
-            timestampString = "542732225.41307"
+            timestampString = "542917301.2050689"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "459"
@@ -1034,7 +1034,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Alchemie/BigImageViewController.swift"
-            timestampString = "542732225.413703"
+            timestampString = "542917301.205389"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "465"
@@ -1050,11 +1050,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Alchemie/BigImageViewController.swift"
-            timestampString = "542732225.4143389"
+            timestampString = "542917301.2057199"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "775"
-            endingLineNumber = "775"
+            startingLineNumber = "820"
+            endingLineNumber = "820"
             landmarkName = "getIconPositionsAndSaveToCoreData()"
             landmarkType = "7">
          </BreakpointContent>
@@ -1066,11 +1066,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Alchemie/BigImageViewController.swift"
-            timestampString = "542732225.41497"
+            timestampString = "542917301.20604"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "801"
-            endingLineNumber = "801"
+            startingLineNumber = "846"
+            endingLineNumber = "846"
             landmarkName = "getIconPositionsAndSaveToCoreData()"
             landmarkType = "7">
          </BreakpointContent>
@@ -1082,11 +1082,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Alchemie/BigImageViewController.swift"
-            timestampString = "542732225.415596"
+            timestampString = "542917301.2063611"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "841"
-            endingLineNumber = "841"
+            startingLineNumber = "886"
+            endingLineNumber = "886"
             landmarkName = "saveButtonPositionsToCoreData(buttonOneCenters:buttonTwoCenters:buttonThreeCenters:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1098,11 +1098,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Alchemie/BigImageViewController.swift"
-            timestampString = "542732225.416227"
+            timestampString = "542917301.206679"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "793"
-            endingLineNumber = "793"
+            startingLineNumber = "838"
+            endingLineNumber = "838"
             landmarkName = "getIconPositionsAndSaveToCoreData()"
             landmarkType = "7">
          </BreakpointContent>
@@ -1114,11 +1114,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Alchemie/BigImageViewController.swift"
-            timestampString = "542732225.4168791"
+            timestampString = "542917301.2069989"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "810"
-            endingLineNumber = "810"
+            startingLineNumber = "855"
+            endingLineNumber = "855"
             landmarkName = "saveButtonPositionsToCoreData(buttonOneCenters:buttonTwoCenters:buttonThreeCenters:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1130,11 +1130,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Alchemie/BigImageViewController.swift"
-            timestampString = "542732225.417513"
+            timestampString = "542917301.207322"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "830"
-            endingLineNumber = "830"
+            startingLineNumber = "875"
+            endingLineNumber = "875"
             landmarkName = "saveButtonPositionsToCoreData(buttonOneCenters:buttonTwoCenters:buttonThreeCenters:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1178,11 +1178,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Alchemie/BigImageViewController.swift"
-            timestampString = "542732225.4181761"
+            timestampString = "542917301.207671"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "834"
-            endingLineNumber = "834"
+            startingLineNumber = "879"
+            endingLineNumber = "879"
             landmarkName = "saveButtonPositionsToCoreData(buttonOneCenters:buttonTwoCenters:buttonThreeCenters:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1194,11 +1194,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Alchemie/BigImageViewController.swift"
-            timestampString = "542732225.4188139"
+            timestampString = "542917301.207996"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "820"
-            endingLineNumber = "820"
+            startingLineNumber = "865"
+            endingLineNumber = "865"
             landmarkName = "saveButtonPositionsToCoreData(buttonOneCenters:buttonTwoCenters:buttonThreeCenters:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1210,11 +1210,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Alchemie/BigImageViewController.swift"
-            timestampString = "542732225.419453"
+            timestampString = "542917301.208315"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "854"
-            endingLineNumber = "854"
+            startingLineNumber = "899"
+            endingLineNumber = "899"
             landmarkName = "saveButtonPositionsToCoreData(buttonOneCenters:buttonTwoCenters:buttonThreeCenters:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1226,11 +1226,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Alchemie/BigImageViewController.swift"
-            timestampString = "542732225.420082"
+            timestampString = "542917301.208634"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "826"
-            endingLineNumber = "826"
+            startingLineNumber = "871"
+            endingLineNumber = "871"
             landmarkName = "saveButtonPositionsToCoreData(buttonOneCenters:buttonTwoCenters:buttonThreeCenters:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1706,7 +1706,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Alchemie/BigImageViewController.swift"
-            timestampString = "542732225.420975"
+            timestampString = "542917301.209197"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "250"
@@ -1722,7 +1722,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Alchemie/BigImageViewController.swift"
-            timestampString = "542732225.4215961"
+            timestampString = "542917301.2095129"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "251"
@@ -1738,11 +1738,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Alchemie/BigImageViewController.swift"
-            timestampString = "542732225.422214"
+            timestampString = "542917301.2098269"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "636"
-            endingLineNumber = "636"
+            startingLineNumber = "681"
+            endingLineNumber = "681"
             landmarkName = "draggedButtonOne(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1754,11 +1754,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Alchemie/BigImageViewController.swift"
-            timestampString = "542732225.4228491"
+            timestampString = "542917301.210152"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "661"
-            endingLineNumber = "661"
+            startingLineNumber = "706"
+            endingLineNumber = "706"
             landmarkName = "draggedButtonTwo(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1770,11 +1770,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Alchemie/BigImageViewController.swift"
-            timestampString = "542732225.423499"
+            timestampString = "542917301.210476"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "685"
-            endingLineNumber = "685"
+            startingLineNumber = "730"
+            endingLineNumber = "730"
             landmarkName = "draggedButtonThree(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1786,11 +1786,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Alchemie/BigImageViewController.swift"
-            timestampString = "542732225.424141"
+            timestampString = "542917301.210798"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "638"
-            endingLineNumber = "638"
+            startingLineNumber = "683"
+            endingLineNumber = "683"
             landmarkName = "draggedButtonOne(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1802,11 +1802,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Alchemie/BigImageViewController.swift"
-            timestampString = "542732225.424771"
+            timestampString = "542917301.2111191"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "645"
-            endingLineNumber = "645"
+            startingLineNumber = "690"
+            endingLineNumber = "690"
             landmarkName = "draggedButtonOne(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1818,7 +1818,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Alchemie/BigImageViewController.swift"
-            timestampString = "542732225.425406"
+            timestampString = "542917301.21144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "556"
@@ -1834,11 +1834,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Alchemie/BigImageViewController.swift"
-            timestampString = "542732225.426049"
+            timestampString = "542917301.211761"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "675"
-            endingLineNumber = "675"
+            startingLineNumber = "720"
+            endingLineNumber = "720"
             landmarkName = "draggedButtonTwo(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1850,75 +1850,91 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Alchemie/BigImageViewController.swift"
-            timestampString = "542732225.426681"
+            timestampString = "542917301.21208"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "695"
+            endingLineNumber = "695"
+            landmarkName = "draggedButtonOne(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Alchemie/BigImageViewController.swift"
+            timestampString = "542917301.2124"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "682"
+            endingLineNumber = "682"
+            landmarkName = "draggedButtonOne(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Alchemie/BigImageViewController.swift"
+            timestampString = "542917301.2127171"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "680"
+            endingLineNumber = "680"
+            landmarkName = "draggedButtonOne(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Alchemie/BigImageViewController.swift"
+            timestampString = "542917301.2130359"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "708"
+            endingLineNumber = "708"
+            landmarkName = "draggedButtonTwo(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Alchemie/BigImageViewController.swift"
+            timestampString = "542917301.213354"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "596"
+            endingLineNumber = "596"
+            landmarkName = "draggedButtonEvery(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Alchemie/BigImageViewController.swift"
+            timestampString = "542917301.213672"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "650"
             endingLineNumber = "650"
-            landmarkName = "draggedButtonOne(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Alchemie/BigImageViewController.swift"
-            timestampString = "542732225.427317"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "637"
-            endingLineNumber = "637"
-            landmarkName = "draggedButtonOne(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Alchemie/BigImageViewController.swift"
-            timestampString = "542732225.427965"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "635"
-            endingLineNumber = "635"
-            landmarkName = "draggedButtonOne(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Alchemie/BigImageViewController.swift"
-            timestampString = "542732225.4286031"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "663"
-            endingLineNumber = "663"
-            landmarkName = "draggedButtonTwo(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Alchemie/BigImageViewController.swift"
-            timestampString = "542732225.429232"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "566"
-            endingLineNumber = "566"
             landmarkName = "draggedButtonEvery(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1930,27 +1946,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Alchemie/BigImageViewController.swift"
-            timestampString = "542732225.429863"
+            timestampString = "542917301.213991"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "605"
-            endingLineNumber = "605"
-            landmarkName = "draggedButtonEvery(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Alchemie/BigImageViewController.swift"
-            timestampString = "542732225.430499"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "610"
-            endingLineNumber = "610"
+            startingLineNumber = "655"
+            endingLineNumber = "655"
             landmarkName = "draggedButtonEvery(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1978,7 +1978,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Alchemie/BigImageViewController.swift"
-            timestampString = "542732225.4311531"
+            timestampString = "542917301.214323"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "68"
@@ -2010,7 +2010,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Alchemie/BigImageViewController.swift"
-            timestampString = "542732225.431792"
+            timestampString = "542917301.214664"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "69"
@@ -2314,7 +2314,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Alchemie/BigImageViewController.swift"
-            timestampString = "542732225.432564"
+            timestampString = "542917301.215145"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "419"
@@ -2330,7 +2330,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Alchemie/BigImageViewController.swift"
-            timestampString = "542732225.433189"
+            timestampString = "542917301.215474"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "411"
@@ -2346,7 +2346,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Alchemie/BigImageViewController.swift"
-            timestampString = "542732225.433814"
+            timestampString = "542917301.2158051"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "406"
@@ -2362,7 +2362,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Alchemie/BigImageViewController.swift"
-            timestampString = "542732225.434436"
+            timestampString = "542917301.216121"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "414"
@@ -2378,7 +2378,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Alchemie/BigImageViewController.swift"
-            timestampString = "542732225.43505"
+            timestampString = "542917301.2164479"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "422"
@@ -2394,7 +2394,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Alchemie/BigImageViewController.swift"
-            timestampString = "542732225.435771"
+            timestampString = "542917301.216766"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "407"
@@ -2410,7 +2410,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Alchemie/BigImageViewController.swift"
-            timestampString = "542732225.436461"
+            timestampString = "542917301.217092"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "152"
@@ -2426,7 +2426,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Alchemie/BigImageViewController.swift"
-            timestampString = "542732225.437091"
+            timestampString = "542917301.217412"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "518"
@@ -2442,7 +2442,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Alchemie/BigImageViewController.swift"
-            timestampString = "542732225.4381059"
+            timestampString = "542917301.217733"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "223"
@@ -2458,11 +2458,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Alchemie/BigImageViewController.swift"
-            timestampString = "542732225.439245"
+            timestampString = "542917301.218049"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "665"
-            endingLineNumber = "665"
+            startingLineNumber = "710"
+            endingLineNumber = "710"
             landmarkName = "draggedButtonTwo(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -2474,7 +2474,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Alchemie/BigImageViewController.swift"
-            timestampString = "542732225.44046"
+            timestampString = "542917301.2183681"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "67"
@@ -2490,11 +2490,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Alchemie/BigImageViewController.swift"
-            timestampString = "542732225.441198"
+            timestampString = "542917301.218695"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "667"
-            endingLineNumber = "667"
+            startingLineNumber = "712"
+            endingLineNumber = "712"
             landmarkName = "draggedButtonTwo(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -2506,11 +2506,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Alchemie/BigImageViewController.swift"
-            timestampString = "542732225.441882"
+            timestampString = "542917301.219015"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "662"
-            endingLineNumber = "662"
+            startingLineNumber = "707"
+            endingLineNumber = "707"
             landmarkName = "draggedButtonTwo(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -2522,7 +2522,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Alchemie/BigImageViewController.swift"
-            timestampString = "542732225.442636"
+            timestampString = "542917301.219337"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "149"
@@ -2826,7 +2826,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Alchemie/BigImageViewController.swift"
-            timestampString = "542732225.443553"
+            timestampString = "542917301.219732"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "173"
@@ -2842,7 +2842,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Alchemie/BigImageViewController.swift"
-            timestampString = "542732225.444231"
+            timestampString = "542917301.220062"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "147"

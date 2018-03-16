@@ -67,8 +67,8 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
         bigImage.image = theImage
         
         // Do any additional setup after loading the view.
-        self.scrollView.minimumZoomScale = 0.95;
-        self.scrollView.maximumZoomScale = 1.15;
+        self.scrollView.minimumZoomScale = 1.0
+        self.scrollView.maximumZoomScale = 3.5
         self.scrollView.delegate = self;
         
         self.view.isUserInteractionEnabled = true
@@ -561,12 +561,57 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
         let point = buttonView.center
         let rect = scrollView.frame
         
-        
-        if sender.state == .began || sender.state == .changed {
-        
+        /*
+        if sender.state == .began {
+            
+            //let translation = sender.translation(in: self.bigImage)
+            
+            
+            let xDif = location.x - locationv.x
+            let yDif = location.y - locationv.y
+            
+            buttonView.center   = CGPoint(x: buttonView.center.x - xDif,
+                                          y: buttonView.center.y - yDif)
+            
+            
+            //buttonView.center   = CGPoint(x: buttonView.center.x + translation.x , y: buttonView.center.y + translation.y)
+            
+        }
+        else if sender.state == .changed {
             let translation = sender.translation(in: self.bigImage)
             
+            let xDif = location.x - locationv.x
+            let yDif = location.y - locationv.y
+            
+            //buttonView.center   = CGPoint(x: buttonView.center.x + xDif,
+            //                              y: buttonView.center.y + yDif)
+            
+            
             buttonView.center   = CGPoint(x: buttonView.center.x + translation.x , y: buttonView.center.y + translation.y)
+            
+            sender.setTranslation(CGPoint.zero, in: self.bigImage)
+        }
+        */
+        if sender.state == .began || sender.state == .changed {
+        
+            var translation:CGPoint?
+            
+            if (buttonView.superview == self.view) {
+                translation = sender.translation(in: self.view)
+            }
+            else if (buttonView.superview == self.bigImage) {
+                translation = sender.translation(in: self.bigImage)
+            }
+            //let translation = sender.translation(in: self.view)
+            
+            let xDif = location.x - locationv.x
+            let yDif = location.y - locationv.y
+            
+            //buttonView.center   = CGPoint(x: buttonView.center.x + xDif,
+            //                              y: buttonView.center.y + yDif)
+            
+            
+            buttonView.center   = CGPoint(x: buttonView.center.x + translation!.x , y: buttonView.center.y + translation!.y)
             
             sender.setTranslation(CGPoint.zero, in: self.bigImage)
             
