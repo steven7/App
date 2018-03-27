@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SVProgressHUD
 
 class QuestionsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIGestureRecognizerDelegate {
     
@@ -42,6 +43,9 @@ class QuestionsViewController: UIViewController, UITableViewDelegate, UITableVie
     
     var theQuestionTypes = [Question.QuestionTypes]()
     
+    var currentOption:Option?
+    var currentSubOption:SubOption?
+    var currentItem:Item?
     
     let imagePicker = UIImagePickerController()
     
@@ -575,6 +579,50 @@ class QuestionsViewController: UIViewController, UITableViewDelegate, UITableVie
     
     @IBAction func saveButtonPressed(_ sender: Any) {
         // self.navigationController?.popViewController(animated: false)
+        let id  = "test lol"
+        let projectID  = "test lol"
+        let questionSetID  = "test lol"
+        let answerSetInstanceID  = "test lol"
+        let backgroundID  = "test lol"
+        let answerSetXPosition  = 88
+        let answerSetYPosition  = 88
+        let questionNum  = 6
+        let answerType =  1
+        
+        let imgPointer = self.currentItem!.imgPointer
+        let answer = "test lol"
+        
+        let api = AlchemieAPI()
+        
+        //SVProgressHUD.show()
+        
+        api.uploadAnswers(id: id,
+                          projectID: projectID,
+                          questionSetID: questionSetID,
+                          answerSetInstanceID: answerSetInstanceID,
+                          backgroundID: backgroundID,
+                          answerSetXPosition: answerSetXPosition,
+                          answerSetYPosition: answerSetYPosition,
+                          questionNum: questionNum,
+                          answerType: answerType,
+                          imgPointer: imgPointer!,
+                          answer: answer,
+                          completion:  {   success, response in
+            
+            if (success) {
+                print("lololz")
+                print(response)
+                self.uploadSuccessPopup()
+            }
+            else {
+                self.errorPopup()
+            }
+            SVProgressHUD.dismiss()
+            // self.questionsLoaded = true
+            //if (self.checkIfEverythingLoaded()){
+            //    SVProgressHUD.dismiss()
+            //}
+        })
     }
     
     @IBAction func discardButtonPressed(_ sender: Any) {

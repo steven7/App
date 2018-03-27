@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import SVProgressHUD
 
 class BigImageViewController: UIViewController, UIScrollViewDelegate {
     
@@ -30,7 +31,7 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
     var touchedLocation = CGPoint(x: 0.0, y: 0.0)
     
     var currentOption:Option?
-    var currentSubOption:SubOption?// not used yet
+    var currentSubOption:SubOption?
     var currentItem:Item?
     
     // var questions = [QuestionSet]()
@@ -749,6 +750,9 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
         if (segue.identifier == "toQuestions") {
             let viewController = segue.destination as! QuestionsViewController
             if let option = currentOption {
+                viewController.currentOption = self.currentOption
+                viewController.currentSubOption = self.currentSubOption
+                viewController.currentItem = self.currentItem
                 viewController.theQuestions = option.questionSetList[0].questionList
             }
         }
@@ -1039,7 +1043,23 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
     }
     
     @IBAction func uploadButtonPressed(_ sender: Any) {
-        self.comingSoonPopup()
+        let api = AlchemieAPI()
+        let pointer = currentItem?.imgPointer
+        SVProgressHUD.show()
+        let editedImage = onDismiss!(self.view);
+        api.uploadImage(theImage: editedImage ,imgPointer: pointer!, completion: {
+            success, response in
+            if (success) {
+                print("lololz")
+                print(response)
+                self.uploadSuccessPopup()
+            }
+            else {
+                self.errorPopup()
+            }
+            SVProgressHUD.dismiss()
+        })
+        //self.comingSoonPopup()
     }
     
 }

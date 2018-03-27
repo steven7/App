@@ -109,6 +109,13 @@ extension UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
+    func uploadSuccessPopup() {
+        let alert = UIAlertController(title: "Success", message: "Upload was successful", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+        alert.addAction(okAction)
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     func errorPopup() {
         let alert = UIAlertController(title: "Error", message: "Something went wrong", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
