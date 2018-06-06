@@ -11,6 +11,7 @@ target 'Alchemie' do
   pod 'SVProgressHUD'
   pod 'SwiftKeychainWrapper','~>3.0.1'	
   pod 'AlamofireImage', '~> 3.3'
+  pod 'DropDown'
   
   target 'AlchemieTests' do
     inherit! :search_paths

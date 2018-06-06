@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -13,48 +13,59 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="photoCell" rowHeight="85" id="KGk-i7-Jjw" customClass="PhotoQuestionTableViewCell" customModule="Alchemie" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="599" height="104"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="photoCell" rowHeight="385" id="KGk-i7-Jjw" customClass="PhotoQuestionTableViewCell" customModule="Alchemie" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="597" height="139"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="599" height="103.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="597" height="138.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wy2-Ek-zzQ">
-                        <rect key="frame" x="120" y="27" width="259" height="50"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="50" id="ans-zu-BN4"/>
-                        </constraints>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wy2-Ek-zzQ">
+                        <rect key="frame" x="190" y="0.0" width="207" height="138.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="36"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WXD-lb-5pp">
-                        <rect key="frame" x="389" y="9" width="86" height="86"/>
+                        <rect key="frame" x="397" y="4.5" width="130" height="130"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="86" id="ATC-q2-IyV"/>
-                            <constraint firstAttribute="width" constant="86" id="P7X-fT-mRb"/>
+                            <constraint firstAttribute="height" constant="130" id="ATC-q2-IyV"/>
+                            <constraint firstAttribute="width" constant="130" id="P7X-fT-mRb"/>
                         </constraints>
                         <state key="normal" backgroundImage="addPhoto"/>
                         <connections>
                             <action selector="photoButtonPressed:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="10B-ns-rah"/>
                         </connections>
                     </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nid-M2-QgH">
+                        <rect key="frame" x="120" y="44" width="60" height="50"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="50" id="0y4-uZ-2WQ"/>
+                            <constraint firstAttribute="width" constant="60" id="fOO-nL-evu"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="36"/>
+                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="WXD-lb-5pp" firstAttribute="leading" secondItem="Wy2-Ek-zzQ" secondAttribute="trailing" constant="10" id="1Rl-AJ-zHX"/>
-                    <constraint firstItem="WXD-lb-5pp" firstAttribute="centerY" secondItem="Wy2-Ek-zzQ" secondAttribute="centerY" id="CTi-ZN-avf"/>
-                    <constraint firstItem="Wy2-Ek-zzQ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="100" id="H4f-yy-S4j"/>
-                    <constraint firstItem="Wy2-Ek-zzQ" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="aap-Cb-Yck"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="Wy2-Ek-zzQ" secondAttribute="trailing" constant="200" id="hKv-cy-ikh"/>
+                    <constraint firstItem="WXD-lb-5pp" firstAttribute="leading" secondItem="Wy2-Ek-zzQ" secondAttribute="trailing" id="1Rl-AJ-zHX"/>
+                    <constraint firstItem="Nid-M2-QgH" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="100" id="LYF-91-3rc"/>
+                    <constraint firstItem="Wy2-Ek-zzQ" firstAttribute="leading" secondItem="Nid-M2-QgH" secondAttribute="trailing" constant="10" id="STe-Th-axx"/>
+                    <constraint firstItem="Wy2-Ek-zzQ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="Wbx-5F-3DY"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="Wy2-Ek-zzQ" secondAttribute="trailing" constant="180" id="hKv-cy-ikh"/>
+                    <constraint firstItem="WXD-lb-5pp" firstAttribute="centerY" secondItem="Nid-M2-QgH" secondAttribute="centerY" id="hiS-JF-bHN"/>
+                    <constraint firstAttribute="bottom" secondItem="Wy2-Ek-zzQ" secondAttribute="bottom" id="kFw-Y9-lvc"/>
+                    <constraint firstItem="Nid-M2-QgH" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="nsk-8c-W2V"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="photoButton" destination="WXD-lb-5pp" id="FRk-Cy-oTo"/>
                 <outlet property="questionLabel" destination="Wy2-Ek-zzQ" id="7mg-As-tqe"/>
+                <outlet property="questionNumber" destination="Nid-M2-QgH" id="2tw-ML-Lvi"/>
             </connections>
-            <point key="canvasLocation" x="174.5" y="84"/>
+            <point key="canvasLocation" x="173.5" y="101.5"/>
         </tableViewCell>
     </objects>
     <resources>

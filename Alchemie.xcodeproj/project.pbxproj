@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		26D4158116988224EDD565BC /* Pods_AlchemieTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67D8098136A2390695312A32 /* Pods_AlchemieTests.framework */; };
 		74D615FEC39BA1D2F852B3E6 /* Pods_Alchemie.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 860D9649C2D92FEE108E9EE1 /* Pods_Alchemie.framework */; };
+		AA160FD920820464003D4A47 /* CoreDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA160FD820820464003D4A47 /* CoreDataStore.swift */; };
+		AA160FDB20820628003D4A47 /* QuestionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA160FDA20820628003D4A47 /* QuestionButton.swift */; };
 		AA3152CE1FEA796000C772DE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3152CD1FEA796000C772DE /* AppDelegate.swift */; };
 		AA3152D01FEA796000C772DE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3152CF1FEA796000C772DE /* ViewController.swift */; };
 		AA3152D31FEA796000C772DE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA3152D11FEA796000C772DE /* Main.storyboard */; };
@@ -92,6 +94,8 @@
 		67D8098136A2390695312A32 /* Pods_AlchemieTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AlchemieTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A1E9DE0532AA032C714F154 /* Pods_AlchemieUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AlchemieUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		860D9649C2D92FEE108E9EE1 /* Pods_Alchemie.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Alchemie.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA160FD820820464003D4A47 /* CoreDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStore.swift; sourceTree = "<group>"; };
+		AA160FDA20820628003D4A47 /* QuestionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionButton.swift; sourceTree = "<group>"; };
 		AA3152CA1FEA796000C772DE /* Alchemie.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Alchemie.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA3152CD1FEA796000C772DE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AA3152CF1FEA796000C772DE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -235,8 +239,10 @@
 				AAB1252F1FF4443300F75EBA /* BigImageViewController.swift */,
 				AAC3530520074845005EB207 /* QuestionsViewController.swift */,
 				AA3152D11FEA796000C772DE /* Main.storyboard */,
+				AA160FD820820464003D4A47 /* CoreDataStore.swift */,
 				AA3153081FEA79D300C772DE /* AlchemieAPI.swift */,
 				AACFE9891FEC348A00B798D7 /* Extensions.swift */,
+				AA160FDA20820628003D4A47 /* QuestionButton.swift */,
 				AACFE98B1FEC356E00B798D7 /* Utilities.swift */,
 				AA54CC8D1FEEB17F00B72C44 /* ImageStore.swift */,
 				AA6C7A991FEB3C6B00392EE7 /* Model */,
@@ -512,6 +518,7 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-Alchemie/Pods-Alchemie-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework",
+				"${BUILT_PRODUCTS_DIR}/DropDown/DropDown.framework",
 				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftKeychainWrapper/SwiftKeychainWrapper.framework",
 			);
@@ -519,6 +526,7 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DropDown.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftKeychainWrapper.framework",
 			);
@@ -674,6 +682,7 @@
 				AA9A1C061FED6E5600F61C8F /* CreateItem.swift in Sources */,
 				AA6311352006E8780023D786 /* QuestionSet.swift in Sources */,
 				AA9A1C041FED468F00F61C8F /* Item.swift in Sources */,
+				AA160FDB20820628003D4A47 /* QuestionButton.swift in Sources */,
 				AA371D60200AE03200BCD3AC /* YesOrNoQuestionTableViewCell.swift in Sources */,
 				AA7D4F1E202E2E61005CA847 /* NextQuestionTableViewCell.swift in Sources */,
 				AA371D5A200ADFEA00BCD3AC /* TextQuestionTableViewCell.swift in Sources */,
@@ -681,6 +690,7 @@
 				AA3153251FEA7BCF00C772DE /* SubOption.swift in Sources */,
 				AA3153051FEA79B800C772DE /* OptionsViewController.swift in Sources */,
 				AA371D68200AE05500BCD3AC /* MultiListQuestionTableViewCell.swift in Sources */,
+				AA160FD920820464003D4A47 /* CoreDataStore.swift in Sources */,
 				AA6C7A971FEB3BFE00392EE7 /* CreateItemCollectionViewCell.swift in Sources */,
 				AA3153091FEA79D300C772DE /* AlchemieAPI.swift in Sources */,
 				AA371D64200AE04300BCD3AC /* ListQuestionTableViewCell.swift in Sources */,
@@ -872,7 +882,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.alchemie.Alchemie;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Debug;
 		};
@@ -889,7 +899,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.alchemie.Alchemie;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Release;
 		};

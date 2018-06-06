@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -21,16 +21,16 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cfn-Rr-1rP">
-                        <rect key="frame" x="197.5" y="11" width="572" height="30"/>
+                        <rect key="frame" x="187.5" y="11" width="582" height="50"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="30" id="RhJ-4a-1B8"/>
+                            <constraint firstAttribute="height" constant="50" id="RhJ-4a-1B8"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="36"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yZk-Zr-lxZ">
-                        <rect key="frame" x="197.5" y="61" width="472" height="50"/>
+                        <rect key="frame" x="197.5" y="81" width="472" height="50"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="50" id="XSK-vq-Rmq"/>
                         </constraints>
@@ -44,7 +44,7 @@
                     <constraint firstAttribute="trailingMargin" secondItem="cfn-Rr-1rP" secondAttribute="trailing" id="8Xl-kh-PGW"/>
                     <constraint firstItem="yZk-Zr-lxZ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="100" id="JaE-a1-N3A"/>
                     <constraint firstAttribute="trailingMargin" secondItem="yZk-Zr-lxZ" secondAttribute="trailing" constant="100" id="R0W-7K-NdF"/>
-                    <constraint firstItem="cfn-Rr-1rP" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="100" id="kNp-NG-uJd"/>
+                    <constraint firstItem="cfn-Rr-1rP" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="90" id="kNp-NG-uJd"/>
                     <constraint firstItem="cfn-Rr-1rP" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="rfZ-9u-yf1"/>
                 </constraints>
             </tableViewCellContentView>

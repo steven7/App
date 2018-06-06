@@ -10,6 +10,8 @@ import UIKit
 
 class PhotoQuestionTableViewCell: UITableViewCell, UIImagePickerControllerDelegate, UINavigationControllerDelegate  {
 
+    @IBOutlet weak var questionNumber: UILabel!
+    
     @IBOutlet weak var questionLabel: UILabel!
     
     @IBOutlet weak var photoButton: UIButton!
@@ -17,31 +19,16 @@ class PhotoQuestionTableViewCell: UITableViewCell, UIImagePickerControllerDelega
     var theImage:UIImage?
     let imagePicker = UIImagePickerController()
     
-    var photoClosure:((UIButton)->())?
+    //var photoClosure:((UIButton)->())?
+    
+    var photoClosure:((UIButton, Int, Int)->())?
+    
+    var row:Int?
+    var currentQuestionNumber:Int?
     
     @IBAction func photoButtonPressed(_ sender: Any) {
-        photoClosure!(photoButton)
-        /*
-        let photoAlert = UIAlertController(title: "Photo Source", message: "What is the source of the photo?", preferredStyle: .actionSheet)
-        //photoAlert.popoverPresentationController?.sourceView = photoButton
-        photoAlert.popoverPresentationController?.sourceView = self.view
-        photoAlert.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection()
-        photoAlert.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY - 180, width: 0, height: 0)
-        let libraryAction = UIAlertAction(title: "Photo Library", style: .default, handler: { action in
-            self.imagePicker.allowsEditing = false
-            self.imagePicker.sourceType = .photoLibrary
-            self.present(self.imagePicker, animated: true, completion: nil)
-        })
-        let cameraAction  = UIAlertAction(title: "Camera", style: .default, handler: { action in
-            self.imagePicker.allowsEditing = false
-            self.imagePicker.sourceType = .camera
-            self.present(self.imagePicker, animated: true, completion: nil)
-        })
-        photoAlert.addAction(libraryAction)
-        photoAlert.addAction(cameraAction)
-        self.present(photoAlert, animated: true, completion: {
-            print("done lololz")
-        })*/
+        // photoClosure!(photoButton)
+        photoClosure!(photoButton, row!, currentQuestionNumber!)
     }
     
     
@@ -54,6 +41,15 @@ class PhotoQuestionTableViewCell: UITableViewCell, UIImagePickerControllerDelega
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    func getAnswer() -> String {
+        if (photoButton.currentBackgroundImage != nil) {
+            return "photo"
+        }
+        else {
+            return UUID().uuidString
+        }
     }
     
     // MARK: - Image Picker
@@ -76,4 +72,5 @@ class PhotoQuestionTableViewCell: UITableViewCell, UIImagePickerControllerDelega
         //dismiss(animated: true, completion: nil)
     }
     */
+    
 }

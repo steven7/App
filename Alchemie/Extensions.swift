@@ -26,22 +26,7 @@ extension UIImage {
 
 extension UIButton {
     
-    func copyButton() -> UIButton {
-        let copyButton = UIButton(type: .custom)
-        copyButton.setTitle(self.titleLabel?.text, for: .normal)
-        copyButton.titleLabel?.font = UIFont(name: "System", size: 20.0)
-        copyButton.setTitleColor(UIColor.lightBlue, for: .normal)
-        copyButton.backgroundColor = UIColor.clear
-        // copyButton.setBackgroundImage(self.currentBackgroundImage, for: .normal)
-        //copyButton.setImage(self.currentImage, for: .normal)
-        copyButton.setImage(self.image(for: .normal), for: .normal)
-        copyButton.imageView?.layer.cornerRadius = 10
-        copyButton.layer.cornerRadius = 10
-        copyButton.frame = self.frame
-        //copyButton.frame =
-            // CGRect(x: buttonThree.frame.minX, y: buttonThree.frame.minY, width: buttonThree.frame.width, height: buttonThree.frame.height)
-        return copyButton
-    }
+    
     
 }
 
@@ -81,6 +66,7 @@ extension UIButton {
 
 extension UIViewController {
     
+    
     func notConnectedToInternetPopup() {
         let alert = UIAlertController(title: "Not connected to internet", message: "Connect to the internet and try again", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
@@ -116,6 +102,13 @@ extension UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
+    func partialErrorPopup(num: Int) {
+        let alert = UIAlertController(title: "Error", message: "Something went wrong with \(num) uploads", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+        alert.addAction(okAction)
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     func errorPopup() {
         let alert = UIAlertController(title: "Error", message: "Something went wrong", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
@@ -129,6 +122,17 @@ extension UIViewController {
         let okAction = UIAlertAction(title: "OK", style: .default, handler: { action in
             completion()
         })
+        alert.addAction(cancelAction)
+        alert.addAction(okAction)
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func saveQuestionsPopup(completion: @escaping ()->()) {
+        let alert = UIAlertController(title: "Save", message: "Anwers saved. Do you want to exit the questionnaire?", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Yes", style: .default, handler: { action in
+            completion()
+        })
+        let cancelAction = UIAlertAction(title: "No", style: .cancel, handler: nil)
         alert.addAction(cancelAction)
         alert.addAction(okAction)
         self.present(alert, animated: true, completion: nil)
@@ -152,3 +156,41 @@ extension UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
 }
+
+protocol Copying {
+    init(original: Self)
+}
+
+extension Copying {
+    func copy() -> Self {
+        return Self.init(original: self)
+    }
+}
+
+//extension Array where Question: Copying {
+//    func clone() -> Array {
+//        var copiedArray = Array<Element>()
+//        for element in self {
+//            copiedArray.append(element.copy())
+//        }
+//        return copiedArray
+//    }
+//}
+
+extension Array where Element: Copying {
+    func clone() -> Array {
+        var copiedArray = Array<Element>()
+        for element in self {
+            copiedArray.append(element.copy())
+        }
+        return copiedArray
+    }
+}
+
+extension NSMutableData {
+    func appendString(_ string: String) {
+        let data = string.data(using: String.Encoding.utf8, allowLossyConversion: false)
+        append(data!)
+    }
+}
+

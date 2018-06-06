@@ -19,6 +19,7 @@ class MultiListQuestionTableViewCell: UITableViewCell, UITextFieldDelegate {
     var answer:String?
     
     var pickerQuestions = [ "Question One", "Question Two", "Question Three", "Question Four", "Question Five"]
+    var pickerAnswers = [Answer]()
     
     var pickerClosureOpen:(( )->())?
     var pickerClosureClose:(( )->())?
@@ -26,7 +27,9 @@ class MultiListQuestionTableViewCell: UITableViewCell, UITextFieldDelegate {
     var pickerQuestionsClosure:(([String])->())?
     
     var pickerClosureCloseWithAnsMulti:((UITextField)->())?
+    var pickerClosureCloseWithAnsPlusRow:((UITextField, String, Int)->())?
     var row:Int?
+    // var pickerCurrentRow:Int?
     var keyboardManageClosure: ((UITextField,NSNotification)->())?
     var keyboardManageClosureClose: ((UITextField,NSNotification)->())?
     
@@ -58,7 +61,12 @@ class MultiListQuestionTableViewCell: UITableViewCell, UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         print("end list edit")
-        pickerClosureCloseWithAnsMulti!(textField)
+        var answersID = " no answer id "
+//        if (pickerAnswers.count > 0) {
+//            let currentPickerRow = self.picker.selectedRow(inComponent: 0)
+//            answersID = pickerAnswers[currentPickerRow].answerID!
+//        }
+        pickerClosureCloseWithAnsPlusRow!(textField, answersID, row!)
     }
     
     @objc func keyboardDidShow(_ notification: NSNotification) {
@@ -71,4 +79,9 @@ class MultiListQuestionTableViewCell: UITableViewCell, UITextFieldDelegate {
         print("Keyboard will hide!")
         // keyboardManageClosureClose!(questionText, notification)
     }
+    
+    func getAnswer() -> String {
+        return questionText.text!
+    }
+    
 }

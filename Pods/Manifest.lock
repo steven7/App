@@ -2,21 +2,24 @@ PODS:
   - Alamofire (4.6.0)
   - AlamofireImage (3.3.0):
     - Alamofire (~> 4.5)
+  - DropDown (2.3.1)
   - SVProgressHUD (2.2.3)
   - SwiftKeychainWrapper (3.0.1)
 
 DEPENDENCIES:
   - Alamofire (~> 4.5)
   - AlamofireImage (~> 3.3)
+  - DropDown
   - SVProgressHUD
   - SwiftKeychainWrapper (~> 3.0.1)
 
 SPEC CHECKSUMS:
   Alamofire: f41a599bd63041760b26d393ec1069d9d7b917f4
   AlamofireImage: 2e784dc5d00f04903a52c1d169181469c805c3df
+  DropDown: 20499c7b2731b0d21609af924e47c7677a2be50d
   SVProgressHUD: a5eaeff664a82dda89809c409ace40183ce91523
   SwiftKeychainWrapper: 38952a3636320ae61bad3513cadd870929de7a4a
 
-PODFILE CHECKSUM: 448006b730eca3b73e78510f4da52526b5408dc0
+PODFILE CHECKSUM: 8aceb49824465c81a299a62403c86f6f9a06b28d
 
 COCOAPODS: 1.4.0

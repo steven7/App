@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "71BB316EB68C186CA1EA854E7DF1CAE3"
+               BlueprintIdentifier = "FE572AFD451B07870E04E0580C3E8E98"
                BuildableName = "Pods_Alchemie.framework"
                BlueprintName = "Pods-Alchemie"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -26,7 +26,6 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      language = ""
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
       </Testables>
@@ -37,7 +36,6 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      language = ""
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
       ignoresPersistentStateOnLaunch = "NO"
@@ -47,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "71BB316EB68C186CA1EA854E7DF1CAE3"
+            BlueprintIdentifier = "FE572AFD451B07870E04E0580C3E8E98"
             BuildableName = "Pods_Alchemie.framework"
             BlueprintName = "Pods-Alchemie"
             ReferencedContainer = "container:Pods.xcodeproj">

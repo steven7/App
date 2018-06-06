@@ -35,6 +35,7 @@ class PlacementViewController: UIViewController, UICollectionViewDelegate, UICol
     
     var currentOption:Option?
     var currentSubOption:SubOption?
+    var currentButton:QuestionButton?
     
     var optionTitle:String?
     var subOptionOneTitle:String?
@@ -287,9 +288,18 @@ class PlacementViewController: UIViewController, UICollectionViewDelegate, UICol
             theManagedItems = try managedContext.fetch(fetchRequest)
             print("begin fetch")
             
+            var itemIdSet = Set<String>()
+            
             for oneManagedItem in theManagedItems {
                 let oneItem = Item()
-                oneItem.itemID     = oneManagedItem.value(forKeyPath: "itemID")   as? String
+                oneItem.itemID   = oneManagedItem.value(forKeyPath: "itemID")   as? String
+                if (itemIdSet.contains(oneItem.itemID!)){
+                    print("dupe found")
+                    continue
+                }
+                else {
+                    itemIdSet.insert(oneItem.itemID!)
+                }
                 oneItem.caption    = oneManagedItem .value(forKeyPath: "caption") as? String
                 oneItem.imgUUID    = oneManagedItem .value(forKeyPath: "imgUUID") as? String
                 oneItem.imgPointer = oneManagedItem .value(forKeyPath: "imgPointer") as? String
@@ -323,6 +333,108 @@ class PlacementViewController: UIViewController, UICollectionViewDelegate, UICol
                     oneItem.questionIconPositionsThree = [CGPoint]()
                 }
                 
+                ///
+                ///
+                ///
+                let questionInstancefetchRequest =
+                    NSFetchRequest<NSManagedObject>(entityName: "CDQuestionListInstance")
+                
+                questionInstancefetchRequest.predicate = NSPredicate(format: "parentItemID == %@", oneItem.itemID!)
+                
+                var theManagedInstances = try managedContext.fetch(questionInstancefetchRequest)
+                
+                var buttonIdSet = Set<String>()
+                
+                for instance in theManagedInstances {
+                    
+                    let oneButton = QuestionButton()
+                    
+                    oneButton.buttonInstanceID = instance.value(forKeyPath: "questionInstanceID") as? String
+                    
+                    if (buttonIdSet.contains(oneButton.buttonInstanceID!)){
+                        print("dupe found")
+                        continue
+                    }
+                    else {
+                        buttonIdSet.insert(oneButton.buttonInstanceID!)
+                    }
+                    
+                    oneButton.questionSetID    = instance.value(forKeyPath: "questionSetID") as? String
+                    oneButton.buttonTypeNumber = instance.value(forKeyPath: "questionInstanceType") as? Int
+                    
+                    if let dataPoint = instance.value(forKey: "buttonCenterPoint") as? Data {
+                        let unarchiveObjectThree = NSKeyedUnarchiver.unarchiveObject(with: dataPoint)
+                        let point = unarchiveObjectThree as AnyObject? as! CGPoint
+                        oneButton.setLocation(point: point)
+                    }
+                    else {
+                        oneButton.setLocation(point: CGPoint())
+                    }
+                    
+                    if (oneButton.buttonTypeNumber == 0) {
+                        oneItem.buttonOnes?.append(oneButton)
+                    }
+                    else if (oneButton.buttonTypeNumber == 1) {
+                        oneItem.buttonTwos?.append(oneButton)
+                    }
+                    else if (oneButton.buttonTypeNumber == 2) {
+                        oneItem.buttonThrees?.append(oneButton)
+                    }
+                    
+                    let questionInstanceAnswerfetchRequest =
+                        NSFetchRequest<NSManagedObject>(entityName: "CDQuestionAnswer")
+                    
+                    questionInstancefetchRequest.predicate = NSPredicate(format: "parentButtonID == %@", oneButton.buttonInstanceID!)
+                    
+                    let theAnswers = try managedContext.fetch(questionInstanceAnswerfetchRequest)
+                    
+                    
+                    for oneAnswer in theAnswers {
+                        
+                        
+                        let text = oneAnswer.value(forKeyPath: "questionAnswerText") as? String
+                        let number = oneAnswer.value(forKeyPath: "questionNumber") as? Int
+                        
+                        print("loading \(text) with \(number) from \(oneButton.buttonInstanceID!)")
+                        
+                        oneButton.addToAnswerMap(answer: text!, key: number!)
+                        
+//                        let answer = Answer()
+//                        answer.answerID = theAnswers.value(forKeyPath: "caption") as? String
+//                        answer.answerListitemtext = theAnswers.value(forKeyPath: "caption") as? String
+//
+//                        cdQuestionListAnswer.setValue(oneQuestion.questionAnswer,     forKeyPath: "")
+//                        cdQuestionListAnswer.setValue(oneQuestion.questionNumber,     forKeyPath: "")
+//                        let index =
+                        
+                        //oneButton.getQuestions()
+                        
+//                        answer.= theAnswers.value(forKeyPath: "caption") as? String
+//                        answer.= theAnswers.value(forKeyPath: "caption") as? String
+//                        answer.= theAnswers.value(forKeyPath: "caption") as? String
+//                        answer.= theAnswers.value(forKeyPath: "caption") as? String
+//
+//                        cdQuestionListAnswer.setValue(self.currentButton?.buttonInstanceID!,     forKeyPath: "parentButtonID")
+//                        cdQuestionListAnswer.setValue(oneQuestion.parentQuestionSetID,     forKeyPath: "parentQuestionSetID")
+//                        cdQuestionListAnswer.setValue(oneQuestion.questionAnswer,     forKeyPath: "questionAnswerText")
+//                        cdQuestionListAnswer.setValue(oneQuestion.questionNumber,     forKeyPath: "questionNumber")
+//                        cdQuestionListAnswer.setValue(oneQuestion.questionTypeNumber,     forKeyPath: "questionTypeNumber")
+                    }
+                    
+//                    oneButton = oneManagedItem.value(forKeyPath: "editedimgPointer") as? String
+//
+                    
+                    //cdQuestionInstance.setValue(parentItemID, forKey: "parentItemID")
+                    //cdQuestionInstance.setValue(id, forKey: "questionInstanceID")
+                    //cdQuestionInstance.setValue(centerData, forKey: "buttonCenterPoint")
+                    //cdQuestionInstance.setValue(qsetID, forKey: "questionSetID")
+                    //cdQuestionInstance.setValue(type, forKey: "questionInstanceType")
+                }
+                
+                ////
+                ////
+                ////
+                    
                 oneItem.originalImage = imageStore.image(forKey: oneItem.imgUUID!)
                 if let editedImageID = oneItem.editedimgUUID {
                     oneItem.editedImage = imageStore.image(forKey: editedImageID)
@@ -582,6 +694,7 @@ class PlacementViewController: UIViewController, UICollectionViewDelegate, UICol
             let viewController = segue.destination as! QuestionsViewController
             if let option = currentOption {
                 viewController.theQuestions = option.questionList
+                //viewController.currentButton =
             }
         }
     }

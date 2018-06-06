@@ -26,6 +26,10 @@ class Item: NSObject {
     var questionIconPositionsTwo:[CGPoint]?
     var questionIconPositionsThree:[CGPoint]?
     
+    var buttonOnes:[QuestionButton]?
+    var buttonTwos:[QuestionButton]?
+    var buttonThrees:[QuestionButton]?
+    
     override init () {
         originalImage = nil
         editedImage = nil
@@ -35,5 +39,8 @@ class Item: NSObject {
         caption = ""
         parentSubOptionID = ""
         highlightedBackground = false
+        buttonOnes = [QuestionButton]()
+        buttonTwos = [QuestionButton]()
+        buttonThrees = [QuestionButton]()
     }
 }

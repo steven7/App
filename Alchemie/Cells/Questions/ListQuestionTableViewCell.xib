@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -13,24 +13,24 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="listCell" rowHeight="252" id="KGk-i7-Jjw" customClass="ListQuestionTableViewCell" customModule="Alchemie" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="569" height="252"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="listCell" rowHeight="246" id="KGk-i7-Jjw" customClass="ListQuestionTableViewCell" customModule="Alchemie" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="580" height="246"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="569" height="251.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="580" height="245.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" clearsContextBeforeDrawing="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZqO-yD-WDw">
-                        <rect key="frame" x="120" y="21" width="419" height="30"/>
+                        <rect key="frame" x="110" y="21" width="85" height="50"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="30" id="uIc-ab-ob2"/>
+                            <constraint firstAttribute="height" constant="50" id="uIc-ab-ob2"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="36"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9xk-5V-WlL">
-                        <rect key="frame" x="120" y="71" width="329" height="50"/>
+                        <rect key="frame" x="120" y="86" width="550" height="50"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="50" id="5KI-Hx-Anf"/>
                         </constraints>
@@ -38,6 +38,15 @@
                         <fontDescription key="fontDescription" type="system" pointSize="23"/>
                         <textInputTraits key="textInputTraits"/>
                     </textField>
+                    <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hno-Ix-fRt">
+                        <rect key="frame" x="120" y="136" width="550" height="230"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="230" id="ZAT-Ga-yv7"/>
+                            <constraint firstAttribute="width" constant="550" id="eLX-lX-cig"/>
+                        </constraints>
+                    </pickerView>
                     <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iTS-eE-vjW">
                         <rect key="frame" x="120" y="121" width="329" height="130"/>
                         <constraints>
@@ -47,12 +56,15 @@
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailingMargin" secondItem="ZqO-yD-WDw" secondAttribute="trailing" constant="10" id="1nH-dY-KBN"/>
+                    <constraint firstItem="hno-Ix-fRt" firstAttribute="leading" secondItem="9xk-5V-WlL" secondAttribute="leading" id="5b5-Xh-yZI"/>
                     <constraint firstItem="ZqO-yD-WDw" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="10" id="7iX-bU-WS4"/>
+                    <constraint firstItem="hno-Ix-fRt" firstAttribute="trailing" secondItem="9xk-5V-WlL" secondAttribute="trailing" id="EiQ-BO-Dsm"/>
                     <constraint firstItem="iTS-eE-vjW" firstAttribute="leading" secondItem="9xk-5V-WlL" secondAttribute="leading" id="ElF-tS-n7k"/>
-                    <constraint firstItem="ZqO-yD-WDw" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="100" id="O5X-GB-wC5"/>
+                    <constraint firstItem="ZqO-yD-WDw" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="90" id="O5X-GB-wC5"/>
                     <constraint firstAttribute="trailingMargin" secondItem="9xk-5V-WlL" secondAttribute="trailing" constant="100" id="VGj-hM-7T5"/>
+                    <constraint firstItem="hno-Ix-fRt" firstAttribute="top" secondItem="9xk-5V-WlL" secondAttribute="bottom" id="gEr-Yg-agC"/>
                     <constraint firstItem="9xk-5V-WlL" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="100" id="gP6-nc-fP4"/>
-                    <constraint firstItem="9xk-5V-WlL" firstAttribute="top" secondItem="ZqO-yD-WDw" secondAttribute="bottom" constant="20" id="t3s-8s-ham"/>
+                    <constraint firstItem="9xk-5V-WlL" firstAttribute="top" secondItem="ZqO-yD-WDw" secondAttribute="bottom" constant="15" id="t3s-8s-ham"/>
                     <constraint firstItem="iTS-eE-vjW" firstAttribute="trailing" secondItem="9xk-5V-WlL" secondAttribute="trailing" id="yMN-Rc-eeL"/>
                 </constraints>
                 <variation key="default">
@@ -65,8 +77,9 @@
             <connections>
                 <outlet property="questionLabel" destination="ZqO-yD-WDw" id="1aS-nI-8at"/>
                 <outlet property="questionText" destination="9xk-5V-WlL" id="Jec-7F-mxJ"/>
+                <outlet property="tableViewDropdown" destination="hno-Ix-fRt" id="7Z3-O7-1h3"/>
             </connections>
-            <point key="canvasLocation" x="159.5" y="158"/>
+            <point key="canvasLocation" x="174" y="137"/>
         </tableViewCell>
     </objects>
 </document>

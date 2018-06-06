@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -21,16 +21,16 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ucZ-gx-tqi">
-                        <rect key="frame" x="198.5" y="26" width="562" height="30"/>
+                        <rect key="frame" x="191.5" y="26" width="569" height="50"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="30" id="4os-3G-VNu"/>
+                            <constraint firstAttribute="height" constant="50" id="4os-3G-VNu"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="36"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h21-L3-2T8">
-                        <rect key="frame" x="342" y="76" width="65" height="50"/>
+                        <rect key="frame" x="342" y="96" width="65" height="50"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="65" id="dcW-2z-hzM"/>
                             <constraint firstAttribute="height" constant="50" id="zcj-6D-V2l"/>
@@ -44,7 +44,7 @@
                         </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HAv-IO-aBA">
-                        <rect key="frame" x="462" y="76" width="65" height="50"/>
+                        <rect key="frame" x="462" y="96" width="65" height="50"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="50" id="qnv-sn-ibv"/>
                             <constraint firstAttribute="width" constant="65" id="rU1-JX-Qov"/>
@@ -59,7 +59,7 @@
                     </button>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="ucZ-gx-tqi" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="100" id="3lb-zf-OZe"/>
+                    <constraint firstItem="ucZ-gx-tqi" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="93" id="3lb-zf-OZe"/>
                     <constraint firstItem="h21-L3-2T8" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" constant="-60" id="6MY-M6-qcZ"/>
                     <constraint firstItem="h21-L3-2T8" firstAttribute="top" secondItem="ucZ-gx-tqi" secondAttribute="bottom" constant="20" id="EMq-MO-SXZ"/>
                     <constraint firstAttribute="trailingMargin" secondItem="ucZ-gx-tqi" secondAttribute="trailing" constant="10" id="R4a-xq-ZyZ"/>
