@@ -67,7 +67,17 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
     var answerSetXPosition:Double?
     var answerSetYPosition:Double?
     
-    let api = AlchemieAPI()
+    
+    var operationQueue = OperationQueue()
+    
+    var successOperation = BlockOperation()
+    
+    var failOperation = BlockOperation()
+    
+    var gQuestionSetID:String?  
+    var gAnswerSetInstanceID:String?
+    
+    var taskCount = 0
     
     override func viewDidLoad() {
         
@@ -172,11 +182,25 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
             removeButtonThrees()
         }
         
-        // getThreeButtonPositionOnImage()
-        
         placeButtonsOnImage()
         
         printIconPositions()
+        
+        successOperation = BlockOperation {
+            DispatchQueue.main.async {
+                self.uploadSuccessPopup()
+                SVProgressHUD.dismiss()
+                self.taskCount = 0
+            }
+        }
+        
+        failOperation = BlockOperation {
+            DispatchQueue.main.async {
+                self.errorPopup()
+                SVProgressHUD.dismiss()
+                self.taskCount = 0
+            }
+        }
         
     }
     
@@ -187,44 +211,7 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
     func copyQuestionArray(questionList: [Question]) {
         
     }
-//
-//    func setUpInitialPanGestures() {
-//
-//        let copyButtonOne = buttonOne.copyButton()
-//        // var copyArrayOne = self.currentOption!.questionSetList[0].questionList
-////        copyButtonOne.setQuestions(questions: copyArrayOne)
-//        copyButtonOne.setQuestions(questions: self.currentOption!.questionSetList[0].questionList)
-//        copyButtonOne.isUserInteractionEnabled = true
-//        let panGestureOne   = UIPanGestureRecognizer(target: self, action: #selector(draggedButtonEvery(_:) ) )
-//        copyButtonOne.addGestureRecognizer(panGestureOne)
-//        copyButtonOne.addTarget(self, action: #selector(buttonPressed(_:)), for: .touchUpInside)
-//        self.buttonOnes.append(copyButtonOne)
-//        self.view.addSubview(copyButtonOne)
-//
-//        let copyButtonTwo = buttonTwo.copyButton()
-//        // var copyArrayTwo = self.currentOption!.questionSetList[1].questionList
-//        // copyButtonTwo.setQuestions(questions: copyArrayTwo)
-//        copyButtonOne.setQuestions(questions: self.currentOption!.questionSetList[1].questionList)
-//        copyButtonTwo.isUserInteractionEnabled = true
-//        let panGestureTwo   = UIPanGestureRecognizer(target: self, action: #selector(draggedButtonEvery(_:) ) )
-//        copyButtonTwo.addGestureRecognizer(panGestureTwo)
-//        copyButtonTwo.addTarget(self, action: #selector(buttonPressed(_:)), for: .touchUpInside)
-//        self.buttonTwos.append(copyButtonTwo)
-//        self.view.addSubview(copyButtonTwo)
-//
-//        let copyButtonThree = buttonThree.copyButton()
-//        // var copyArrayThree = self.currentOption!.questionSetList[2].questionList
-//        // copyButtonThree.setQuestions(questions: copyArrayThree)
-//        copyButtonOne.setQuestions(questions: self.currentOption!.questionSetList[2].questionList)
-//        copyButtonThree.isUserInteractionEnabled = true
-//        let panGestureThree = UIPanGestureRecognizer(target: self, action: #selector(draggedButtonEvery(_:) ) )
-//        copyButtonThree.addGestureRecognizer(panGestureThree)
-//        copyButtonThree.addTarget(self, action: #selector(buttonPressed(_:)), for: .touchUpInside)
-//        self.buttonThrees.append(copyButtonThree)
-//        self.view.addSubview(copyButtonThree)
-//
-//    }
-    
+ 
     func setUpInitialPanGesturesOne() {
         let copyButtonOne = buttonOne.copyButton()
         // copyButtonOne.setQuestions(questions: copyArrayOne)
@@ -283,10 +270,7 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
         
         var theQuestions = [QuestionSet]()
         for questionSet in json {
-            //guard let optionName = option["OptionName"] as? String else {
-            //    print("somethings wrong with the data")
-            //     return [AnyObject]()
-            //}
+            
             let oneQuestionSet = QuestionSet()
             
             var setCompanyNum = 0
@@ -296,23 +280,17 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
             var setSurveyType = " "
             
             if let questionSetCompanyNum = questionSet["CompanyNum"] as? Int {
-                //print("somethings wrong with the data")
-                //return [QuestionSet]()
                 setCompanyNum = questionSetCompanyNum
             }
             else {
                 setCompanyNum = 0
             }
             if let  questionSetID = questionSet["ID"] as? String   {
-                //print("somethings wrong with the data")
-                //return [QuestionSet]()
                 setID = questionSetID
             }
             
             if let questionSetSurveyIcon = questionSet["SurveyIconPointer"] as? String  {
-                //print("somethings wrong with the data")
-                //let questionSetSurveyIcon = "  "
-                //return [QuestionSet]()
+                
                 setSurveyIconPointer = questionSetSurveyIcon
                 print("pointer icon \(setSurveyIconPointer) ")
                 
@@ -322,15 +300,15 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
                     
                     if (setSurveyName == "Question Set 1") {
                         print("q one")
-                        api.downloadImageForButton (button: self.buttonOne, imgPointer: setSurveyIconPointer)
+                        AlchemieAPI.shared.downloadImageForButton (button: self.buttonOne, imgPointer: setSurveyIconPointer)
                     }
                     else if (setSurveyName == "Question Set 2") {
                         print("q two")
-                        api.downloadImageForButton (button: self.buttonTwo, imgPointer: setSurveyIconPointer)
+                        AlchemieAPI.shared.downloadImageForButton (button: self.buttonTwo, imgPointer: setSurveyIconPointer)
                     }
                     else if (setSurveyName == "Question Set 3") {
                         print("q three")
-                        api.downloadImageForButton (button: self.buttonThree, imgPointer: setSurveyIconPointer)
+                        AlchemieAPI.shared.downloadImageForButton (button: self.buttonThree, imgPointer: setSurveyIconPointer)
                     }
                     
                 }
@@ -345,8 +323,6 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
             }
             
             if let  questionSetSurveyType = questionSet["SurveyType"] as? String  {
-                //print("somethings wrong with the data")
-                //return [QuestionSet]()
                 setSurveyType = questionSetSurveyType
             }
             
@@ -389,29 +365,9 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
     /*
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
+     
     */
-
-//
-//    @IBAction func buttonOnePressed(_ sender: Any) {
-//        //self.performSegue(withIdentifier: "toQuestions", sender: self)
-//    }
-//
-//    @IBAction func buttonTwoPressed(_ sender: Any) {
-//        //print("button two pressed!!")
-//        //self.performSegue(withIdentifier: "toQuestions", sender: self)
-//    }
-//
-//    @IBAction func buttonThreePressed(_ sender: Any) {
-//        //print("button three pressed!!")
-//        //self.performSegue(withIdentifier: "toQuestions", sender: self)
-//
-//    }
-//
+ 
     
     @objc func buttonPressed(_ sender: Any) {
         //print("copy button pressed!!")
@@ -456,7 +412,6 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
     }
     
     @IBAction func closeButtonPressed(_ sender: Any) {
-        //saveOperation()
         self.navigationController?.popViewController(animated: false)
     }
     
@@ -496,7 +451,6 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
     
     @IBAction func eraseIconsButtonPressed(_ sender: Any) {
         
-        //printIconPositions()
         print("erase icons button pressed")
         for b in buttonOnes {
             self.view.willRemoveSubview(b)
@@ -516,27 +470,6 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
         bigImage.image = currentItem?.originalImage
         
     }
-    
-    
-//    func placeButtonsOnImage() {
-//        if let buttonList = currentItem?.buttonOnes {
-//            for button in buttonList {
-//                addButtonOnPosition(button: button)
-//            }
-//        }
-//
-//        if let buttonList = currentItem?.buttonTwos {
-//            for button in buttonList {
-//                addButtonOnPosition(button: button)
-//            }
-//        }
-//
-//        if let buttonList = currentItem?.buttonThrees {
-//            for button in buttonList {
-//                addButtonOnPosition(button: button)
-//            }
-//        }
-//    }
     
     func placeButtonsOnImage() {
         
@@ -572,7 +505,6 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
                     print("dupe found")
                     continue
                 }
-                // addButtonOnPosition(button: button) //, buttonTypeArray: &buttonTwos)
             }
         }
         
@@ -589,7 +521,6 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
                     print("dupe found")
                     continue
                 }
-                // addButtonOnPosition(button: button) //, buttonTypeArray: &buttonThrees)
             }
         }
     }
@@ -615,18 +546,7 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
         }
     }
     
-    
-//    func addButtonOnPosition(positionCenter: CGPoint, buttonTypeArray: inout [QuestionButton]){
-//        let buttonView = QuestionButton() // sender.view as! UIButton
-//        //let translation = sender.translation(in: self.view)
-//        buttonView.center   = positionCenter
-//        // CGPoint(x: buttonView.center.x + translation.x , y: buttonView.center.y + translation.y)
-//        //sender.setTranslation(CGPoint.zero, in: self.view)
-//        buttonTypeArray.append(buttonView)
-//        self.bigImage.addSubview(buttonView)
-//        //view.addSubview(buttonView)
-//    }
-    
+ 
     // iwth same id. veryy important
     func addButtonOnPosition(button: QuestionButton ){
         let buttonView = buttonOne.copyButton()
@@ -643,8 +563,6 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
             buttonView.setQuestions(questions: self.currentOption!.questionSetList[0].questionList)
             buttonView.setImage(self.buttonImageOne, for: .normal)
             self.buttonOnes.append(buttonView)
-            // let keyOne = self.currentOption?.questionSetList[0].surveyIconPointer
-            //buttonView.imageView?.image = self.imageStore.image(forKey: keyOne!)
         }
         else if (button.getType() == 1) {
             buttonView.setType(typeInt: 1)
@@ -661,9 +579,7 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
         else {
             return
         }
-        // buttonTypeArray.append(buttonView)
         self.bigImage.addSubview(buttonView)
-        //view.addSubview(buttonView)
     }
     
     func addButtonOnPosition(button: QuestionButton, buttonTypeArray: inout [QuestionButton]){
@@ -680,8 +596,6 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
                 buttonView.setType(typeInt: 0)
                 buttonView.setQuestions(questions: self.currentOption!.questionSetList[0].questionList)
                 buttonView.setImage(self.buttonImageOne, for: .normal)
-                // let keyOne = self.currentOption?.questionSetList[0].surveyIconPointer
-                //buttonView.imageView?.image = self.imageStore.image(forKey: keyOne!)
             }
             else if (buttonType == 1) {
                 buttonView.setType(typeInt: 1)
@@ -699,7 +613,6 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
         }
         buttonTypeArray.append(buttonView)
         self.bigImage.addSubview(buttonView)
-        //view.addSubview(buttonView)
     }
     
     func addButtonOneOnPosition(positionCenter: CGPoint, buttonTypeArray: inout [QuestionButton]){
@@ -713,19 +626,15 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
         buttonView.center   = positionCenter
         buttonView.setLocation(point: positionCenter)
         buttonView.setType(typeInt: 0)
-        // let keyOne = self.currentOption?.questionSetList[0].surveyIconPointer
-        // buttonView.imageView?.image = self.imageStore.image(forKey: keyOne!)
         buttonView.setImage(self.buttonImageOne, for: .normal)
         buttonTypeArray.append(buttonView)
         self.bigImage.addSubview(buttonView)
-        // view.addSubview(buttonView)
     }
     
     func addButtonOneOnPositionWithAnswers(positionCenter: CGPoint, buttonTypeArray: inout [QuestionButton]){
         let buttonView = buttonOne.copyButton()
         var copyArray = self.currentOption!.questionSetList[0].questionList
         buttonView.setQuestions(questions: copyArray)
-        // buttonView.clearAnswers()
         let newPanGestureOne   = UIPanGestureRecognizer(target: self, action: #selector(draggedButtonEvery(_:) ) )
         buttonView.isUserInteractionEnabled = true
         buttonView.addGestureRecognizer(newPanGestureOne)
@@ -733,12 +642,9 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
         buttonView.center   = positionCenter
         buttonView.setLocation(point: positionCenter)
         buttonView.setType(typeInt: 0)
-        // let keyOne = self.currentOption?.questionSetList[0].surveyIconPointer
-        // buttonView.imageView?.image = self.imageStore.image(forKey: keyOne!)
         buttonView.setImage(self.buttonImageOne, for: .normal)
         buttonTypeArray.append(buttonView)
         self.bigImage.addSubview(buttonView)
-        //view.addSubview(buttonView)
     }
     
     func addButtonTwoOnPosition(positionCenter: CGPoint, buttonTypeArray: inout [QuestionButton]){
@@ -754,11 +660,9 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
         buttonView.setLocation(point: positionCenter)
         buttonView.setType(typeInt: 1)
         let keyTwo = self.currentOption?.questionSetList[0].surveyIconPointer
-        //buttonView.imageView?.image = self.imageStore.image(forKey: keyTwo!)
         buttonView.setImage(self.buttonImageTwo, for: .normal)
         buttonTypeArray.append(buttonView)
         self.bigImage.addSubview(buttonView)
-        //view.addSubview(buttonView)
     }
     
     func addButtonThreeOnPosition(positionCenter: CGPoint, buttonTypeArray: inout [QuestionButton]){
@@ -774,11 +678,9 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
         buttonView.setLocation(point: positionCenter)
         buttonView.setType(typeInt: 2)
         let keyThree = self.currentOption?.questionSetList[2].surveyIconPointer
-        // buttonView.imageView?.image = self.imageStore.image(forKey: keyThree!)
         buttonView.setImage(self.buttonImageThree, for: .normal)
         buttonTypeArray.append(buttonView)
         self.bigImage.addSubview(buttonView)
-        //view.addSubview(buttonView)
     }
     
     ///////////////////
@@ -790,10 +692,8 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
     @objc func draggedButtonEvery(_ sender:UIPanGestureRecognizer) {
        
         let location = sender.location(in: bigImage)
-        // print("the location: \(location)")
         
         let locationv = sender.location(in: self.view)
-        // print("the location in view: \(locationv)")
         
         let buttonView = sender.view as! QuestionButton
         let point = buttonView.center
@@ -809,14 +709,9 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
             else if (buttonView.superview == self.bigImage) {
                 translation = sender.translation(in: self.bigImage)
             }
-            //let translation = sender.translation(in: self.view)
             
             let xDif = location.x - locationv.x
             let yDif = location.y - locationv.y
-            
-            //buttonView.center   = CGPoint(x: buttonView.center.x + xDif,
-            //                              y: buttonView.center.y + yDif)
-            
             
             buttonView.center   = CGPoint(x: buttonView.center.x + translation!.x , y: buttonView.center.y + translation!.y)
             
@@ -827,9 +722,7 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
             //print("pan ended?")
             if (rect.contains(buttonView.frame)) {
                 if (!bigImage.subviews.contains(buttonView)) {
-                    //self.bigImage.addSubview(buttonView )
-                    
-                    // i dont this is the offiial apple way to convert between different coordinate systems but it works
+                    // possibly not the offiial apple way to convert between different coordinate systems but it works well
                     let xDif = location.x - locationv.x
                     let yDif = location.y - locationv.y
                     
@@ -843,49 +736,14 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
                     self.view.willRemoveSubview(buttonView)
                     self.bigImage.addSubview(buttonView )
                     
-                    // print("icon added to pic")
                 }
             }
             else {
-                // self.view.willRemoveSubview(buttonView)
                 buttonView.removeFromSuperview()
-                // self.view.addSubview(buttonView )
             }
             return
         }
     }
-        // if (!self.view.bounds.intersects(copyButton.frame) ){
-        //if (self.bigImage.bounds.intersects(buttonView.frame) ){
-        //if (self.bigImage.bounds.contains(buttonView.center) ){
-        //if (!self.bottomBackgroundView.bounds.contains(buttonView.frame)) {
-        /*
-        if (!self.bottomBackgroundView.bounds.contains(buttonView.frame)) {
-            if (!bigImage.subviews.contains(buttonView)) {
-                self.bigImage.addSubview(buttonView )
-            }
-        }
-        else {
-            self.view.addSubview(buttonView )
-        }
-        */
-        
-        /*
-        if (rect.contains(point)) {
-            //if (!scrollView.subviews.contains(buttonView)) {
-            //    self.scrollView.addSubview(buttonView )
-            //}
-            if (!bigImage.subviews.contains(buttonView)) {
-                self.bigImage.addSubview(buttonView )
-            }
-        }
-        else {
-            self.view.addSubview(buttonView )
-        }
-        */
-        
-        //self.view.addSubview(buttonView )
-        
-    //}
     
     @objc func draggedButtonOne(_ sender:UIPanGestureRecognizer) {
         print("the llzololz ")
@@ -901,12 +759,9 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
         copyButton.setImage(self.buttonImageOne, for: .normal)
         buttonOnes.append(copyButton)
         self.view.addSubview(copyButton)
-        
         let rect = scrollView.frame
         if sender.state == .ended {
-            //print("pan ended?")
             if (rect.contains(copyButton.frame)) {
-                // self.view.addSubview(copyButton)
             }
             else {
                 self.view.willRemoveSubview(copyButton)
@@ -926,11 +781,9 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
         copyButton.imageView?.image = self.imageStore.image(forKey: keyTwo!)
         copyButton.setImage(self.buttonImageTwo, for: .normal)
         buttonTwos.append(copyButton)
-        self.view.addSubview(copyButton)
-        
+        self.view.addSubview(copyButton) 
         let rect = scrollView.frame
         if sender.state == .ended {
-            //print("pan ended?")
             if (rect.contains(copyButton.frame)) {
                 self.view.addSubview(copyButton)
                 buttonOnes.append(copyButton)
@@ -1047,210 +900,18 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
 //                                      buttonThreeCenters: buttonThreeCenters)
 //
 //
-        saveButtonPositionsToCoreData(buttonOnes: buttonOnes,
+        DataStore.shared.saveButtonPositionsToCoreData(
+                                      buttonOnes: buttonOnes,
                                       buttonTwos: buttonTwos,
-                                      buttonThrees: buttonThrees)
+                                      buttonThrees: buttonThrees,
+                                      currentItem: self.currentItem!)
         
     }
 
     // new
-    func saveButtonPositionsToCoreData(buttonOnes:[QuestionButton], buttonTwos:[QuestionButton], buttonThrees:[QuestionButton] ) {
-        
-        guard let appDelegate =
-            UIApplication.shared.delegate as? AppDelegate else {
-                return
-        }
-        
-        let managedContext = appDelegate.persistentContainer.viewContext
-        
-        let currentItemId = currentItem?.itemID
-        
-        do {
-            
-            let itemfetchRequest = NSFetchRequest<NSManagedObject>(entityName: "CDItem")
-            
-            itemfetchRequest.predicate = NSPredicate(format: "itemID == %@", currentItemId!)
-            
-            let themanaged_Items = try managedContext.fetch(itemfetchRequest)
-            
-            let onemanaged_Item = themanaged_Items[0]
-            
-            // not sure if right yet
-            //
-            //
-            //
-            var buttonIDSet = Set<String>()
-            for button in buttonOnes {
-                
-                let entity = NSEntityDescription.entity(forEntityName: "CDQuestionListInstance", in: managedContext)!
-                
-                let cdQuestionInstance = NSManagedObject(entity: entity,
-                                                         insertInto: managedContext)
-                
-                
-                let id = button.getButtonID()
-                if(buttonIDSet.contains(id)){
-                    continue
-                }
-                else {
-                    buttonIDSet.insert(id)
-                }
-                let parentItemID = self.currentItem?.itemID
-                let center = button.getLocation()
-                let centerData = NSKeyedArchiver.archivedData(withRootObject: center)
-                let qsetID = button.questionSetID
-                let type = 0 //button.getType()
-                
-                cdQuestionInstance.setValue(parentItemID, forKey: "parentItemID")
-                cdQuestionInstance.setValue(id, forKey: "questionInstanceID")
-                cdQuestionInstance.setValue(centerData, forKey: "buttonCenterPoint")
-                cdQuestionInstance.setValue(qsetID, forKey: "questionSetID")
-                cdQuestionInstance.setValue(type, forKey: "questionInstanceType")
-     
-                
-                onemanaged_Item.setValue(NSSet(object: cdQuestionInstance), forKey: "questionListInstance")
-                
-            }
-            
-            for button in buttonTwos {
-                
-                let entity = NSEntityDescription.entity(forEntityName: "CDQuestionListInstance", in: managedContext)!
-                
-                let cdQuestionInstance = NSManagedObject(entity: entity,
-                                                         insertInto: managedContext)
-                
-                
-                let id = button.getButtonID()
-                if(buttonIDSet.contains(id)){
-                    continue
-                }
-                else {
-                    buttonIDSet.insert(id)
-                }
-                let parentItemID = self.currentItem?.itemID
-                let center = button.getLocation()
-                let centerData = NSKeyedArchiver.archivedData(withRootObject: center)
-                let qsetID = button.questionSetID
-                let type = 1 // button.getType()
-                
-                cdQuestionInstance.setValue(parentItemID, forKey: "parentItemID")
-                cdQuestionInstance.setValue(id, forKey: "questionInstanceID")
-                cdQuestionInstance.setValue(centerData, forKey: "buttonCenterPoint")
-                cdQuestionInstance.setValue(qsetID, forKey: "questionSetID")
-                cdQuestionInstance.setValue(type, forKey: "questionInstanceType")
-                
-                
-                onemanaged_Item.setValue(NSSet(object: cdQuestionInstance), forKey: "questionListInstance")
-                
-            }
-            
-            for button in buttonThrees {
-                
-                let entity = NSEntityDescription.entity(forEntityName: "CDQuestionListInstance", in: managedContext)!
-                
-                let cdQuestionInstance = NSManagedObject(entity: entity,
-                                                         insertInto: managedContext)
-                
-                
-                let id = button.getButtonID()
-                if(buttonIDSet.contains(id)){
-                    continue
-                }
-                else {
-                    buttonIDSet.insert(id)
-                }
-                let parentItemID = self.currentItem?.itemID
-                let center = button.getLocation()
-                let centerData = NSKeyedArchiver.archivedData(withRootObject: center)
-                let qsetID = button.questionSetID
-                let type = 2 // button.getType()
-                
-                cdQuestionInstance.setValue(parentItemID, forKey: "parentItemID")
-                cdQuestionInstance.setValue(id, forKey: "questionInstanceID")
-                cdQuestionInstance.setValue(centerData, forKey: "buttonCenterPoint")
-                cdQuestionInstance.setValue(qsetID, forKey: "questionSetID")
-                cdQuestionInstance.setValue(type, forKey: "questionInstanceType")
-                
-                
-                onemanaged_Item.setValue(NSSet(object: cdQuestionInstance), forKey: "questionListInstance")
-                
-            }
-            
-            do {
-                try managedContext.save()
-                //people.append(person)
-            } catch let error as NSError {
-                print("Could not save. \(error), \(error.userInfo)")
-            }
-            // }
-        }
-        catch let error as NSError {
-            print("Could not fetch. \(error), \(error.userInfo)")
-        }
-        
-    }
+    
     
     func saveOneButton(){
-        
-    }
-    
-    func saveButtonPositionsToCoreData(buttonOneCenters:[CGPoint], buttonTwoCenters:[CGPoint], buttonThreeCenters:[CGPoint]) {
-        
-        guard let appDelegate =
-            UIApplication.shared.delegate as? AppDelegate else {
-                return
-        }
-        
-        let managedContext = appDelegate.persistentContainer.viewContext
-        
-        let currentItemId = currentItem?.itemID
-        
-        let dataOne = NSKeyedArchiver.archivedData(withRootObject: buttonOneCenters)
-        let dataTwo = NSKeyedArchiver.archivedData(withRootObject: buttonTwoCenters)
-        let dataThree = NSKeyedArchiver.archivedData(withRootObject: buttonThreeCenters)
-        
-        do {
-            
-            let itemfetchRequest = NSFetchRequest<NSManagedObject>(entityName: "CDItem")
-            
-            itemfetchRequest.predicate = NSPredicate(format: "itemID == %@", currentItemId!)
-            
-            let themanaged_Items = try managedContext.fetch(itemfetchRequest)
-            
-            // if  themanaged_Items.count > 0 {
-            
-                let onemanaged_Item = themanaged_Items[0]
-                
-                onemanaged_Item.setNilValueForKey("questionIconPositionsOne")
-                onemanaged_Item.setNilValueForKey("questionIconPositionsTwo")
-                onemanaged_Item.setNilValueForKey("questionIconPositionsThree")
-                
-                onemanaged_Item.setValue(currentItemId!, forKeyPath: "itemID")
-                onemanaged_Item.setValue(dataOne,        forKeyPath: "questionIconPositionsOne")
-                onemanaged_Item.setValue(dataTwo,        forKeyPath: "questionIconPositionsTwo")
-                onemanaged_Item.setValue(dataThree,      forKeyPath: "questionIconPositionsThree")
-            
-                //optionToUpdate.setValue(NSSet(object: cdQuestionList), forKey: "questionList")
-            
-                // new stuff
-//                let itemfetchRequest = NSFetchRequest<NSManagedObject>(entityName: "CDQuestionAnswer")
-//
-//                for (b in buttonOnes) {
-//                    
-//                }
-            
-                do {
-                    try managedContext.save()
-                    //people.append(person)
-                } catch let error as NSError {
-                    print("Could not save. \(error), \(error.userInfo)")
-                }
-            // }
-        }
-        catch let error as NSError {
-            print("Could not fetch. \(error), \(error.userInfo)")
-        }
-        
         
     }
     
@@ -1307,25 +968,25 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
         clearButtonsOutsidePicture()
         
         let dispatchGroup = DispatchGroup()
+        let queue = DispatchQueue.global()
+        
+        
+        successOperation = BlockOperation {
+            DispatchQueue.main.async {
+                self.uploadSuccessPopup()
+                SVProgressHUD.dismiss()
+                self.taskCount = 0
+            }
+        }
+        
+        
         // let pointer = UUID().uuidString
         let pointer = currentItem?.imgPointer
         SVProgressHUD.show()
         // let editedImage = onDismiss!(self.view);
         let editedImage = self.bigImage.image!
         //dispatchGroup.enter()
-        api.uploadImage(theImage: editedImage ,imgPointer: pointer!, completion: {
-            success, response in
-            if (success) {
-                print("lololz")
-                print(response)
-                self.uploadSuccessPopup()
-            }
-            else {
-                self.errorPopup()
-            }
-            //dispatchGroup.leave()
-            SVProgressHUD.dismiss()
-        })
+        
         
         let questionSetCount = self.currentOption?.questionSetList.count
         
@@ -1338,13 +999,13 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
 //            questionsUploadOld(questionList: qTwo!, button: buttonTwos[0], dispatchGroup: dispatchGroup)
 //            questionsUploadOld(questionList: qThree!, button: buttonThrees[0], dispatchGroup: dispatchGroup)
             for oneButtonOne in buttonOnes {
-                questionsUpload(questionList: qOne!, button: oneButtonOne, dispatchGroup: dispatchGroup)
+                questionsUpload(questionList: qOne!, button: oneButtonOne) //, dispatchGroup: dispatchGroup, queue: queue)
             }
             for oneButtonTwo in buttonTwos {
-                questionsUpload(questionList: qTwo!, button: oneButtonTwo, dispatchGroup: dispatchGroup)
+                questionsUpload(questionList: qTwo!, button: oneButtonTwo) //, dispatchGroup: dispatchGroup, queue: queue)
             }
             for oneButtonThree in buttonTwos {
-                questionsUpload(questionList: qThree!, button: oneButtonThree, dispatchGroup: dispatchGroup)
+                questionsUpload(questionList: qThree!, button: oneButtonThree) //, dispatchGroup: dispatchGroup, queue: queue)
             }
         }
         else if (questionSetCount! == 2) {
@@ -1355,10 +1016,10 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
 //            questionsUploadOld(questionList: qTwo!, button: buttonTwos[0], dispatchGroup: dispatchGroup)
 //            
             for oneButtonOne in buttonOnes {
-                questionsUpload(questionList: qOne!, button: oneButtonOne, dispatchGroup: dispatchGroup)
+                questionsUpload(questionList: qOne!, button: oneButtonOne) //, dispatchGroup: dispatchGroup, queue: queue)
             }
             for oneButtonTwo in buttonTwos {
-                questionsUpload(questionList: qTwo!, button: oneButtonTwo, dispatchGroup: dispatchGroup)
+                questionsUpload(questionList: qTwo!, button: oneButtonTwo) //, dispatchGroup: dispatchGroup, queue: queue)
             }
         }
         else if (questionSetCount! == 1) {
@@ -1366,125 +1027,107 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
             
 //            questionsUploadOld(questionList: qOne!, button: buttonOnes[0], dispatchGroup: dispatchGroup)
             for oneButtonOne in buttonOnes {
-                questionsUpload(questionList: qOne!, button: oneButtonOne, dispatchGroup: dispatchGroup)
+                questionsUpload(questionList: qOne!, button: oneButtonOne) //, dispatchGroup: dispatchGroup, queue: queue)
             }
         }
         
-    }
-    
-    func questionsUploadOld(questionList: [Question], button: QuestionButton, dispatchGroup:DispatchGroup) {
         
-        var successCount = 0
-        var failCount = 0
-        
-        SVProgressHUD.show()
-        let oneAnswerSetInstanceId = UUID().uuidString // change this. this is temporary. we dont want a different answer set instance id each time we upload. create a new one each time a button is created and persist it once answered or something lke that
-        
-        //if let questions = questionList {
-            for oneQuestion in questionList {
-                //for oneQuestion in questionList {
+        operationQueue.addOperation {
+            
+            self.taskCount += 1
+            
+            AlchemieAPI.shared.uploadImage(theImage: editedImage ,imgPointer: pointer!, completion: {
+                success, response in
                 
-                if (oneQuestion.questionType == .next) {
-                    continue
+                //                DispatchQueue.main.async {
+                //                    if (success) {
+                print("lololz")
+                print(response)
+                //                        self.uploadSuccessPopup()
+                //                    }
+                //                    else {
+                //                        self.errorPopup()
+                //                    }
+                //                    //dispatchGroup.leave()
+                //                    SVProgressHUD.dismiss()
+                //                }
+                self.taskCount -= 1
+                if (self.taskCount == 0) {
+                    self.operationQueue.addOperation(self.successOperation)
                 }
-                let questionText = oneQuestion.questionText!
-                let answer = oneQuestion.questionAnswer!
-                let questionNum  = oneQuestion.questionNumber!
-                let guid  = self.currentOption!.optionID!
-                let projectID  = self.currentOption!.optionID! //oneQuestion.parentQuestionSetID!
-                let questionSetID  = oneQuestion.parentQuestionSetID! //
-                let answerSetInstanceID  = oneAnswerSetInstanceId //oneQuestion.parentQuestionSetID!
-                let backgroundID  =  self.currentItem!.imgPointer!
-                let answerSetXPosition  = Int(button.center.x)
-                let answerSetYPosition  = Int(button.center.y)
-                var answerType = oneQuestion.questionTypeNumber! //theQuestions[0].questionTypeNumber!
-                
-//                if (oneQuestion.questionType == .photo) {
-//                    answerType = 5
-//                    dispatchGroup.enter()
-//                    for (key, value)  in button.photoCache {
-//                        let image = value
-//                        let pointer = UUID().uuidString
-//                        self.api.uploadImage(theImage: image ,imgPointer: pointer, completion: {
-//                            success, response in
-//                            print(response)
-//                            //                            if (success) {
-//                            //                                print("lololz")
-//                            //                                print(response)
-//                            //                                //self.uploadSuccessPopup()
-//                            //                            }
-//                            //                            else {
-//                            //                                //self.errorPopup()
-//                            //                            }
-//                            //SVProgressHUD.dismiss()
-//                            dispatchGroup.leave()
-//                        })
-//                    }
-//
-//                }
-//                else if (answer == "") {
-//                    continue
-//                }
-                
-                
-//                if (answer == "") {
-//                    continue
-//                }
-                let imgPointer = self.currentItem!.imgPointer
-                
-                let date = Date()
-                let formatter = DateFormatter()
-                formatter.dateFormat = "yyyy/MM/dd HH:mm"
-                let dateTime = formatter.date(from: "2016/10/08 22:31")
-                let dateString = dateTime?.description
-                
-                let device_id = UIDevice.current.identifierForVendor?.uuidString
-                
-                
-                let api = AlchemieAPI()
- 
-                dispatchGroup.enter()
-                api.uploadAnswers(guid: guid,
-                                  projectID: projectID,
-                                  questionSetID: questionSetID,
-                                  answerSetInstanceID: answerSetInstanceID,
-                                  backgroundID: backgroundID,
-                                  answerSetXPosition: answerSetXPosition,
-                                  answerSetYPosition: answerSetYPosition,
-                                  questionNum: questionNum,
-                                  answerType: answerType,
-                                  imgPointer: imgPointer!,
-                                  answer: answer,
-                                  time: dateString!,
-                                  tabletID: device_id!,
-                                  completion:  {   success, response in
+            })
+        }
+        
+        
+        operationQueue.addOperation {
+            let questionText = "Item background" // oneQuestion.questionText!
+            // var answer = oneQuestion.questionAnswer!
+            let questionNum  = 0 // oneQuestion.questionNumber!
+            let guid  = self.currentOption!.optionID!
+            let projectID  = self.currentOption!.optionID! //oneQuestion.parentQuestionSetID!
+            let questionSetID  =  self.gQuestionSetID //
+            let answerSetInstanceID  = self.gAnswerSetInstanceID //
+            let backgroundID  =  self.currentItem!.imgPointer!
+            let answerSetXPosition  = 0 //Int(button.center.x)
+            let answerSetYPosition  = 0 //Int(button.center.y)
+            var answerType = 5 // Question.QuestionTypes.photo //oneQuestion.questionTypeNumber!
+            var dateString = ""
+            let date = Date()
+            let dateFormatter = DateFormatter()
+            dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+            dateFormatter.dateFormat = "yyyy/MM/dd HH:mm"
+            let currentTime = dateFormatter.string(from: date)
+            dateString = currentTime
+            
+            let device_id = UIDevice.current.identifierForVendor?.uuidString
+            self.taskCount += 1
+            AlchemieAPI.shared.uploadAnswers(guid: guid,
+                                   projectID: projectID,
+                                   questionSetID: questionSetID!,
+                                   answerSetInstanceID: answerSetInstanceID!,
+                                   backgroundID: backgroundID,
+                                   answerSetXPosition: answerSetXPosition,
+                                   answerSetYPosition: answerSetYPosition,
+                                   questionNum: questionNum,
+                                   answerType: answerType,
+                                   imgPointer: pointer!,
+                                   answer: pointer!,
+                                   time: dateString,
+                                   tabletID: device_id!,
+                                   completion:  {   success, response in
                                     
                                     if (success) {
                                         print("lololz")
                                         print(response)
-                                        successCount += 1
+                                        //                                    self.successCount += 1
                                     }
                                     else {
-                                        failCount += 1
+                                        //                                    self.failCount += 1
                                     }
-                                    dispatchGroup.leave()
+                                    //            dispatchGroup.leave()
                                     
-                })
-            }
-        // }
+                                    self.taskCount -= 1
+                                    if (self.taskCount == 0) {
+                                        self.operationQueue.addOperation(self.successOperation)
+                                    }
+                                    
+            })
+        }
+        
         
     }
     
+    
     /// beta who knows how the questions will be put there
-    func questionsUpload(questionList: [Question], button: QuestionButton, dispatchGroup:DispatchGroup) {
+    func questionsUpload(questionList: [Question], button: QuestionButton ) {
         
         var successCount = 0
         var failCount = 0
         
+        
         SVProgressHUD.show()
         
         let oneAnswerSetInstanceId = UUID().uuidString
-        
         
         
         if let questions = button.getQuestions() {
@@ -1508,18 +1151,27 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
                 let answerSetYPosition  = Int(button.center.y)
                 var answerType = oneQuestion.questionTypeNumber! //theQuestions[0].questionTypeNumber!
                 
-                
-                
                 let answer = button.getFromAnswersMap(key: questionNum)
                 
                 
-                if (answer == ""  && oneQuestion.questionType != .photo) {
+                gQuestionSetID = questionSetID
+                gAnswerSetInstanceID = answerSetInstanceID
+                
+                
+                if (answer == "" ) { // && oneQuestion.questionType != .photo) {
                     continue
                 }
+//                else if (answer == "" ) {
+//
+//                }
                 
                 
                 let imgPointer = button.getFromAnswersMap(key: questionNum)
-//                
+                
+                
+//                if (answer == "" ) {
+//
+//                }
                 
                 if (oneQuestion.questionType == .photo) {
                     answerType = 5
@@ -1529,97 +1181,162 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
                     
                     if let picForThisQuestion = ImageStore.sharedInstance.image(forKey: imgPointer) {
 //                        dispatchGroup.enter()
-                        self.api.uploadImage(theImage: picForThisQuestion, imgPointer: imgPointer, completion: {
-                            success, response in
-                            print("    question pic response!!!    ")
-                            print(response)
-//                            if (success) {
-//                                print("lololz")
-//                                print(response)
-//                                //self.uploadSuccessPopup()
-//                            }
-//                            else {
-//                                //self.errorPopup()
-//                            }
-//                            dispatchGroup.leave()
-                        })
-                    }
-                    
-//                    for (key, value)  in button.photoCache {
-//                        let image = value
-//
-//                        //dispatchGroup.enter()
-//                        self.api.uploadImage(theImage: value ,imgPointer: imgPointer, completion: {
-//                            success, response in
-//                            print("    question pic response!!!    ")
-//                            print(response)
-////                            if (success) {
-////                                print("lololz")
-////                                print(response)
-////                                self.uploadSuccessPopup()
-////                            }
-////                            else {
-////                                self.errorPopup()
-////                            }
-//
-//                            //dispatchGroup.leave()
-//                        })
-//
-//                    }
-                    continue
-                }
-                
-//                else if (answer == "") {
-//                    continue
-//                }
-                
-                // let imgPointer = self.currentItem!.imgPointer
-                
-                let date = Date()
-                let formatter = DateFormatter()
-                formatter.dateFormat = "yyyy/MM/dd HH:mm"
-                let dateTime = formatter.date(from: "2016/10/08 22:31")
-                let dateString = dateTime?.description
-                
-                let device_id = UIDevice.current.identifierForVendor?.uuidString
-                
-                
-                let api = AlchemieAPI()
-                
-                dispatchGroup.enter()
-                api.uploadAnswers(guid: guid,
-                                  projectID: projectID,
-                                  questionSetID: questionSetID,
-                                  answerSetInstanceID: answerSetInstanceID,
-                                  backgroundID: backgroundID,
-                                  answerSetXPosition: answerSetXPosition,
-                                  answerSetYPosition: answerSetYPosition,
-                                  questionNum: questionNum,
-                                  answerType: answerType,
-                                  imgPointer: imgPointer,
-                                  answer: answer,
-                                  time: dateString!,
-                                  tabletID: device_id!,
-                                  completion:  {   success, response in
+                        
+                        if (!imageEqualToPlaceHolder(image: picForThisQuestion)) {
+                        
+                            operationQueue.addOperation {
+    //                            self.taskCount += 1
+                                AlchemieAPI.shared.uploadImage(theImage: picForThisQuestion, imgPointer: imgPointer, completion: {
+                                    success, response in
+                                    print("    question pic response!!!    ")
+                                    print(response)
                                     
                                     if (success) {
                                         print("lololz")
                                         print(response)
-                                        successCount += 1
+                                        //self.uploadSuccessPopup()
                                     }
                                     else {
-                                        failCount += 1
+                                        //self.errorPopup()
                                     }
-                                    dispatchGroup.leave()
-                                    
-                })
-                
-                dispatchGroup.notify(queue: DispatchQueue.main) {
-                    self.uploadSuccessPopup()
-                    SVProgressHUD.dismiss()
+                                    //                            dispatchGroup.leave()
+    //                                self.taskCount -= 1
+    //                                if (self.taskCount == 0) {
+    //                                    self.operationQueue.addOperation(self.successOperation)
+    //                                }
+                                })
+                            }
+                        }
+                    }
                 }
+                
+                
+                // let imgPointer = self.currentItem!.imgPointer
+                 
+                var dateString = ""
+                if let time = button.timeAnswered   {
+                    dateString = time //dateTime?.description
+                }
+                else {
+                    let date = Date()
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+                    dateFormatter.dateFormat = "yyyy/MM/dd HH:mm"
+                    let currentTime = dateFormatter.string(from: date)
+                    dateString = currentTime
+                }
+                
+                let device_id = UIDevice.current.identifierForVendor?.uuidString
+                
+                
+//                dispatchGroup.enter()
+                operationQueue.addOperation {
+                    
+                    self.taskCount += 1
+                    AlchemieAPI.shared.uploadAnswers(guid: guid,
+                                      projectID: projectID,
+                                      questionSetID: questionSetID,
+                                      answerSetInstanceID: answerSetInstanceID,
+                                      backgroundID: backgroundID,
+                                      answerSetXPosition: answerSetXPosition,
+                                      answerSetYPosition: answerSetYPosition,
+                                      questionNum: questionNum,
+                                      answerType: answerType,
+                                      imgPointer: imgPointer,
+                                      answer: answer,
+                                      time: dateString,
+                                      tabletID: device_id!,
+                                      completion:  {   success, response in
+                                        
+                                        if (success) {
+                                            print("lololz")
+                                            print(response)
+                                            successCount += 1
+                                        }
+                                        else {
+                                            failCount += 1
+                                        }
+//                                        dispatchGroup.leave()
+                                        self.taskCount -= 1
+                                        if (self.taskCount == 0) {
+                                            self.operationQueue.addOperation(self.successOperation)
+                                        }
+                    })
+                }
+                
+                
+                
+//                dispatchGroup.notify(queue: DispatchQueue.main) {
+//                    self.uploadSuccessPopup()
+//                    SVProgressHUD.dismiss()
+//                }
             }
         }
         
+    
     }
+    
+    func uploadItemBackground() {
+     
+//        let api = AlchemieAPI()
+//
+//        operationQueue.addOperation {
+//
+//            self.taskCount += 1
+//            api.uploadAnswers(guid: guid,
+//                              projectID: projectID,
+//                              questionSetID: questionSetID,
+//                              answerSetInstanceID: answerSetInstanceID,
+//                              backgroundID: backgroundID,
+//                              answerSetXPosition: answerSetXPosition,
+//                              answerSetYPosition: answerSetYPosition,
+//                              questionNum: questionNum,
+//                              answerType: answerType,
+//                              imgPointer: imgPointer,
+//                              answer: answer,
+//                              time: dateString,
+//                              tabletID: device_id!,
+//                              completion:  {   success, response in
+//
+//                                if (success) {
+//                                    print("lololz")
+//                                    print(response)
+//                                    successCount += 1
+//                                }
+//                                else {
+//                                    failCount += 1
+//                                }
+//                                //                                        dispatchGroup.leave()
+//                                self.taskCount -= 1
+//                                if (self.taskCount == 0) {
+//                                    self.operationQueue.addOperation(self.successOperation)
+//                                }
+//            })
+//        }
+        
+    }
+    
+    func imageEqualToPlaceHolder(image: UIImage ) ->Bool {
+        if let emptyImage = UIImage(named: "addPhoto") {
+            let emptyData = UIImagePNGRepresentation(emptyImage)
+            let compareImageData = UIImagePNGRepresentation(image )
+            
+            if let empty = emptyData, let compareTo = compareImageData {
+                if empty == compareTo {
+                    // Empty image is the same as image1.image
+                    return true
+                } else {
+                    // Empty image is not equal to image1.image
+                    return false
+                }
+            } else {
+                // Creating NSData from Images failed
+                return false
+            }
+        }
+        else {
+            return false
+        }
+    }
+    
 }

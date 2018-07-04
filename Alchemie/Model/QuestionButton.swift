@@ -27,7 +27,7 @@ class QuestionButton: UIButton {
     var buttonLocation:CGPoint?
     var answersMap = Dictionary<Int, String>()
     var photoCache = Dictionary<Int, UIImage>()
-    
+    var timeAnswered:String?
     var buttonTypeNumber:Int?
     
 //    func setQuestionSet(questionSet: QuestionSet) {

@@ -39,22 +39,13 @@ class CreateUserViewController: UIViewController {
     @objc func dismissKeyboard (_ sender: UITapGestureRecognizer) {
         self.view.endEditing(true)
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+ 
     @IBAction func backButtonPressed(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
     }
     
     @IBAction func continueButtonPressed(_ sender: Any) {
+        
         if ( !Reachability.isConnectedToNetwork() ) {
             notConnectedToInternetPopup()
             return
@@ -69,9 +60,9 @@ class CreateUserViewController: UIViewController {
             return
         }
         
-        let api = AlchemieAPI()
+        
         SVProgressHUD.show()
-        api.createUser(email: nameTextField.text!, company: companyTextField.text!, password: passwordTextField.text!, completion: {
+        AlchemieAPI.shared.createUser(email: nameTextField.text!, company: companyTextField.text!, password: passwordTextField.text!, completion: {
             success  in
             if (success) {
                 self.performSegue(withIdentifier: "toConfirm", sender: self)
@@ -90,9 +81,6 @@ class CreateUserViewController: UIViewController {
     ///////////
     
     @objc func keyboardWillHide(noti: Notification) {
-        //let contentInsets = UIEdgeInsets.zero
-        //scrollView.contentInset = contentInsets
-        //scrollView.scrollIndicatorInsets = contentInsets
         scrollView.contentInset.bottom = 0
     }
     
@@ -100,17 +88,5 @@ class CreateUserViewController: UIViewController {
         if let keyboardSize = (noti.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             scrollView.contentInset.bottom = keyboardSize.height
         }
-        /*
-        guard let userInfo = noti.userInfo else { return }
-        guard var keyboardFrame: CGRect = (userInfo[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue else { return }
-        keyboardFrame = self.view.convert(keyboardFrame, from: nil)
-        
-        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            scrollView.contentInset.bottom = keyboardSize.height
-        }
-        
-        var contentInset:UIEdgeInsets = scrollView.contentInset
-        contentInset.bottom = keyboardFrame.size.height
-        scrollView.contentInset = contentInset*/
     }
 }

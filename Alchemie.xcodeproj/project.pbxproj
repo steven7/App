@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		26D4158116988224EDD565BC /* Pods_AlchemieTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67D8098136A2390695312A32 /* Pods_AlchemieTests.framework */; };
 		74D615FEC39BA1D2F852B3E6 /* Pods_Alchemie.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 860D9649C2D92FEE108E9EE1 /* Pods_Alchemie.framework */; };
-		AA160FD920820464003D4A47 /* CoreDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA160FD820820464003D4A47 /* CoreDataStore.swift */; };
 		AA160FDB20820628003D4A47 /* QuestionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA160FDA20820628003D4A47 /* QuestionButton.swift */; };
 		AA3152CE1FEA796000C772DE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3152CD1FEA796000C772DE /* AppDelegate.swift */; };
 		AA3152D01FEA796000C772DE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3152CF1FEA796000C772DE /* ViewController.swift */; };
@@ -60,6 +59,7 @@
 		AA9A1C041FED468F00F61C8F /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA9A1C031FED468F00F61C8F /* Item.swift */; };
 		AA9A1C061FED6E5600F61C8F /* CreateItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA9A1C051FED6E5600F61C8F /* CreateItem.swift */; };
 		AA9A1C081FED72F600F61C8F /* CreateItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA9A1C071FED72F600F61C8F /* CreateItemViewController.swift */; };
+		AAA6CA0820EC8C4900550C1F /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA6CA0720EC8C4900550C1F /* DataStore.swift */; };
 		AAB125301FF4443300F75EBA /* BigImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB1252F1FF4443300F75EBA /* BigImageViewController.swift */; };
 		AAB30BB22035573E0037DE26 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAB30BB32035573E0037DE26 /* Alamofire.framework */; };
 		AAB30BB4203557410037DE26 /* AlamofireImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAB30BB5203557410037DE26 /* AlamofireImage.framework */; };
@@ -94,7 +94,6 @@
 		67D8098136A2390695312A32 /* Pods_AlchemieTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AlchemieTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A1E9DE0532AA032C714F154 /* Pods_AlchemieUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AlchemieUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		860D9649C2D92FEE108E9EE1 /* Pods_Alchemie.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Alchemie.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		AA160FD820820464003D4A47 /* CoreDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStore.swift; sourceTree = "<group>"; };
 		AA160FDA20820628003D4A47 /* QuestionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionButton.swift; sourceTree = "<group>"; };
 		AA3152CA1FEA796000C772DE /* Alchemie.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Alchemie.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA3152CD1FEA796000C772DE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -151,6 +150,7 @@
 		AA9A1C031FED468F00F61C8F /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		AA9A1C051FED6E5600F61C8F /* CreateItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateItem.swift; sourceTree = "<group>"; };
 		AA9A1C071FED72F600F61C8F /* CreateItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateItemViewController.swift; sourceTree = "<group>"; };
+		AAA6CA0720EC8C4900550C1F /* DataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
 		AAB1252F1FF4443300F75EBA /* BigImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BigImageViewController.swift; sourceTree = "<group>"; };
 		AAB30BB32035573E0037DE26 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAB30BB5203557410037DE26 /* AlamofireImage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = AlamofireImage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -239,12 +239,6 @@
 				AAB1252F1FF4443300F75EBA /* BigImageViewController.swift */,
 				AAC3530520074845005EB207 /* QuestionsViewController.swift */,
 				AA3152D11FEA796000C772DE /* Main.storyboard */,
-				AA160FD820820464003D4A47 /* CoreDataStore.swift */,
-				AA3153081FEA79D300C772DE /* AlchemieAPI.swift */,
-				AACFE9891FEC348A00B798D7 /* Extensions.swift */,
-				AA160FDA20820628003D4A47 /* QuestionButton.swift */,
-				AACFE98B1FEC356E00B798D7 /* Utilities.swift */,
-				AA54CC8D1FEEB17F00B72C44 /* ImageStore.swift */,
 				AA6C7A991FEB3C6B00392EE7 /* Model */,
 				AA6C7A9A1FEB3C8000392EE7 /* Cells */,
 				AA3152D71FEA796000C772DE /* Assets.xcassets */,
@@ -326,10 +320,16 @@
 				AA3153221FEA7BC400C772DE /* Option.swift */,
 				AA3153241FEA7BCF00C772DE /* SubOption.swift */,
 				AA9A1C031FED468F00F61C8F /* Item.swift */,
+				AA3153081FEA79D300C772DE /* AlchemieAPI.swift */,
 				AA6311342006E8780023D786 /* QuestionSet.swift */,
 				AA31531E1FEA7A7F00C772DE /* CreateOption.swift */,
 				AA3153201FEA7A8C00C772DE /* CreateSubOption.swift */,
 				AA9A1C051FED6E5600F61C8F /* CreateItem.swift */,
+				AACFE9891FEC348A00B798D7 /* Extensions.swift */,
+				AA160FDA20820628003D4A47 /* QuestionButton.swift */,
+				AACFE98B1FEC356E00B798D7 /* Utilities.swift */,
+				AA54CC8D1FEEB17F00B72C44 /* ImageStore.swift */,
+				AAA6CA0720EC8C4900550C1F /* DataStore.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -429,7 +429,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0910;
-				LastUpgradeCheck = 0910;
+				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = steve;
 				TargetAttributes = {
 					AA3152C91FEA796000C772DE = {
@@ -690,7 +690,7 @@
 				AA3153251FEA7BCF00C772DE /* SubOption.swift in Sources */,
 				AA3153051FEA79B800C772DE /* OptionsViewController.swift in Sources */,
 				AA371D68200AE05500BCD3AC /* MultiListQuestionTableViewCell.swift in Sources */,
-				AA160FD920820464003D4A47 /* CoreDataStore.swift in Sources */,
+				AAA6CA0820EC8C4900550C1F /* DataStore.swift in Sources */,
 				AA6C7A971FEB3BFE00392EE7 /* CreateItemCollectionViewCell.swift in Sources */,
 				AA3153091FEA79D300C772DE /* AlchemieAPI.swift in Sources */,
 				AA371D64200AE04300BCD3AC /* ListQuestionTableViewCell.swift in Sources */,
@@ -776,6 +776,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -783,6 +784,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -833,6 +835,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -840,6 +843,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;

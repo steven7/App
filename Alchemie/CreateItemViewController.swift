@@ -41,13 +41,7 @@ class CreateItemViewController: UIViewController, UIImagePickerControllerDelegat
     
     
     @IBAction func photoButtonPressed(_ sender: Any) {
-        /*
-        self.imagePicker.allowsEditing = false
-        self.imagePicker.sourceType = .photoLibrary
-        self.present(self.imagePicker, animated: true, completion: {
-            
-        })
-        */
+        
         let photoAlert = UIAlertController(title: "Photo Source", message: "What is the source of the photo?", preferredStyle: .actionSheet)
         //photoAlert.popoverPresentationController?.sourceView = photoButton
         photoAlert.popoverPresentationController?.sourceView = self.view
@@ -76,14 +70,10 @@ class CreateItemViewController: UIViewController, UIImagePickerControllerDelegat
     func imagePickerController(_ picker: UIImagePickerController,
                                didFinishPickingMediaWithInfo info: [String : Any]) {
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            //imageView.contentMode = .ScaleAspectFit
             theImage = pickedImage
-            //photoButton.imageView?.image = pickedImage
             photoButton.setBackgroundImage(self.theImage, for: .normal)
         } 
         dismiss(animated: true, completion: {
-            //self.photoButton.imageView?.image = self.theImage
-            //self.photoButton.setBackgroundImage(self.theImage, for: .normal)
         })
     }
     
@@ -91,15 +81,6 @@ class CreateItemViewController: UIViewController, UIImagePickerControllerDelegat
         dismiss(animated: true, completion: nil)
     }
     
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
@@ -117,7 +98,6 @@ class CreateItemViewController: UIViewController, UIImagePickerControllerDelegat
         }
         createItemCompletion!(theImage!, caption)
         self.navigationController?.popViewController(animated: true)
-        //self.presentingViewController?.dismiss(animated: true, completion:nil)
     }
     
     @objc func dismissKeyboard (_ sender: UITapGestureRecognizer) {
@@ -126,8 +106,6 @@ class CreateItemViewController: UIViewController, UIImagePickerControllerDelegat
     
     @objc func keyboardWillHide(noti: Notification) {
         let contentInsets = UIEdgeInsets.zero
-        //scrollView.contentInset = contentInsets
-        //scrollView.scrollIndicatorInsets = contentInsets
         if let keyboardSize = (noti.userInfo![UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
             if self.view.frame.origin.y != 0 {
                 self.view.frame.origin.y += keyboardSize.height
@@ -136,14 +114,6 @@ class CreateItemViewController: UIViewController, UIImagePickerControllerDelegat
     }
     
     @objc func keyboardWillShow(noti: Notification) {
-        /*
-        guard let userInfo = noti.userInfo else { return }
-        guard var keyboardFrame: CGRect = (userInfo[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue else { return }
-        keyboardFrame = self.view.convert(keyboardFrame, from: nil)
-        
-        var contentInset:UIEdgeInsets = scrollView.contentInset
-        contentInset.bottom = keyboardFrame.size.height
-        scrollView.contentInset = contentInset*/
         if let keyboardSize = (noti.userInfo![UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
             if self.view.frame.origin.y == 0 {
                 self.view.frame.origin.y -= keyboardSize.height

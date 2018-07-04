@@ -8,16 +8,29 @@
 
 import UIKit
 import Alamofire
-// import AlamofireImage
+import CoreData
+import UIKit 
 
 class AlchemieAPI: NSObject {
     
-    let baseLoginURL = "http://ec2-54-84-28-14.compute-1.amazonaws.com/alchemie"
-    let baseURL = "http://Alchemiewebservice20171213043804.azurewebsites.net/service1.svc"
-    let baseDownloadImageURL = "http://alchemiewebservice20171213043804.azurewebsites.net/service1.svc/downloadimage/"
+//    let baseLoginURL = "http://ec2-54-84-28-14.compute-1.amazonaws.com/alchemie"
+//    let baseURL = "http://Alchemiewebservice20171213043804.azurewebsites.net/service1.svc"
+//    let baseDownloadImageURL = "http://alchemiewebservice20171213043804.azurewebsites.net/service1.svc/downloadimage/"
+    
+    var baseLoginURL:String // = "http://ec2-54-84-28-14.compute-1.amazonaws.com/alchemie"
+    var baseURL:String // = "http://Alchemiewebservice20171213043804.azurewebsites.net/service1.svc"
+    var baseDownloadImageURL:String // = "http://alchemiewebservice20171213043804.azurewebsites.net/service1.svc/downloadimage/"
     
     //for test
     // let baseURL = "localhost/alchemie"
+    
+    static let shared = AlchemieAPI( )
+
+    private override init( ) {
+        self.baseLoginURL = "http://ec2-54-84-28-14.compute-1.amazonaws.com/alchemie"
+        self.baseURL = "http://Alchemiewebservice20171213043804.azurewebsites.net/service1.svc"
+        self.baseDownloadImageURL = "http://alchemiewebservice20171213043804.azurewebsites.net/service1.svc/downloadimage/"
+    }
     
     func loginUser(email:String, company:String, password:String, completion: @escaping (Bool)->()){
         let url = URL(string: "\(baseLoginURL)/loginUser.php")!
@@ -30,7 +43,6 @@ class AlchemieAPI: NSObject {
             
             guard let responseJSON = response.result.value as? [String: Any] else {
                 print("Invalid tag information received from the service")
-                //completion(false)
                 return
             }
             
@@ -80,7 +92,6 @@ class AlchemieAPI: NSObject {
     func logoutUser(completion: @escaping (Bool)->()){
         let url = URL(string: "\(baseLoginURL)/logoutUser.php")!
         Alamofire.request(url, method: .post, parameters: nil ).responseJSON { (response) in
-            
             guard let responseJSON = response.result.value as? [String: Any] else {
                 print("Invalid tag information received from the service")
                 completion(false)
@@ -94,8 +105,6 @@ class AlchemieAPI: NSObject {
         let url = URL(string: "\(baseURL)/GetOptions")!
         Alamofire.request(url, method: .get, parameters: nil ).responseJSON { (response) in
             
-            // print(response)
-            
             guard let responseJSON = response.result.value as? [String: AnyObject] else {
                 print("ERROR - \(response)")
                 print("Invalid json information received from the service")
@@ -105,7 +114,6 @@ class AlchemieAPI: NSObject {
             }
             
             print(responseJSON)
-            
             
             guard let options = responseJSON["GetOptionsResult"] as? [[String: AnyObject]] else {
                 print("ERROR - \(response)")
@@ -166,9 +174,6 @@ class AlchemieAPI: NSObject {
                 return
             }
             
-            //print(responseJSON)
-            
-            
             guard let questionSet = responseJSON["GetQuestionSetResult"] as? [[String: AnyObject]] else {
                 print("somethings wrong with the data for get question set")
                 completion(false, [[String: AnyObject]]())
@@ -206,33 +211,10 @@ class AlchemieAPI: NSObject {
             
             if let theimage = response.result.value {
                 print("image downloaded: \(theimage)")
-                /*
-                // should probably do this in queue after images download
-                let item = Item()
-                /// <-----  fix this ---->
-                item.image = theimage // UIImage(named: "questionSetIcon2") // this is temporary image. change it soon
-                item.imgUUID = imgPointer
-                item.imgPointer = imgPointer
-                item.parentSubOptionID = newSubOption.subOptionID
-                item.caption = title
-                
-                print("one download complete   \(title) on subOtion \(newSubOption.name) and option \(newOption.title) ")
-                self.addItemToCurrentSubOptionCoreData(subOption: newSubOption,  item: item )
-                */
+               
             }
         }
-        /*
-        Alamofire.request(url).responseImage { response in
-            debugPrint(response)
-            
-            print(response.request)
-            print(response.response)
-            debugPrint(response.result)
-            
-            if let image = response.result.value {
-                print("image downloaded: \(image)")
-            }
-        } */
+        
     }
     
     func downloadAnswers (guid: String,
@@ -240,36 +222,9 @@ class AlchemieAPI: NSObject {
         
         print ("begin fetch question set")
         
-        //let url = URL(string: "\(baseURL)/UploadAnswers/\(imgPointer)")!
-        
-        //let url = URL(string: "\(baseURL)/UploadAnswers")!
-        
-        //let url = URL(string: "http://alchemiewebservice20171213043804.azurewebsites.net/service1.svc/uploadanswers")!
-        
-        //let url = URL(string: "http://alchemiewebservice20171213043804.azurewebsites.net/service1.svc/downloadanswers/\(guid)")!
-        
-        //let url = URL(string: "http://alchemiewebservice20171213043804.azurewebsites.net/service1.svc/downloadanswers")!
         
         let url = URL(string: "http://alchemiewebservice20171213043804.azurewebsites.net/service1.svc/GetAllAnswers")!
         
-//        let parameters:[String : Any] = [
-//
-//            "AnswerSetInstanceID": answerSetInstanceID,
-//            "AnswerSetXPosition": answerSetXPosition,
-//            "AnswerSetYPosition": answerSetYPosition,
-//            "AnswerText":"FIRST ANSWER",
-//            "AnswerType":0,
-//            "BackgroundID": backgroundID,
-//            "ID" : id,
-//            "ProjectID": projectID,
-//            "QuestionNum": 1, // questionNum,
-//            "QuestionSetID": questionSetID,
-//            "SubmitTime":"/Date(1521838656020-0400)/",
-//            "TabletID":"dfc7be2b-6d08-49a2-b855-9e7fbbf7c0de"
-//
-//            //"AnswerType": answerType,
-//            //"Answer": answer
-//        ]
      
         let parameters:[String : Any] = [
           
@@ -282,18 +237,9 @@ class AlchemieAPI: NSObject {
         
         var request = URLRequest(url: url)
         request.httpMethod = HTTPMethod.post.rawValue
-        //request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("text/plain", forHTTPHeaderField: "Content-Type")
-        //request.setValue("application/xml", forHTTPHeaderField: "Content-Type")
-        //request.setValue("text/xml", forHTTPHeaderField: "Content-Type")
-        //request
-        //request.httpBody
-        //Alamofire.request(url, method: .post, parameters: parameters, encoding: nil, headers: nil) {
-        //Alamofire.request(request).responseJSON { (response) in
-        // Alamofire.req
+      
         Alamofire.request(url, method:.get, parameters:parameters).validate(contentType: ["application/json", "text/html", "text/plain", "application/xml"]).responseString { response in
-            
-            //response in
             
             
             debugPrint(response)
@@ -307,7 +253,7 @@ class AlchemieAPI: NSObject {
             print()
             debugPrint()
             
-            // let result = response.result
+            
             if (response.result.isSuccess) {
                 completion(true, [[String: AnyObject]]())
                 print("asnwers uploaded?  ")
@@ -360,7 +306,7 @@ class AlchemieAPI: NSObject {
   
         let jsonData = try? JSONSerialization.data(withJSONObject: parameters, options: [])
         
-        // let json = String(data: jsonData!)
+        
         let json = String(data: jsonData!, encoding:  String.Encoding.init(rawValue: 0x0000) )
         
         
@@ -370,8 +316,7 @@ class AlchemieAPI: NSObject {
         
         
         print(jsonData)
-//        print(json)
-//
+
         print(jsonTest)
         print(data)
         
@@ -380,8 +325,6 @@ class AlchemieAPI: NSObject {
         var request = URLRequest(url: url)
      
         Alamofire.request(url, method: .post, parameters: [:], encoding: jsonTest, headers: [:]).validate(contentType: ["application/json", "text/html", "text/plain", "application/xml", "raw"]).responseString { response in
-            
-            //response in
             
             debugPrint(response)
             print(" - req")
@@ -393,8 +336,6 @@ class AlchemieAPI: NSObject {
             print(" - resul")
             print()
             debugPrint()
-//            response
-            
             
             if (response.result.isSuccess) {
                 completion(true, [[String: AnyObject]]())
@@ -407,25 +348,9 @@ class AlchemieAPI: NSObject {
         }
        
         ////
-        // Create the URLSession on the default configuration
         let defaultSessionConfiguration = URLSessionConfiguration.default
         let defaultSession = URLSession(configuration: defaultSessionConfiguration)
-
-        // Setup the request with URL
-        //let url = URL(string: "yourURL")
-//        var urlRequest = URLRequest(url: url)  // Note: This is a demo, that's why I use implicitly unwrapped optional
-//
-//        // Convert POST string parameters to data using UTF8 Encoding
-//        let postParams = jsonTest // "api_key=APIKEY&email=example@example.com&password=password"
-//        let postData = postParams.data(using: .utf8)
-//
-//        // Set the httpMethod and assign httpBody
-//        urlRequest.httpMethod = "POST"
-//        urlRequest.httpBody = postData
-//        urlRequest.addValue("raw", forHTTPHeaderField: "Content-Type")
-        //urlRequest.addValue("application/json", forHTTPHeaderField: "Accept")
-   
-        
+ 
     }
     
     func uploadAnswersOld (guid: String,
@@ -443,7 +368,7 @@ class AlchemieAPI: NSObject {
         
         print ("begin fetch question set")
         
-        //let url = URL(string: "\(baseURL)/UploadAnswers/\(imgPointer)")!
+        
         let url = URL(string: "\(baseURL)/UploadAnswers")!
         
         let downloadURL = baseDownloadImageURL + "\(imgPointer)"
@@ -464,12 +389,8 @@ class AlchemieAPI: NSObject {
         var request = URLRequest(url: url)
         request.httpMethod = HTTPMethod.post.rawValue
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        //request.httpBody
-        //Alamofire.request(url, method: .post, parameters: parameters, encoding: nil, headers: nil) {
-        //Alamofire.request(request).responseJSON { (response) in
+        
         Alamofire.request(url, method:.post, parameters:parameters,encoding: JSONEncoding.default).responseJSON { response in
-             
-            //response in
             
             completion(true, [[String: AnyObject]]())
             
@@ -480,19 +401,6 @@ class AlchemieAPI: NSObject {
             
             if let theanswers = response.result.value {
                 print("asnwers uploaded?: \(theanswers)")
-                /*
-                 // should probably do this in queue after images download
-                 let item = Item()
-                 /// <-----  fix this ---->
-                 item.image = theimage // UIImage(named: "questionSetIcon2") // this is temporary image. change it soon
-                 item.imgUUID = imgPointer
-                 item.imgPointer = imgPointer
-                 item.parentSubOptionID = newSubOption.subOptionID
-                 item.caption = title
-                 
-                 print("one download complete   \(title) on subOtion \(newSubOption.name) and option \(newOption.title) ")
-                 self.addItemToCurrentSubOptionCoreData(subOption: newSubOption,  item: item )
-                 */
             }
         }
     }
@@ -501,14 +409,13 @@ class AlchemieAPI: NSObject {
     
     func uploadImage (theImage:UIImage, imgPointer:String, completion: @escaping (Bool, [[String: AnyObject]])->() ) {
         
-        //let url = URL(string: "\(baseURL)/UploadImage/\(imgPointer)")!
+        
         let url = URL(string: "\(baseURL)/UploadImageMPF/\(imgPointer)")!
         
         let headers: HTTPHeaders = [
-            /* "Authorization": "your_access_token",  in case you need authorization header */
             "Content-type": "text/plain"
         ]
-        //"Content-type": "multipart/form-data"
+        
         
         let parameters = ["ID" : imgPointer,
                           "ProjectID": imgPointer,
@@ -517,92 +424,25 @@ class AlchemieAPI: NSObject {
                           "imageguid" : imgPointer
         ]
         
-        //let imgData = UIImageJPEGRepresentation(theImage, 0.1)
+        
         let imgData = UIImagePNGRepresentation(theImage)
+      
         
-//        let jpegimgData = UIImageJPEGRepresentation(theImage, 0.1)
-//        
-//        let jpegImg = UIImage(data: jpegimgData!)
-//        
-        //let imgData = UIImagePNGRepresentation(jpegImg!)
+        let name = imgPointer
         
-        let name = imgPointer //url.absoluteString
-        //let fileName = "\(name)"
-        let fileName = "\(name).png" //"\(name).jpg"
+        let fileName = "\(name).png"
         
         let fileURL = ImageStore.sharedInstance.imageURL(forKey: fileName)
-            //Bundle.main.url(forResource:  imgPointer, withExtension: "jpg")
+    
         
-//        Alamofire.upload(fileURL, to: url).responseJSON { // (data, response, error) in
-//            ( response ) in
-//            print(response)
-////            guard let data = data, error == nil else {
-////                print("error=(error)")
-////                completion(false, [[String: AnyObject]]())
-////                return
-////            }
-////            if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {           // check for http errors
-////                print("statusCode should be 200, but is (httpStatus.statusCode)")
-////                print("response = (response)")
-////                completion(false, [[String: AnyObject]]())
-////                return
-////            }
-////            let responseString = String(data: data, encoding: .utf8)
-////            print("responseString = \(responseString)")
-//             completion(true, [[String: AnyObject]]())
-//            print("----- the picture upload response -----")
-//            print(response)
-//            debugPrint(response)
-//        }
-        
-//        Alamofire.upload(multipartFormData: { (data: MultipartFormData) in
-//            data.append(imgData!, withName: name)
-//        }, to: url.absoluteString) { [weak self] (encodingResult) in
-//            switch encodingResult {
-//            case .success(let upload, _, _):
-//                upload.responseJSON { response in
-//
-//                    if     let dataDict = response.result.value as? NSDictionary {
-//                        print(dataDict)
-////                        if    let data = dataDict["data"] as? NSDictionary {
-////                            print(data)
-////                        }
-////
-////                        if let imgUrl = data["img_url"] as? String else {
-////                            print(imgUrl)
-////
-////                        }
-//                    }
-//
-//
-//                    if (response.result.isSuccess) {
-//                        completion(true, [[String: AnyObject]]())
-//                    }
-//                    else {
-//                        completion(false, [[String: AnyObject]]())
-//                    }
-//
-////                    self?.loadingSpinner.isHidden = true
-////                    self?.loadingSpinner.stopAnimation(self?.view)
-//                }
-//            case .failure(let encodingError):
-//                print(encodingError)
-//                completion(false, [[String: AnyObject]]())
-//            }
-//        }
-
         Alamofire.upload(multipartFormData: { (multipartFormData) in
-
-//            for (key, value) in parameters {
-//                multipartFormData.append("\(value)".data(using: String.Encoding.utf8)!, withName: key as String)
-//            }
-
+ 
             if let data = imgData {
                 multipartFormData.append(data,
                                          withName: name,
                                          fileName: fileName,
-                                         mimeType: "image/png") // "image/jpeg")
-                //multipartFormData.append(data, withName: name, fileName: fileName, mimeType: "image/png")
+                                         mimeType: "image/png")
+                
             }
 
         }, usingThreshold: UInt64.init(), to: url.absoluteString, method: .post, headers: headers)  { (result) in
@@ -652,44 +492,6 @@ class AlchemieAPI: NSObject {
         request.httpMethod = "POST"
 
         request.setValue("text/plain", forHTTPHeaderField: "Content-Type")
-        //request.setValue("multipart/form-data", forHTTPHeaderField: "Content-Type")
-
-        //request.setValue("multipart/form-data; boundary=\(imgPointer)", forHTTPHeaderField: "Content-Type")
-
-        //let imageData = UIImageJPEGRepresentation(imageView.image!, 1)
-
-        //if(imageData==nil)  { return; }
-
-        // request.HTTPBody = createBodyWithParameters(parameters, filePathKey: "file", imageDataKey: imgData!, boundary: nil)
-//        request.httpBody = createBody(parameters: parameters,
-//                                   boundary: imgPointer,
-//                                   data: imgData!,
-//                                   mimeType: "image/jpeg",
-//                                   filename: fileName)
-
-//        let boundary = generateBoundaryString()
-//
-//        request.httpBody = createBodyWithParameters(parameters: parameters, filePathKey: name, imageDataKey: imgData!, boundary: boundary)
-//
-//
-//        //"image/jpeg"
-//
-//        let task = URLSession.shared.dataTask(with: request ) { (data, response, error) in
-//            print(response)
-//            guard let data = data, error == nil else {
-//                print("error=(error)")
-//                completion(false, [[String: AnyObject]]())
-//                return
-//            }
-//            if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {           // check for http errors
-//                print("statusCode should be 200, but is \(httpStatus.statusCode)")
-//                print("response = \(response)")
-//            }
-//            let responseString = String(data: data, encoding: .utf8)
-//            print("responseString = \(responseString)")
-//            completion(true, [[String: AnyObject]]())
-//        }
-//        task.resume()
         
     }
     
@@ -747,103 +549,10 @@ class AlchemieAPI: NSObject {
         
         return body as Data
     }
-    
-//    func uploadImage (theImage:UIImage, imgPointer:String, completion: @escaping (Bool, [[String: AnyObject]])->() ) {
-//
-//        print ("begin image upload")
-//
-//        //let url = URL(string: "\(baseURL)/UploadImage/\(imgPointer)")!
-//
-//       // let downloadURL = baseDownloadImageURL + "\(imgPointer)"
-//
-//        let url = URL(string: "http://alchemiewebservice20171213043804.azurewebsites.net/service1.svc/uploadImage/\(imgPointer)")
-//
-//        let imgData = UIImageJPEGRepresentation(theImage, 0.2)!
-//
-//        if let data = UIImageJPEGRepresentation(theImage,1) {
-//            //let parameters: Parameters = [
-//            //    "access_token" : "YourToken"
-//            //]
-//            // You can change your image name here, i use NSURL image and convert into string
-//            let imageURL = url // info[UIImagePickerControllerReferenceURL] as! NSURL
-//            let fileName = url?.absoluteString
-//            //absouluteString
-//            // Start Alamofire
-//
-//            let imageToUploadURL =  Bundle.main.url(forResource: "tree", withExtension: "png")
-//
-//            // Server address (replace this with the address of your own server):
-//            let theurl = url //"http://localhost:8888/upload_image.php"
-//
-//            let theCompressedImage = UIImageJPEGRepresentation(theImage, 0.3)
-//
-//            //UIImagePNGRepresentation
-//            // Use Alamofire to upload the image
-//            Alamofire.upload(
-//                    multipartFormData: { multipartFormData in
-//                                 // On the PHP side you can retrive the image using $_FILES["image"]["tmp_name"]
-//                                 //multipartFormData.append(imageToUploadURL!, withName: "image")
-//                                    multipartFormData.append(theCompressedImage!,
-//                                                          // UIImagePNGRepresentation(theImage)!,
-//                                                          withName: fileName!,
-//                                                          mimeType: "image/jpeg")
-//                                 //for (key, val) in parameters {
-//                                 //   multipartFormData.append((val as! String).data(using: .utf8)!, withName: key)
-//                                    /*//    multipartFormData.append(val.data(using: String.Encoding.utf8)!, withName: key)*/
-//                                // }
-//                         },
-//                    to: url!,
-//                    encodingCompletion: { encodingResult in
-//
-//                             switch encodingResult {
-//
-//                             case .success(let upload, _, _):
-//
-//                                print("upload response")
-//                                print(upload)
-//                                // completion(true, [[String: AnyObject]]())
-//                                // upload.responseJSON { response in
-//                                upload.responseString { response in
-//
-//                                     //if let jsonResponse = response.result.value as? [String: Any] {
-//                                         print(response)
-//
-//                                        print(response.request)
-//                                        print(" * ")
-//                                        print(response.response)
-//                                        print(" * ")
-//                                        print(response.error)
-//                                        print(" * ")
-//                                        print(response.description)
-//                                        print(" * ")
-//                                        debugPrint(response.result)
-//
-//                                        if (response.result.isSuccess) {
-//                                            completion(true, [[String: AnyObject]]())
-//
-//                                        }
-//                                     //}
-//                                 }
-//
-//                             case .failure(let encodingError):
-//                                 completion(false, [[String: AnyObject]]())
-//                                 print(encodingError)
-//                             }
-//                }
-//            )
-//
-//        }
-//
-//    }
-    
-    
+  
     func downloadImageTest (  imgPointer:String, completion: @escaping (Bool, [[String: AnyObject]])->() ) {
         
         print ("begin image upload")
-        
-        //let url = URL(string: "\(baseURL)/UploadImage/\(imgPointer)")!
-        
-        // let downloadURL = baseDownloadImageURL + "\(imgPointer)"
         
         let url = URL(string: "\(baseURL)/\(imgPointer)")!
         
@@ -853,80 +562,420 @@ class AlchemieAPI: NSObject {
             print(response)
             
         }
-        
-//        if let data = UIImageJPEGRepresentation(theImage,1) {
-//            //let parameters: Parameters = [
-//            //    "access_token" : "YourToken"
-//            //]
-//            // You can change your image name here, i use NSURL image and convert into string
-//            let imageURL = url // info[UIImagePickerControllerReferenceURL] as! NSURL
-//            let fileName = url?.absoluteString
-//            //absouluteString
-//            // Start Alamofire
+ 
+    }
+    
+    /////////
+    ///
+    /// placement
+    ///
+    /////////
+    
+//    func fetchItemsFromCoreData(currentSubOption: SubOption) -> [AnyObject] {
 //
-//            let imageToUploadURL =  Bundle.main.url(forResource: "tree", withExtension: "png")
-//
-//            // Server address (replace this with the address of your own server):
-//            let theurl = url //"http://localhost:8888/upload_image.php"
-//
-//            let theCompressedImage = UIImageJPEGRepresentation(theImage, 0.3)
-//
-//            //UIImagePNGRepresentation
-//            // Use Alamofire to upload the image
-////            Alamofire.upload(
-////                multipartFormData: { multipartFormData in
-////                    // On the PHP side you can retrive the image using $_FILES["image"]["tmp_name"]
-////                    //multipartFormData.append(imageToUploadURL!, withName: "image")
-////                    multipartFormData.append(theCompressedImage!,
-////                                             // UIImagePNGRepresentation(theImage)!,
-////                        withName: fileName!,
-////                        mimeType: "image/jpeg")
-////                    //for (key, val) in parameters {
-////                    //   multipartFormData.append((val as! String).data(using: .utf8)!, withName: key)
-////                    /*//    multipartFormData.append(val.data(using: String.Encoding.utf8)!, withName: key)*/
-////                    // }
-////            },
-////                to: url!,
-////                encodingCompletion: { encodingResult in
-////
-////                    switch encodingResult {
-////
-////                    case .success(let upload, _, _):
-////
-////                        print("upload response")
-////                        print(upload)
-////                        // completion(true, [[String: AnyObject]]())
-////                        // upload.responseJSON { response in
-////                        upload.responseString { response in
-////
-////                            //if let jsonResponse = response.result.value as? [String: Any] {
-////                            print(response)
-////                            
-////                            print(response.request)
-////                            print(" * ")
-////                            print(response.response)
-////                            print(" * ")
-////                            print(response.error)
-////                            print(" * ")
-////                            print(response.description)
-////                            print(" * ")
-////                            debugPrint(response.result)
-////                            
-////                            if (response.result.isSuccess) {
-////                                completion(true, [[String: AnyObject]]())
-////
-////                            }
-////                            //}
-////                        }
-////
-////                    case .failure(let encodingError):
-////                        completion(false, [[String: AnyObject]]())
-////                        print(encodingError)
-////                    }
-////            }
-////            )
-//            
+//        guard let appDelegate =
+//            UIApplication.shared.delegate as? AppDelegate else {
+//                return []
 //        }
+//
+//        let managedContext =
+//            appDelegate.persistentContainer.viewContext
+//
+//        let fetchRequest =
+//            NSFetchRequest<NSManagedObject>(entityName: "CDItem")
+//
+//        let subOptionID = currentSubOption.subOptionID
+//
+//        fetchRequest.predicate = NSPredicate(format: "parentSubOptionID == %@", subOptionID!)
+//
+//        var theItems = [AnyObject]()
+//        var theManagedItems = [NSManagedObject]()
+//
+//        do {
+//
+//            theManagedItems = try managedContext.fetch(fetchRequest)
+//            print("begin fetch")
+//
+//            var itemIdSet = Set<String>()
+//
+//            for oneManagedItem in theManagedItems {
+//                let oneItem = Item()
+//                oneItem.itemID   = oneManagedItem.value(forKeyPath: "itemID")   as? String
+//                if (itemIdSet.contains(oneItem.itemID!)){
+//                    print("dupe found")
+//                    continue
+//                }
+//                else {
+//                    itemIdSet.insert(oneItem.itemID!)
+//                }
+//                oneItem.caption    = oneManagedItem .value(forKeyPath: "caption") as? String
+//                oneItem.imgUUID    = oneManagedItem .value(forKeyPath: "imgUUID") as? String
+//                oneItem.imgPointer = oneManagedItem .value(forKeyPath: "imgPointer") as? String
+//                oneItem.editedimgUUID = oneManagedItem.value(forKeyPath: "editedimgPointer") as? String
+//                //oneItem.questionIconPositionsThree = oneManagedItem.value( forKeyPath: "questionIconPositionsThree") as? String
+//
+//                if let dataOne = oneManagedItem.value(forKey: "questionIconPositionsOne") as? Data {
+//                    let unarchiveObjectOne = NSKeyedUnarchiver.unarchiveObject(with: dataOne)
+//                    let arrayObjectOne = unarchiveObjectOne as AnyObject! as! [CGPoint]
+//                    oneItem.questionIconPositionsOne = arrayObjectOne
+//                }
+//                else {
+//                    oneItem.questionIconPositionsOne = [CGPoint]()
+//                }
+//
+//                if let dataTwo = oneManagedItem.value(forKey: "questionIconPositionsTwo") as? Data {
+//                    let unarchiveObjectTwo = NSKeyedUnarchiver.unarchiveObject(with: dataTwo)
+//                    let arrayObjectTwo = unarchiveObjectTwo as AnyObject! as! [CGPoint]
+//                    oneItem.questionIconPositionsTwo = arrayObjectTwo
+//                }
+//                else {
+//                    oneItem.questionIconPositionsTwo = [CGPoint]()
+//                }
+//
+//                if let dataThree = oneManagedItem.value(forKey: "questionIconPositionsThree") as? Data {
+//                    let unarchiveObjectThree = NSKeyedUnarchiver.unarchiveObject(with: dataThree)
+//                    let arrayObjectThree = unarchiveObjectThree as AnyObject! as! [CGPoint]
+//                    oneItem.questionIconPositionsThree = arrayObjectThree
+//                }
+//                else {
+//                    oneItem.questionIconPositionsThree = [CGPoint]()
+//                }
+//
+//                ///
+//                ///
+//                ///
+//                let questionInstancefetchRequest =
+//                    NSFetchRequest<NSManagedObject>(entityName: "CDQuestionListInstance")
+//
+//                questionInstancefetchRequest.predicate = NSPredicate(format: "parentItemID == %@", oneItem.itemID!)
+//
+//                var theManagedInstances = try managedContext.fetch(questionInstancefetchRequest)
+//
+//                var buttonIdSet = Set<String>()
+//
+//                for instance in theManagedInstances {
+//
+//                    let oneButton = QuestionButton()
+//
+//                    oneButton.buttonInstanceID = instance.value(forKeyPath: "questionInstanceID") as? String
+//
+//                    if (buttonIdSet.contains(oneButton.buttonInstanceID!)){
+//                        print("dupe found")
+//                        continue
+//                    }
+//                    else {
+//                        buttonIdSet.insert(oneButton.buttonInstanceID!)
+//                    }
+//
+//                    oneButton.questionSetID    = instance.value(forKeyPath: "questionSetID") as? String
+//                    oneButton.buttonTypeNumber = instance.value(forKeyPath: "questionInstanceType") as? Int
+//                    oneButton.timeAnswered     = instance.value(forKeyPath: "timeAnswered") as? String
+//
+//                    if let dataPoint = instance.value(forKey: "buttonCenterPoint") as? Data {
+//                        let unarchiveObjectThree = NSKeyedUnarchiver.unarchiveObject(with: dataPoint)
+//                        let point = unarchiveObjectThree as AnyObject? as! CGPoint
+//                        oneButton.setLocation(point: point)
+//                    }
+//                    else {
+//                        oneButton.setLocation(point: CGPoint())
+//                    }
+//
+//                    if (oneButton.buttonTypeNumber == 0) {
+//                        oneItem.buttonOnes?.append(oneButton)
+//                    }
+//                    else if (oneButton.buttonTypeNumber == 1) {
+//                        oneItem.buttonTwos?.append(oneButton)
+//                    }
+//                    else if (oneButton.buttonTypeNumber == 2) {
+//                        oneItem.buttonThrees?.append(oneButton)
+//                    }
+//
+//                    let questionInstanceAnswerfetchRequest =
+//                        NSFetchRequest<NSManagedObject>(entityName: "CDQuestionAnswer")
+//
+//                    questionInstancefetchRequest.predicate = NSPredicate(format: "parentButtonID == %@", oneButton.buttonInstanceID!)
+//
+//                    let theAnswers = try managedContext.fetch(questionInstanceAnswerfetchRequest)
+//
+//
+//                    for oneAnswer in theAnswers {
+//
+//
+//                        let text = oneAnswer.value(forKeyPath: "questionAnswerText") as? String
+//                        let number = oneAnswer.value(forKeyPath: "questionNumber") as? Int
+//
+//                        print("loading \(text) with \(number) from \(oneButton.buttonInstanceID!)")
+//
+//                        oneButton.addToAnswerMap(answer: text!, key: number!)
+//
+//                    }
+//
+//                }
+//
+//                oneItem.originalImage = ImageStore.sharedInstance.image(forKey: oneItem.imgUUID!)
+//                if let editedImageID = oneItem.editedimgUUID {
+//                    oneItem.editedImage = ImageStore.sharedInstance.image(forKey: editedImageID)
+//                }
+//                else {
+//                    oneItem.editedImage = nil
+//                }
+//
+//                print("one item!!")
+//                print("  -  \(oneItem.caption)")
+//                print("  -  \(oneItem.imgUUID)")
+//                print("  -  \(oneItem.originalImage)")
+//
+//                theItems.append(oneItem)
+//
+//            }
+//
+//        } catch let error as NSError {
+//            print("Could not fetch. \(error), \(error.userInfo)")
+//        }
+//
+//        theItems.append(CreateItem())
+//
+//        return theItems
+//    }
+    
+    
+    
+//    func addItemToCurrentSubOptionCoreData(item: Item, currentSubOption: SubOption ){
+//
+//        guard let appDelegate =
+//            UIApplication.shared.delegate as? AppDelegate else {
+//                return
+//        }
+//        let managedContext =
+//            appDelegate.persistentContainer.viewContext
+//
+//
+//        let subOptionID = currentSubOption.subOptionID
+//        let fetchRequest =
+//            NSFetchRequest<NSManagedObject>(entityName: "CDSubOption")
+//
+//        fetchRequest.predicate = NSPredicate(format: "subOptionID == %@", subOptionID!)
+//
+//        do {
+//
+//            let subOptionsToUpdate = try managedContext.fetch(fetchRequest)
+//            let subOptionToUpdate = subOptionsToUpdate[0]
+//
+//            let entity =
+//                NSEntityDescription.entity(forEntityName: "CDItem",
+//                                           in: managedContext)!
+//            let cdItem = NSManagedObject(entity: entity,
+//                                         insertInto: managedContext)
+//
+//
+//            cdItem.setValue(item.caption,            forKeyPath: "caption")
+//            cdItem.setValue(item.itemID,             forKeyPath: "itemID")
+//            cdItem.setValue(item.imgUUID,            forKeyPath: "imgUUID")
+//            cdItem.setValue(item.imgPointer,         forKeyPath: "imgPointer")
+//            cdItem.setValue(subOptionID,             forKeyPath: "parentSubOptionID")
+//            //cdItem.setValue(item.parentSubOptionID,  forKeyPath: "parentSubOptionID")
+//
+//            imageStore.setImage(item.originalImage!, forKey: item.imgUUID!)
+//
+//            let set = NSSet(object: cdItem)
+//
+//            subOptionToUpdate.setValue(set, forKey: "items")
+//
+//            do {
+//                try managedContext.save()
+//                //people.append(person)
+//            } catch let error as NSError {
+//                print("Could not save. \(error), \(error.userInfo)")
+//            }
+//
+//        }
+//        catch let error as NSError {
+//            print("Could not fetch. \(error), \(error.userInfo)")
+//        }
+//
+//
+//    }
+    
+//    func saveCroppedImage(currentItem: Item){
+//
+//        guard let appDelegate =
+//            UIApplication.shared.delegate as? AppDelegate else {
+//                return
+//        }
+//
+//        let managedContext = appDelegate.persistentContainer.viewContext
+//
+//        let currentItemId = currentItem.itemID
+//
+//
+//        do {
+//
+//            let itemfetchRequest = NSFetchRequest<NSManagedObject>(entityName: "CDItem")
+//
+//            itemfetchRequest.predicate = NSPredicate(format: "itemID == %@", currentItemId!)
+//
+//            let themanaged_Items = try managedContext.fetch(itemfetchRequest)
+//
+//            if  themanaged_Items.count > 0 {
+//
+//                let onemanaged_Item = themanaged_Items[0]
+//
+//                onemanaged_Item.setValue(currentItem.editedimgUUID,  forKeyPath: "editedimgPointer")
+//
+//                ImageStore.sharedInstance.setImage(currentItem.editedImage!, forKey: currentItem.editedimgUUID!)
+//
+//                do {
+//                    try managedContext.save()
+//                    //people.append(person)
+//                } catch let error as NSError {
+//                    print("Could not save. \(error), \(error.userInfo)")
+//                }
+//            }
+//        }
+//        catch let error as NSError {
+//            print("Could not fetch. \(error), \(error.userInfo)")
+//        }
+//    }
+    
+    /////////
+    ///
+    ///   Big image 
+    ///
+    /////////
+    
+    func saveButtonPositionsToCoreData(buttonOnes:[QuestionButton], buttonTwos:[QuestionButton], buttonThrees:[QuestionButton],  currentItem: Item) {
+        
+        guard let appDelegate =
+            UIApplication.shared.delegate as? AppDelegate else {
+                return
+        }
+        
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        let currentItemId = currentItem.itemID
+        
+        do {
+            
+            let itemfetchRequest = NSFetchRequest<NSManagedObject>(entityName: "CDItem")
+            
+            itemfetchRequest.predicate = NSPredicate(format: "itemID == %@", currentItemId!)
+            
+            let themanaged_Items = try managedContext.fetch(itemfetchRequest)
+            
+            let onemanaged_Item = themanaged_Items[0]
+            
+            // not sure if right yet
+            //
+            //
+            //
+            var buttonIDSet = Set<String>()
+            for button in buttonOnes {
+                
+                let entity = NSEntityDescription.entity(forEntityName: "CDQuestionListInstance", in: managedContext)!
+                
+                let cdQuestionInstance = NSManagedObject(entity: entity,
+                                                         insertInto: managedContext)
+                
+                
+                let id = button.getButtonID()
+                if(buttonIDSet.contains(id)){
+                    continue
+                }
+                else {
+                    buttonIDSet.insert(id)
+                }
+                let parentItemID = currentItem.itemID
+                let center = button.getLocation()
+                let centerData = NSKeyedArchiver.archivedData(withRootObject: center)
+                let qsetID = button.questionSetID
+                let type = 0 //button.getType()
+                
+                cdQuestionInstance.setValue(parentItemID, forKey: "parentItemID")
+                cdQuestionInstance.setValue(id, forKey: "questionInstanceID")
+                cdQuestionInstance.setValue(centerData, forKey: "buttonCenterPoint")
+                cdQuestionInstance.setValue(qsetID, forKey: "questionSetID")
+                cdQuestionInstance.setValue(type, forKey: "questionInstanceType")
+                
+                
+                onemanaged_Item.setValue(NSSet(object: cdQuestionInstance), forKey: "questionListInstance")
+                
+            }
+            
+            for button in buttonTwos {
+                
+                let entity = NSEntityDescription.entity(forEntityName: "CDQuestionListInstance", in: managedContext)!
+                
+                let cdQuestionInstance = NSManagedObject(entity: entity,
+                                                         insertInto: managedContext)
+                
+                
+                let id = button.getButtonID()
+                if(buttonIDSet.contains(id)){
+                    continue
+                }
+                else {
+                    buttonIDSet.insert(id)
+                }
+                let parentItemID = currentItem.itemID
+                let center = button.getLocation()
+                let centerData = NSKeyedArchiver.archivedData(withRootObject: center)
+                let qsetID = button.questionSetID
+                let type = 1 // button.getType()
+                
+                cdQuestionInstance.setValue(parentItemID, forKey: "parentItemID")
+                cdQuestionInstance.setValue(id, forKey: "questionInstanceID")
+                cdQuestionInstance.setValue(centerData, forKey: "buttonCenterPoint")
+                cdQuestionInstance.setValue(qsetID, forKey: "questionSetID")
+                cdQuestionInstance.setValue(type, forKey: "questionInstanceType")
+                
+                
+                onemanaged_Item.setValue(NSSet(object: cdQuestionInstance), forKey: "questionListInstance")
+                
+            }
+            
+            for button in buttonThrees {
+                
+                let entity = NSEntityDescription.entity(forEntityName: "CDQuestionListInstance", in: managedContext)!
+                
+                let cdQuestionInstance = NSManagedObject(entity: entity,
+                                                         insertInto: managedContext)
+                
+                
+                let id = button.getButtonID()
+                if(buttonIDSet.contains(id)){
+                    continue
+                }
+                else {
+                    buttonIDSet.insert(id)
+                }
+                let parentItemID = currentItem.itemID
+                let center = button.getLocation()
+                let centerData = NSKeyedArchiver.archivedData(withRootObject: center)
+                let qsetID = button.questionSetID
+                let type = 2 // button.getType()
+                
+                cdQuestionInstance.setValue(parentItemID, forKey: "parentItemID")
+                cdQuestionInstance.setValue(id, forKey: "questionInstanceID")
+                cdQuestionInstance.setValue(centerData, forKey: "buttonCenterPoint")
+                cdQuestionInstance.setValue(qsetID, forKey: "questionSetID")
+                cdQuestionInstance.setValue(type, forKey: "questionInstanceType")
+                
+                
+                onemanaged_Item.setValue(NSSet(object: cdQuestionInstance), forKey: "questionListInstance")
+                
+            }
+            
+            do {
+                try managedContext.save()
+                //people.append(person)
+            } catch let error as NSError {
+                print("Could not save. \(error), \(error.userInfo)")
+            }
+            // }
+        }
+        catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
         
     }
 }

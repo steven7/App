@@ -517,12 +517,10 @@ class QuestionsViewController: UIViewController,  UITextFieldDelegate,  UINaviga
         
         let imgPointer = self.currentItem!.imgPointer
         let answer = "test lol"
-        
-        let api = AlchemieAPI()
-        
+     
         //SVProgressHUD.show()
         
-        api.uploadAnswers(guid: guid,
+        AlchemieAPI.shared.uploadAnswers(guid: guid,
                           projectID: projectID,
                           questionSetID: questionSetID,
                           answerSetInstanceID: answerSetInstanceID,
@@ -600,10 +598,8 @@ class QuestionsViewController: UIViewController,  UITextFieldDelegate,  UINaviga
             let device_id = UIDevice.current.identifierForVendor?.uuidString
             
             
-            let api = AlchemieAPI()
-         
             dispatchGroup.enter()
-            api.uploadAnswers(guid: guid,
+            AlchemieAPI.shared.uploadAnswers(guid: guid,
                               projectID: projectID,
                               questionSetID: questionSetID,
                               answerSetInstanceID: answerSetInstanceID,
@@ -759,7 +755,6 @@ class QuestionsViewController: UIViewController,  UITextFieldDelegate,  UINaviga
                 theInstanceToUpdate?.setValue(qsetID, forKey: "questionSetID")
                 theInstanceToUpdate?.setValue(type, forKey: "questionInstanceType")
                 
-                
                 for (key, value) in (self.currentButton?.answersMap)! {
                     
                     let entityList =
@@ -775,6 +770,7 @@ class QuestionsViewController: UIViewController,  UITextFieldDelegate,  UINaviga
                     cdQuestionListAnswer.setValue(self.currentButton?.buttonInstanceID!,     forKeyPath: "parentButtonID")
                     cdQuestionListAnswer.setValue(value,     forKeyPath: "questionAnswerText")
                     cdQuestionListAnswer.setValue(key,     forKeyPath: "questionNumber")
+                    
                     //                if (oneQuestion.questionType == .photo) {
                     //
                     //                }
@@ -812,6 +808,12 @@ class QuestionsViewController: UIViewController,  UITextFieldDelegate,  UINaviga
 //                }
                 
                 onemanaged_Item.setValue(NSSet(object: theInstanceToUpdate!), forKey: "questionListInstance")
+                let date = Date()
+                let dateFormatter = DateFormatter()
+                dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+                dateFormatter.dateFormat = "yyyy/MM/dd HH:mm"
+                let currentTime = dateFormatter.string(from: date)
+                onemanaged_Item.setValue(currentTime,     forKeyPath: "timeAnswered")
             }
          
         }

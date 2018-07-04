@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14133" systemVersion="17E199" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14135" systemVersion="17E202" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="CDItem" representedClassName="CDItem" parentEntity="CDSubOption" syncable="YES" codeGenerationType="class">
         <attribute name="caption" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="editedimgPointer" optional="YES" attributeType="String" syncable="YES"/>
@@ -70,6 +70,7 @@
         <attribute name="questionInstanceID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="questionInstanceType" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="questionSetID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="timeAnswered" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="parentItem" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDItem" inverseName="questionListInstance" inverseEntity="CDItem" syncable="YES"/>
         <relationship name="questionListAnswers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CDQuestionAnswer" inverseName="questionListInstance" inverseEntity="CDQuestionAnswer" syncable="YES"/>
     </entity>
@@ -104,7 +105,7 @@
         <element name="CDQuestionAnswer" positionX="-117" positionY="-207" width="128" height="150"/>
         <element name="CDQuestionAnswerOptions" positionX="-117" positionY="-207" width="128" height="120"/>
         <element name="CDQuestionList" positionX="-108" positionY="-108" width="128" height="315"/>
-        <element name="CDQuestionListInstance" positionX="-117" positionY="-207" width="128" height="150"/>
+        <element name="CDQuestionListInstance" positionX="-117" positionY="-207" width="128" height="165"/>
         <element name="CDQuestionSet" positionX="27" positionY="0" width="128" height="150"/>
         <element name="CDSubOption" positionX="70" positionY="-190" width="128" height="28"/>
     </elements>

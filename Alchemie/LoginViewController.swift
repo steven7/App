@@ -85,9 +85,9 @@ class LoginViewController: UIViewController {
             notFilledOutPopup()
         }
         
-        let api = AlchemieAPI()
+        
         SVProgressHUD.show()
-        api.loginUser(email: nameTextField.text!, company: companyTextField.text!, password: passwordTextField.text!, completion: {
+        AlchemieAPI.shared.loginUser(email: nameTextField.text!, company: companyTextField.text!, password: passwordTextField.text!, completion: {
             success  in
             if (success) {
                 let saveSuccessful: Bool   = KeychainWrapper.standard.set(self.nameTextField.text!, forKey: "userName")
