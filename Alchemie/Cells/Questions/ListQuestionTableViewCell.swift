@@ -22,7 +22,6 @@ class ListQuestionTableViewCell: UITableViewCell, UITextFieldDelegate {
     var pickerAnswers = [Answer]()
     
     var pickerClosureOpen:(( )->())?
-//    var pickerClosureOpen:(( UITextField )->())?
     var pickerClosureClose:(( )->())?
     var pickerPositionClosure:((UITextField)->())?
     var pickerQuestionsClosure:(([String])->())?
@@ -31,9 +30,7 @@ class ListQuestionTableViewCell: UITableViewCell, UITextFieldDelegate {
     var pickerClosureCloseWithAnsPlusRow:((UITextField, String, Int)->())?
     var row:Int?
     var keyboardManageClosure: ((UITextField,NSNotification)->())?
-    var keyboardManageClosureClose: ((UITextField,NSNotification)->())?
-    //var keyboardManageClosure: ((Int,NSNotification)->())?
-    //var thePicker = UIPickerView()
+    var keyboardManageClosureClose: ((UITextField,NSNotification)->())? 
     
     override func awakeFromNib() {
         super.awakeFromNib()

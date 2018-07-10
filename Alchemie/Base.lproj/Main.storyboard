@@ -857,11 +857,11 @@
                                 </constraints>
                             </pickerView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="KRC-me-qjd">
-                                <rect key="frame" x="142" y="495" width="550" height="300"/>
+                                <rect key="frame" x="137" y="500" width="560" height="390"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="550" id="nCu-Kq-dQM"/>
-                                    <constraint firstAttribute="height" constant="300" id="vOB-cX-m5h"/>
+                                    <constraint firstAttribute="width" constant="560" id="nCu-Kq-dQM"/>
+                                    <constraint firstAttribute="height" constant="390" id="vOB-cX-m5h"/>
                                 </constraints>
                             </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Questions  " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jgs-ay-Ozd">
@@ -920,7 +920,7 @@
                             <constraint firstItem="LbV-yl-eg3" firstAttribute="bottom" secondItem="hVX-wL-APF" secondAttribute="bottom" id="Iim-g4-bhY"/>
                             <constraint firstItem="hVX-wL-APF" firstAttribute="bottom" secondItem="RTc-9Y-QRl" secondAttribute="bottom" constant="50" id="MO3-mX-ad0"/>
                             <constraint firstItem="hVX-wL-APF" firstAttribute="trailing" secondItem="Jgs-ay-Ozd" secondAttribute="trailing" constant="100" id="U3x-bG-6bh"/>
-                            <constraint firstItem="KRC-me-qjd" firstAttribute="top" secondItem="Jgs-ay-Ozd" secondAttribute="bottom" constant="380" id="UlE-Ps-2HY"/>
+                            <constraint firstItem="KRC-me-qjd" firstAttribute="top" secondItem="Jgs-ay-Ozd" secondAttribute="bottom" constant="385" id="UlE-Ps-2HY"/>
                             <constraint firstItem="ztb-mZ-ccO" firstAttribute="leading" secondItem="H2p-U9-gwE" secondAttribute="leadingMargin" constant="35" id="Xlq-eS-rom"/>
                             <constraint firstItem="EYM-iz-nPQ" firstAttribute="centerX" secondItem="H2p-U9-gwE" secondAttribute="centerX" id="ftr-xN-a2D"/>
                             <constraint firstItem="KRC-me-qjd" firstAttribute="centerX" secondItem="H2p-U9-gwE" secondAttribute="centerX" id="hCd-jN-AcY"/>

@@ -57,6 +57,10 @@ class QuestionsViewController: UIViewController,  UITextFieldDelegate,  UINaviga
     var answerSetXPosition:Double?
     var answerSetYPosition:Double?
     
+    var currentSelectionPopup = Set<String>()
+    
+    var currentType:Question.QuestionTypes?
+    var currentCell:UITableViewCell?
     
     override func viewDidLoad() {
         
@@ -250,7 +254,16 @@ class QuestionsViewController: UIViewController,  UITextFieldDelegate,  UINaviga
 //        })
 //    }
     
-    
+    func getAnswerStringFromCurrentSelections() -> String {
+        var string = ""
+        print("\n")
+        for s in self.currentSelectionPopup {
+            print(" " + s)
+            string.append(s + " "  )
+        }
+        print("\n")
+        return string
+    }
     
     func buttonClosureWithAns(theanswer:String, row:Int) {
         theQuestions[row].questionAnswer = theanswer
@@ -271,6 +284,8 @@ class QuestionsViewController: UIViewController,  UITextFieldDelegate,  UINaviga
         self.pickerView.isUserInteractionEnabled = false 
         self.popuptableView.isHidden = true
         self.popuptableView.isUserInteractionEnabled = false
+        self.currentSelectionPopup.removeAll()
+        self.tableView.isScrollEnabled = true
     }
     
     func textFieldClosure(theanswer:String, row: Int){
@@ -286,7 +301,8 @@ class QuestionsViewController: UIViewController,  UITextFieldDelegate,  UINaviga
         self.pickerView.isHidden = true
         self.pickerView.isUserInteractionEnabled = false
         let index = self.pickerView.selectedRow(inComponent: 0)
-        let theanswer = pickerQuestions[index]
+//        let theanswer = pickerQuestions[index]
+        let theanswer = getAnswerStringFromCurrentSelections()
         theQuestions[row].questionAnswer = theanswer
         
         // self.currentButton?.addToAnswerMap(answer: theanswer, key: row)
@@ -315,10 +331,10 @@ class QuestionsViewController: UIViewController,  UITextFieldDelegate,  UINaviga
         self.pickerView.isHidden = true
         self.pickerView.isUserInteractionEnabled = false
         let index = self.pickerView.selectedRow(inComponent: 0)
-        let theanswer = pickerQuestions[index]
+//        let theanswer = pickerQuestions[index]
+        let theanswer = getAnswerStringFromCurrentSelections()
         
-//        self.currentButton?.addToAnswerMap(answer: theanswer, key: row)
-        textField.text?.append("\(theanswer)  ")
+        textField.text? = theanswer //.append("\(theanswer)  ")
         
         // theQuestions[row].questionAnswer?.append("\(theanswer)  ")
         let key = theQuestions[row].questionNumber
@@ -347,21 +363,53 @@ class QuestionsViewController: UIViewController,  UITextFieldDelegate,  UINaviga
 //    }
     
     func pickerClosureOpen() {
-        self.pickerView.isHidden = false
-        self.pickerView.isUserInteractionEnabled = true
-        self.view.bringSubview(toFront: self.pickerView)
-//        self.popuptableView.isHidden = false
-//        self.popuptableView.isUserInteractionEnabled = true
-//        self.view.bringSubview(toFront:self.popuptableView)
+//        self.pickerView.isHidden = false
+//        self.pickerView.isUserInteractionEnabled = true
+//        self.view.bringSubview(toFront: self.pickerView)
+        self.popuptableView.isHidden = false
+        self.popuptableView.isUserInteractionEnabled = true
+        self.currentSelectionPopup.removeAll()
+        self.tableView.isScrollEnabled = false
+        print("picker closure open")
+        self.currentType = .list
+        self.view.bringSubview(toFront:self.popuptableView)
+    }
+    
+    func pickerClosureOpenMulti() {
+        //        self.pickerView.isHidden = false
+        //        self.pickerView.isUserInteractionEnabled = true
+        //        self.view.bringSubview(toFront: self.pickerView)
+        self.popuptableView.isHidden = false
+        self.popuptableView.isUserInteractionEnabled = true
+        self.currentSelectionPopup.removeAll()
+        self.tableView.isScrollEnabled = false
+        print("picker closure open multi")
+        self.currentType = .listMulti
+        self.view.bringSubview(toFront:self.popuptableView)
     }
     
     func pickerClosureOpen(textField:UITextField) {
-        self.pickerView.isHidden = false
-        self.pickerView.isUserInteractionEnabled = true
-        self.view.bringSubview(toFront: self.pickerView)
-//        self.popuptableView.isHidden = false
-//        self.popuptableView.isUserInteractionEnabled = true
-//        self.view.bringSubview(toFront:self.popuptableView)
+//        self.pickerView.isHidden = false
+//        self.pickerView.isUserInteractionEnabled = true
+//        self.view.bringSubview(toFront: self.pickerView)
+        self.popuptableView.isHidden = false
+        self.popuptableView.isUserInteractionEnabled = true
+        self.currentSelectionPopup.removeAll()
+        self.tableView.isScrollEnabled = false
+        self.currentType = .list
+        self.view.bringSubview(toFront:self.popuptableView)
+    }
+    
+    func pickerClosureOpenMulti(textField:UITextField) {
+        //        self.pickerView.isHidden = false
+        //        self.pickerView.isUserInteractionEnabled = true
+        //        self.view.bringSubview(toFront: self.pickerView)
+        self.popuptableView.isHidden = false
+        self.popuptableView.isUserInteractionEnabled = true
+        self.currentSelectionPopup.removeAll()
+        self.tableView.isScrollEnabled = false
+        self.currentType = .listMulti
+        self.view.bringSubview(toFront:self.popuptableView)
     }
     
     func setPickerQuestionsClosure(theQuestions: [String]) {
@@ -373,19 +421,18 @@ class QuestionsViewController: UIViewController,  UITextFieldDelegate,  UINaviga
     }
     
     func setPickerPositionClosure(textField: UITextField) {
-        //self.pickerView.leadingAnchor
-        //    = textField.bounds.minX
         
         let pointthree = self.view.convert(CGPoint.zero, from: textField.superview!.superview! )
         print("point: \(pointthree)")
         
-        let dist = pointthree.y - 20.0
+        let dist = pointthree.y + 20.0
         
         print(self.pickerViewTopConstraint.constant)
         self.pickerViewTopConstraint.constant = dist
         print(self.pickerViewTopConstraint.constant)
         
         self.popupTableViewTopConstraint.constant = dist
+//        self.popuptableView.bounds.width = textField.bounds.width
         
         self.view.layoutIfNeeded()
         print(self.pickerViewTopConstraint.constant)
@@ -408,6 +455,7 @@ class QuestionsViewController: UIViewController,  UITextFieldDelegate,  UINaviga
 
     }
 
+    
     func keyboardManageClosureClose(textField: UITextField, _ notification: NSNotification){
         textField.resignFirstResponder()
         if ( textField.superview?.superview is UITableViewCell )
@@ -454,11 +502,7 @@ class QuestionsViewController: UIViewController,  UITextFieldDelegate,  UINaviga
         */
         print("current text field \(currentTextField)")
         print("keyboard rect \(keyboardRect)")
-        /*
-        if ( currentTextField?.frame.contains(keyboardRect) )! {
-            tableView.scrollRectToVisible(keyboardRect, animated: true)
-        }
-        */
+        
     }
     
     @objc func keyboardDidHide(_ notification: NSNotification) {
@@ -481,6 +525,9 @@ class QuestionsViewController: UIViewController,  UITextFieldDelegate,  UINaviga
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         print("touches began?")
         self.view.endEditing(true)
+//        if (touch.view?.isDescendant(of: self.popuptableView))! {
+//            return false
+//        }
 //        pickerClosureClose()
     }
     
@@ -495,6 +542,11 @@ class QuestionsViewController: UIViewController,  UITextFieldDelegate,  UINaviga
                 }
             }
         }
+        
+        if (touch.view?.isDescendant(of: self.popuptableView))! {
+            return false
+        }
+        
         return true
     }
     
@@ -918,8 +970,9 @@ extension QuestionsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
+        // popup tableview
         if (tableView == self.popuptableView) {
-            return 3
+            return pickerQuestions.count
         }
         
         return theQuestions.count
@@ -927,12 +980,21 @@ extension QuestionsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        
+        // popup tableview
         if (tableView == self.popuptableView) {
             
             let cell = UITableViewCell()
             
-            cell.textLabel?.text = "test" //  self.pickerAnswers[indexPath.row].answerListitemtext
+            let text = pickerQuestions[indexPath.row]
+            cell.textLabel?.text = text //self.pickerAnswers[indexPath.row].answerListitemtext
+            cell.textLabel?.textAlignment = .center
+            
+            if (self.currentSelectionPopup.contains(text)) {
+                cell.accessoryType = .checkmark
+            }
+            else {
+                cell.accessoryType = .none
+            }
             
             print("   ------    ")
             print("   \(self.pickerAnswers)")
@@ -977,6 +1039,8 @@ extension QuestionsViewController: UITableViewDelegate, UITableViewDataSource {
             cell.textFieldClosure = textFieldClosure
             cell.questionLabel.text = nil
             cell.questionLabel.text = textString
+            cell.selectionStyle = .none
+            currentType = Question.QuestionTypes.text
             
             if let answer = theQuestion?.questionAnswer {
                 cell.questionText.text = answer
@@ -996,7 +1060,8 @@ extension QuestionsViewController: UITableViewDelegate, UITableViewDataSource {
             cell.buttonClosureWithAns = buttonClosureWithAns
             cell.questionLabel.text = nil
             cell.questionLabel.text = textString
-            
+            cell.selectionStyle = .none
+            currentType = Question.QuestionTypes.yesOrNo
             
             // if
             let answer = self.currentButton?.getFromAnswersMap(key: (theQuestion?.questionNumber)!)
@@ -1027,13 +1092,14 @@ extension QuestionsViewController: UITableViewDelegate, UITableViewDataSource {
             cell.pickerQuestions = theQuestions[indexPath.row].getAnswersOptions()
             cell.pickerAnswers = theQuestions[indexPath.row].getAnswersOptionsObject()
             cell.pickerClosureOpen = pickerClosureOpen
+//            currentType = Question.QuestionTypes.list
             cell.pickerClosureClose = pickerClosureClose
             cell.pickerPositionClosure = setPickerPositionClosure
             cell.pickerQuestionsClosure = setPickerQuestionsClosure
-            //cell.pickerClosureCloseWithAns = pickerClosureCloseWithAns
             cell.pickerClosureCloseWithAnsPlusRow = pickerClosureCloseWithAnsPlusRow
             cell.keyboardManageClosure = keyboardManageClosure
             cell.keyboardManageClosureClose = keyboardManageClosureClose
+            cell.selectionStyle = .none
             if let answer = theQuestion?.questionAnswer {
                 cell.questionText.text = answer
             }
@@ -1050,14 +1116,15 @@ extension QuestionsViewController: UITableViewDelegate, UITableViewDataSource {
             cell.row = indexPath.row
             cell.pickerQuestions = theQuestions[indexPath.row].getAnswersOptions()
             cell.pickerAnswers = theQuestions[indexPath.row].getAnswersOptionsObject()
-            cell.pickerClosureOpen = pickerClosureOpen
+            cell.pickerClosureOpen = pickerClosureOpenMulti
             cell.pickerClosureClose = pickerClosureClose
             cell.pickerPositionClosure = setPickerPositionClosure
             cell.pickerQuestionsClosure = setPickerQuestionsClosure
-            // cell.pickerClosureCloseWithAnsMulti = pickerClosureCloseWithAnsMulti
             cell.pickerClosureCloseWithAnsPlusRow = pickerClosureCloseWithAnsPlusRowMulti
             cell.keyboardManageClosure = keyboardManageClosure
             cell.keyboardManageClosureClose = keyboardManageClosureClose
+            cell.selectionStyle = .none
+//            currentType = Question.QuestionTypes.listMulti
             if let answer = theQuestion?.questionAnswer {
                 cell.questionText.text = answer
             }
@@ -1075,12 +1142,13 @@ extension QuestionsViewController: UITableViewDelegate, UITableViewDataSource {
             cell.questionLabel.text = nil
             cell.questionLabel.text = textString
             cell.photoClosure = photoButtonClosure
+            cell.selectionStyle = .none
+//            currentType = Question.QuestionTypes.photo
             let key = (theQuestion?.questionNumber)!
             if let imgPointer = self.currentButton?.getFromAnswersMap(key: key) {
-                //if let img = imageCache[indexPath.row] {
+                
                 if let img = ImageStore.sharedInstance.image(forKey: imgPointer) {
                     cell.photoButton.setBackgroundImage(img, for: .normal)
-                    //imageStore.setImage(img, forKey: imgPointer!)
                 }
                 else {
                     cell.photoButton.setBackgroundImage(UIImage(named: "addPhoto") , for: .normal)
@@ -1100,6 +1168,7 @@ extension QuestionsViewController: UITableViewDelegate, UITableViewDataSource {
             //cell.row = indexPath.row
             cell.questionLabel.text = nil
             cell.questionLabel.text = textString
+//            currentType = Question.QuestionTypes.next
             return cell
         }
         
@@ -1116,9 +1185,32 @@ extension QuestionsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
+        // popup tableview
         if (tableView == self.popuptableView) {
+            
+            let cell = tableView.cellForRow(at: indexPath)
+//            let type = theQuestions[indexPath.row].questionType
+            print("type      \(currentType)")
+            print("type cell \(currentCell)")
+            
+            let text = cell?.textLabel?.text
+            if (self.currentSelectionPopup.contains(text!)){
+                cell?.accessoryType = UITableViewCellAccessoryType.none
+                self.currentSelectionPopup.remove(text!)
+            }
+            else {
+                cell?.accessoryType = UITableViewCellAccessoryType.checkmark
+//                if (currentCell is ListQuestionTableViewCell) {
+                if (currentType == .list ) {
+                    self.currentSelectionPopup.removeAll()
+                }
+                self.currentSelectionPopup.insert(text!)
+                self.popuptableView.reloadData()
+            }
+            
             return
         }
+        
         
         if (theQuestions.count ==  6) { /// 11) {
             return
@@ -1127,13 +1219,16 @@ extension QuestionsViewController: UITableViewDelegate, UITableViewDataSource {
         if (type == .next) {
             createNextRow()
         }
+        currentCell = self.tableView.cellForRow(at: indexPath)
+        
     }
     
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
+        // popup tableview
         if (tableView == self.popuptableView) {
-            return 100
+            return 80
         }
         
         var type :Question.QuestionTypes?

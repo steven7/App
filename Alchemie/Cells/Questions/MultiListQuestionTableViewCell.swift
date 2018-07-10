@@ -28,8 +28,7 @@ class MultiListQuestionTableViewCell: UITableViewCell, UITextFieldDelegate {
     
     var pickerClosureCloseWithAnsMulti:((UITextField)->())?
     var pickerClosureCloseWithAnsPlusRow:((UITextField, String, Int)->())?
-    var row:Int?
-    // var pickerCurrentRow:Int?
+    var row:Int? 
     var keyboardManageClosure: ((UITextField,NSNotification)->())?
     var keyboardManageClosureClose: ((UITextField,NSNotification)->())?
     
