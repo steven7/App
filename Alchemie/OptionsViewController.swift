@@ -12,6 +12,8 @@ import SVProgressHUD
 import SwiftKeychainWrapper
 import Alamofire
 import AlamofireImage
+import PopupDialog 
+//import Reach
 
 class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -77,11 +79,25 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
         else {
             self.lastSyncedText.text = " "
         }
+        
+        options = DataStore.shared.fetchOptionsFromCoreData(forUsername: self.currentUserName!)
+        self.tableView.reloadData()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        options = DataStore.shared.fetchOptionsFromCoreData(forUsername: self.currentUserName!)
+//        options = DataStore.shared.fetchOptionsFromCoreData(forUsername: self.currentUserName!)
+//        self.tableView.reloadData()
+        let reach = ReachabilityHelper()
+        if reach.isConnectedToNetworkHelper() == true {
+            print("Internet connection OK")
+            self.syncButton.isEnabled = true
+        } else {
+            self.syncButton.isEnabled = false
+            self.connectivityLostPopup()
+        }
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -153,7 +169,7 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
     }
     
-    func createOptionPopup(){
+    func createOptionPopup(){ // not used anmore
         let alert = UIAlertController(title: "Create New Option", message: "Enter the title for the new option", preferredStyle: .alert)
         alert.addTextField(configurationHandler: nil)
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
@@ -189,7 +205,32 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
         alert.addAction(cancelAction)
         alert.addAction(createAction)
         self.present(alert, animated: true, completion: nil)
+        
     }
+    
+//    func createSubOptionPopup(withParent option:Option, atRow row:Int ){
+//        let viewController = UIViewController()
+//        let textField = UITextField()
+//        viewController.view.addSubview(textField)
+//        let popup = PopupDialog(viewController: viewController,
+//                                buttonAlignment: .vertical,
+//                                transitionStyle: .bounceUp,
+//                                preferredWidth: 340,
+//                                gestureDismissal: true,
+//                                hideStatusBar: false)
+//        let okButton = DefaultButton(title: "Create") {
+//            let createdSubOption = SubOption()
+//            createdSubOption.name = textField.text
+//            createdSubOption.parentOption = option
+//            createdSubOption.parentOptionID = option.optionID
+//            self.options.insert(createdSubOption, at: row)
+//            DataStore.shared.createSubOptionWithCoreData(with: createdSubOption)
+//            self.tableView.reloadData()
+//        }
+//        let cancelButton = CancelButton(title: "Cancel", action: nil)
+//        popup.addButtons([okButton, cancelButton])
+//        self.present(popup, animated: true, completion: nil)
+//    }
     
     ///////////////////////////////
     //
@@ -220,8 +261,8 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     @IBAction func syncButtonPressed(_ sender: Any) {
-        
-        if ( !Reachability.isConnectedToNetwork() ) {
+        let reach = ReachabilityHelper()
+        if ( reach.isConnectedToNetworkHelper() == false ) {
             notConnectedToInternetPopup()
             return
         }
@@ -555,7 +596,16 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
         
         operationQueue.addOperation(completionOperation)
-        
+        theOptions.sort(by: { (left: AnyObject, right:AnyObject) -> Bool in
+            if (left is Option && right is Option) {
+                let oleft = left as! Option
+                let oright = right as! Option
+                return oleft.title! < oright.title!
+            }
+            
+            return false
+            
+        })
         return theOptions
     }
  
@@ -599,4 +649,26 @@ class OptionsViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         
     }
+    
+    // reachability
+    
+//    @objc func reachabilityChanged(note: Notification) {
+//
+//        let reachability = note.object as! Reachability
+//
+//        switch reachability.connection {
+//        case .wifi:
+//            print("Reachable via WiFi")
+//            self.syncButton.isEnabled = true
+//        case .cellular:
+//            print("Reachable via Cellular")
+//            self.syncButton.isEnabled = true
+//        case .none:
+//            print("Network not reachable")
+//            self.syncButton.isEnabled = false
+//            self.connectivityLostPopup()
+//        }
+//    }
+    
+    
 }

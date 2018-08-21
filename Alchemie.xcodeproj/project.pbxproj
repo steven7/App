@@ -60,6 +60,7 @@
 		AA9A1C061FED6E5600F61C8F /* CreateItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA9A1C051FED6E5600F61C8F /* CreateItem.swift */; };
 		AA9A1C081FED72F600F61C8F /* CreateItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA9A1C071FED72F600F61C8F /* CreateItemViewController.swift */; };
 		AAA6CA0820EC8C4900550C1F /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA6CA0720EC8C4900550C1F /* DataStore.swift */; };
+		AAA9C928212B875900FF045C /* ReachabilityHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA9C927212B875900FF045C /* ReachabilityHelper.swift */; };
 		AAB125301FF4443300F75EBA /* BigImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB1252F1FF4443300F75EBA /* BigImageViewController.swift */; };
 		AAB30BB22035573E0037DE26 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAB30BB32035573E0037DE26 /* Alamofire.framework */; };
 		AAB30BB4203557410037DE26 /* AlamofireImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAB30BB5203557410037DE26 /* AlamofireImage.framework */; };
@@ -151,6 +152,7 @@
 		AA9A1C051FED6E5600F61C8F /* CreateItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateItem.swift; sourceTree = "<group>"; };
 		AA9A1C071FED72F600F61C8F /* CreateItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateItemViewController.swift; sourceTree = "<group>"; };
 		AAA6CA0720EC8C4900550C1F /* DataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
+		AAA9C927212B875900FF045C /* ReachabilityHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReachabilityHelper.swift; sourceTree = "<group>"; };
 		AAB1252F1FF4443300F75EBA /* BigImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BigImageViewController.swift; sourceTree = "<group>"; };
 		AAB30BB32035573E0037DE26 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAB30BB5203557410037DE26 /* AlamofireImage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = AlamofireImage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -330,6 +332,7 @@
 				AACFE98B1FEC356E00B798D7 /* Utilities.swift */,
 				AA54CC8D1FEEB17F00B72C44 /* ImageStore.swift */,
 				AAA6CA0720EC8C4900550C1F /* DataStore.swift */,
+				AAA9C927212B875900FF045C /* ReachabilityHelper.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -369,7 +372,6 @@
 				AA3152C71FEA796000C772DE /* Frameworks */,
 				AA3152C81FEA796000C772DE /* Resources */,
 				234B3A3198BCC13C24107B74 /* [CP] Embed Pods Frameworks */,
-				BF6544E1A1EA5E43C8EF7439 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -388,8 +390,6 @@
 				AA3152DD1FEA796000C772DE /* Sources */,
 				AA3152DE1FEA796000C772DE /* Frameworks */,
 				AA3152DF1FEA796000C772DE /* Resources */,
-				76CF5B7B91428E02833229E4 /* [CP] Embed Pods Frameworks */,
-				6E97A0C8BD1A711B3CE7EB07 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -409,8 +409,6 @@
 				AA3152E81FEA796000C772DE /* Sources */,
 				AA3152E91FEA796000C772DE /* Frameworks */,
 				AA3152EA1FEA796000C772DE /* Resources */,
-				D425322F730A35B53B5A70F9 /* [CP] Embed Pods Frameworks */,
-				567C647AF9D02155075DC2C6 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -518,7 +516,8 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-Alchemie/Pods-Alchemie-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework",
-				"${BUILT_PRODUCTS_DIR}/DropDown/DropDown.framework",
+				"${BUILT_PRODUCTS_DIR}/DynamicBlurView/DynamicBlurView.framework",
+				"${BUILT_PRODUCTS_DIR}/PopupDialog/PopupDialog.framework",
 				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftKeychainWrapper/SwiftKeychainWrapper.framework",
 			);
@@ -526,28 +525,14 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireImage.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DropDown.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DynamicBlurView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PopupDialog.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftKeychainWrapper.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Alchemie/Pods-Alchemie-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		567C647AF9D02155075DC2C6 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AlchemieUITests/Pods-AlchemieUITests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		6E288C4F5E1C9D888B0FC958 /* [CP] Check Pods Manifest.lock */ = {
@@ -566,36 +551,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		6E97A0C8BD1A711B3CE7EB07 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AlchemieTests/Pods-AlchemieTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		76CF5B7B91428E02833229E4 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AlchemieTests/Pods-AlchemieTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		84570E5C3DBDD591B07E28EA /* [CP] Check Pods Manifest.lock */ = {
@@ -634,36 +589,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		BF6544E1A1EA5E43C8EF7439 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Alchemie/Pods-Alchemie-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		D425322F730A35B53B5A70F9 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AlchemieUITests/Pods-AlchemieUITests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -673,6 +598,7 @@
 			files = (
 				AA31531F1FEA7A7F00C772DE /* CreateOption.swift in Sources */,
 				AA3153071FEA79C300C772DE /* PlacementViewController.swift in Sources */,
+				AAA9C928212B875900FF045C /* ReachabilityHelper.swift in Sources */,
 				AACFE98C1FEC356E00B798D7 /* Utilities.swift in Sources */,
 				AA3152FF1FEA797E00C772DE /* LoginViewController.swift in Sources */,
 				AA371D6C200AE06300BCD3AC /* PhotoQuestionTableViewCell.swift in Sources */,

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14135" systemVersion="17E202" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="CDItem" representedClassName="CDItem" parentEntity="CDSubOption" syncable="YES" codeGenerationType="class">
+        <attribute name="answerSetID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="caption" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="editedimgPointer" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="editedimgUUID" optional="YES" attributeType="String" syncable="YES"/>
@@ -100,7 +101,7 @@
         <relationship name="option" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDOption" inverseName="subOptions" inverseEntity="CDOption" syncable="YES"/>
     </entity>
     <elements>
-        <element name="CDItem" positionX="385" positionY="-18" width="128" height="225"/>
+        <element name="CDItem" positionX="385" positionY="-18" width="128" height="240"/>
         <element name="CDOption" positionX="-324" positionY="-360" width="128" height="225"/>
         <element name="CDQuestionAnswer" positionX="-117" positionY="-207" width="128" height="150"/>
         <element name="CDQuestionAnswerOptions" positionX="-117" positionY="-207" width="128" height="120"/>

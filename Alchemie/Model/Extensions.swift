@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import PopupDialog
 
 extension UIImage {
     func crop( rect: CGRect) -> UIImage {
@@ -68,92 +69,147 @@ extension UIViewController {
     
     
     func notConnectedToInternetPopup() {
-        let alert = UIAlertController(title: "Not connected to internet", message: "Connect to the internet and try again", preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-        alert.addAction(okAction)
-        self.present(alert, animated: true, completion: nil)
+//        let alert = UIAlertController(title: "Not connected to internet", message: "Connect to the internet and try again", preferredStyle: .alert)
+//        let okAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+//        alert.addAction(okAction)
+        
+        let popup = PopupDialog(title: "Not connected to internet", message: "Connect to the internet and try again") //, image: image)
+        let okButton = DefaultButton(title: "OK", action: nil)
+        popup.addButtons([okButton])
+        self.present(popup, animated: true, completion: nil)
     }
     
     func notFilledOutPopup() {
-        let alert = UIAlertController(title: "Enter all fields", message: "Please fill out the above fields", preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-        alert.addAction(okAction)
-        self.present(alert, animated: true, completion: nil)
+//        let alert = UIAlertController(title: "Enter all fields", message: "Please fill out the above fields", preferredStyle: .alert)
+//        let okAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+//        alert.addAction(okAction)
+        let popup = PopupDialog(title: "Enter all fields", message: "Please fill out the above fields") //,
+        let okButton = DefaultButton(title: "OK", action: nil)
+        popup.addButtons([okButton])
+        self.present(popup, animated: true, completion: nil)
     }
     
     func passwordErrorPopup() {
-        let alert = UIAlertController(title: "Passwords missmatch", message: "Please make the password match the confirm password", preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-        alert.addAction(okAction)
-        self.present(alert, animated: true, completion: nil)
+//        let alert = UIAlertController(title: "Passwords missmatch", message: "Please make the password match the confirm password", preferredStyle: .alert)
+//        let okAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+//        alert.addAction(okAction)
+        let popup = PopupDialog(title: "Passwords missmatch", message: "Please make the password match the confirm password") //,
+        let okButton = DefaultButton(title: "OK", action: nil)
+        popup.addButtons([okButton])
+        self.present(popup, animated: true, completion: nil)
     }
     
     func loginErrorPopup() {
-        let alert = UIAlertController(title: "Wrong Credentials", message: "Please enter the correct login and password combo", preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-        alert.addAction(okAction)
-        self.present(alert, animated: true, completion: nil)
+//        let alert = UIAlertController(title: "Wrong Credentials", message: "Please enter the correct login and password combo", preferredStyle: .alert)
+//        let okAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+//        alert.addAction(okAction)
+//        self.present(alert, animated: true, completion: nil)
+        let popup = PopupDialog(title: "Wrong Credentials", message: "Please enter the correct login and password combo") //,
+        let okButton = DefaultButton(title: "OK", action: nil)
+        popup.addButtons([okButton])
+        self.present(popup, animated: true, completion: nil)
     }
     
     func uploadSuccessPopup() {
-        let alert = UIAlertController(title: "Success", message: "Upload was successful", preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-        alert.addAction(okAction)
-        self.present(alert, animated: true, completion: nil)
+//        let alert = UIAlertController(title: "Success", message: "Upload was successful", preferredStyle: .alert)
+//        let okAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+//        alert.addAction(okAction)
+//        self.present(alert, animated: true, completion: nil)
+        let popup = PopupDialog(title: "Success", message: "Upload was successful") //,
+        let okButton = DefaultButton(title: "OK", action: nil)
+        popup.addButtons([okButton])
+        self.present(popup, animated: true, completion: nil)
     }
     
     func partialErrorPopup(num: Int) {
-        let alert = UIAlertController(title: "Error", message: "Something went wrong with \(num) uploads", preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-        alert.addAction(okAction)
-        self.present(alert, animated: true, completion: nil)
+//        let alert = UIAlertController(title: "Error", message: "Something went wrong with \(num) uploads", preferredStyle: .alert)
+//        let okAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+//        alert.addAction(okAction)
+//        self.present(alert, animated: true, completion: nil)
+        let popup = PopupDialog(title: "Error", message: "Something went wrong with \(num) uploads") //,
+        let okButton = DefaultButton(title: "OK", action: nil)
+        popup.addButtons([okButton])
+        self.present(popup, animated: true, completion: nil)
     }
     
     func errorPopup() {
-        let alert = UIAlertController(title: "Error", message: "Something went wrong", preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-        alert.addAction(okAction)
-        self.present(alert, animated: true, completion: nil)
+//        let alert = UIAlertController(title: "Error", message: "Something went wrong", preferredStyle: .alert)
+//        let okAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+//        alert.addAction(okAction)
+//        self.present(alert, animated: true, completion: nil)
+        let popup = PopupDialog(title: "Error", message: "Something went wrong")
+        let okButton = DefaultButton(title: "OK", action: nil)
+        popup.addButtons([okButton])
+        self.present(popup, animated: true, completion: nil)
     }
     
     func overwriteWarningPopup(completion: @escaping ()->()) {
-        let alert = UIAlertController(title: "Do you want to sync?", message: "Syncing with the server will overwrite all of your saved options and suboptions", preferredStyle: .alert)
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        let okAction = UIAlertAction(title: "OK", style: .default, handler: { action in
+//        let alert = UIAlertController(title: "Do you want to sync?", message: "Syncing with the server will overwrite all of your saved options and suboptions", preferredStyle: .alert)
+//        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+//        let okAction = UIAlertAction(title: "OK", style: .default, handler: { action in
+//            completion()
+//        })
+//        alert.addAction(cancelAction)
+//        alert.addAction(okAction)
+//        self.present(alert, animated: true, completion: nil)
+        let popup = PopupDialog(title: "Do you want to sync?", message: "Syncing with the server will overwrite all of your saved options and suboptions")
+        let cancelButton = CancelButton(title: "Cancel", action: nil)
+        let okButton = DefaultButton(title: "OK", action:  {
             completion()
         })
-        alert.addAction(cancelAction)
-        alert.addAction(okAction)
-        self.present(alert, animated: true, completion: nil)
+        popup.addButtons([okButton, cancelButton])
+        self.present(popup, animated: true, completion: nil)
     }
     
     func saveQuestionsPopup(completion: @escaping ()->()) {
-        let alert = UIAlertController(title: "Save", message: "Anwers saved. Do you want to exit the questionnaire?", preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "Yes", style: .default, handler: { action in
+//        let alert = UIAlertController(title: "Save", message: "Anwers saved. Do you want to exit the questionnaire?", preferredStyle: .alert)
+//        let okAction = UIAlertAction(title: "Yes", style: .default, handler: { action in
+//            completion()
+//        })
+//        let cancelAction = UIAlertAction(title: "No", style: .cancel, handler: nil)
+//        alert.addAction(cancelAction)
+//        alert.addAction(okAction)
+//        self.present(alert, animated: true, completion: nil)
+//        self.present(alert, animated: true, completion: nil)
+        let popup = PopupDialog(title: "Save", message: "Anwers saved. Do you want to exit the questionnaire?")
+        let cancelButton = CancelButton(title: "No", action: nil)
+        let okButton = DefaultButton(title: "Yes", action:  {
             completion()
         })
-        let cancelAction = UIAlertAction(title: "No", style: .cancel, handler: nil)
-        alert.addAction(cancelAction)
-        alert.addAction(okAction)
-        self.present(alert, animated: true, completion: nil)
+        popup.addButtons([okButton, cancelButton])
+        self.present(popup, animated: true, completion: nil)
     }
     
     func logoutPopup(completion: @escaping ()->()) {
-        let alert = UIAlertController(title: "Do you want to log out of this user?", message: "You will need to be online to log back in.", preferredStyle: .alert)
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        let okAction = UIAlertAction(title: "OK", style: .default, handler: { action in
+//        let alert = UIAlertController(title: "Do you want to log out of this user?", message: "You will need to be online to log back in.", preferredStyle: .alert)
+//        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+//        let okAction = UIAlertAction(title: "OK", style: .default, handler: { action in
+//            completion()
+//        })
+//        alert.addAction(cancelAction)
+//        alert.addAction(okAction)
+//        self.present(alert, animated: true, completion: nil)
+        let popup = PopupDialog(title: "Do you want to log out of this user?", message: "You will need to be online to log back in.")
+        let cancelButton = CancelButton(title: "Cancel", action: nil)
+        let okButton = DefaultButton(title: "OK", action:  {
             completion()
         })
-        alert.addAction(cancelAction)
-        alert.addAction(okAction)
-        self.present(alert, animated: true, completion: nil)
+        popup.addButtons([okButton, cancelButton])
+        self.present(popup, animated: true, completion: nil)
     }
     
     func comingSoonPopup( ) {
-        let alert = UIAlertController(title: "Upload Picture", message: "Feature comming soon!", preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-        alert.addAction(okAction)
-        self.present(alert, animated: true, completion: nil)
+        let popup = PopupDialog(title: "Upload Picture", message: "Feature comming soon!")
+        let okButton = DefaultButton(title: "OK", action:  nil)
+        popup.addButtons([okButton])
+        self.present(popup, animated: true, completion: nil)
+    }
+    
+    func connectivityLostPopup() {
+        let popup = PopupDialog(title: "Connectivity", message: "Internet connectivity lost. Please connect to Wi-Fi or Cellualr and try again.")
+        let okButton = DefaultButton(title: "OK", action:  nil)
+        popup.addButtons([okButton])
+        self.present(popup, animated: true, completion: nil)
     }
 }
 
@@ -166,16 +222,6 @@ extension Copying {
         return Self.init(original: self)
     }
 }
-
-//extension Array where Question: Copying {
-//    func clone() -> Array {
-//        var copiedArray = Array<Element>()
-//        for element in self {
-//            copiedArray.append(element.copy())
-//        }
-//        return copiedArray
-//    }
-//}
 
 extension Array where Element: Copying {
     func clone() -> Array {

@@ -46,7 +46,7 @@ class CreateUserViewController: UIViewController {
     
     @IBAction func continueButtonPressed(_ sender: Any) {
         
-        if ( !Reachability.isConnectedToNetwork() ) {
+        if ( !ReachabilityHelper.isConnectedToNetworkHelper() ) {
             notConnectedToInternetPopup()
             return
         }

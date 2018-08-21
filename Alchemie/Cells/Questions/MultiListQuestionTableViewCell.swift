@@ -21,7 +21,7 @@ class MultiListQuestionTableViewCell: UITableViewCell, UITextFieldDelegate {
     var pickerQuestions = [ "Question One", "Question Two", "Question Three", "Question Four", "Question Five"]
     var pickerAnswers = [Answer]()
     
-    var pickerClosureOpen:(( )->())?
+    var pickerClosureOpen:((String, Int)->())?
     var pickerClosureClose:(( )->())?
     var pickerPositionClosure:((UITextField)->())?
     var pickerQuestionsClosure:(([String])->())?
@@ -31,6 +31,8 @@ class MultiListQuestionTableViewCell: UITableViewCell, UITextFieldDelegate {
     var row:Int? 
     var keyboardManageClosure: ((UITextField,NSNotification)->())?
     var keyboardManageClosureClose: ((UITextField,NSNotification)->())?
+    
+    var checkedIndices:[Int]?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -55,7 +57,13 @@ class MultiListQuestionTableViewCell: UITableViewCell, UITextFieldDelegate {
         print("begin list edit")
         pickerQuestionsClosure!(pickerQuestions)
         pickerPositionClosure!(questionText)
-        pickerClosureOpen!()
+        if let text = ( textField.text) {
+            pickerClosureOpen!(text, row!)
+        }
+        else {
+            pickerClosureOpen!("", row!)
+        }
+        
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {

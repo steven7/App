@@ -50,6 +50,7 @@ class QuestionsViewController: UIViewController,  UITextFieldDelegate,  UINaviga
     
     //var imageCache = Dictionary<String, UIImage>()
     var imageCache = Dictionary<Int, UIImage>()
+    var mulitiAnsCache = Dictionary<Int, [Int]>()
     
     var currentTextField: UITextField?
     var currentQuestionNumber:Int?
@@ -58,6 +59,7 @@ class QuestionsViewController: UIViewController,  UITextFieldDelegate,  UINaviga
     var answerSetYPosition:Double?
     
     var currentSelectionPopup = Set<String>()
+    var ptherSelectionPopups = Dictionary<Int, String>()
     
     var currentType:Question.QuestionTypes?
     var currentCell:UITableViewCell?
@@ -163,7 +165,7 @@ class QuestionsViewController: UIViewController,  UITextFieldDelegate,  UINaviga
         
         // delete one row model
         // theQuestionTypes.removeLast()
-        theQuestions.popLast()
+        theQuestions.removeLast()
         
         // add two rows to medl
         let newQuestion = Question(text:"Wow! This is the next Question!", type: .list)
@@ -254,16 +256,7 @@ class QuestionsViewController: UIViewController,  UITextFieldDelegate,  UINaviga
 //        })
 //    }
     
-    func getAnswerStringFromCurrentSelections() -> String {
-        var string = ""
-        print("\n")
-        for s in self.currentSelectionPopup {
-            print(" " + s)
-            string.append(s + " "  )
-        }
-        print("\n")
-        return string
-    }
+    
     
     func buttonClosureWithAns(theanswer:String, row:Int) {
         theQuestions[row].questionAnswer = theanswer
@@ -298,6 +291,7 @@ class QuestionsViewController: UIViewController,  UITextFieldDelegate,  UINaviga
     }
   
     func pickerClosureCloseWithAnsPlusRow(textField: UITextField, theanswerID:String, row: Int) {
+        
         self.pickerView.isHidden = true
         self.pickerView.isUserInteractionEnabled = false
         let index = self.pickerView.selectedRow(inComponent: 0)
@@ -311,6 +305,9 @@ class QuestionsViewController: UIViewController,  UITextFieldDelegate,  UINaviga
 //        if (index < theQuestions.count) {
 //
 //        }
+        
+        
+        
         textField.text = theanswer
         
         let answersObject = theQuestions[row].getAnswersOptionsObject()
@@ -326,7 +323,9 @@ class QuestionsViewController: UIViewController,  UITextFieldDelegate,  UINaviga
     }
  
     
-    
+    ///
+    //  for multi selection question
+    ///
     func pickerClosureCloseWithAnsPlusRowMulti(textField: UITextField, theanswerID:String,  row: Int) {
         self.pickerView.isHidden = true
         self.pickerView.isUserInteractionEnabled = false
@@ -336,9 +335,8 @@ class QuestionsViewController: UIViewController,  UITextFieldDelegate,  UINaviga
         
         textField.text? = theanswer //.append("\(theanswer)  ")
         
-        // theQuestions[row].questionAnswer?.append("\(theanswer)  ")
         let key = theQuestions[row].questionNumber
-        self.currentButton?.addToAnswerMap(answer: textField.text!, key: key!)
+        self.currentButton?.addToAnswerMap(answer: theanswer, key: key!)
         
         let answersObject = theQuestions[row].getAnswersOptionsObject()
         //var answersId = ""
@@ -375,7 +373,7 @@ class QuestionsViewController: UIViewController,  UITextFieldDelegate,  UINaviga
         self.view.bringSubview(toFront:self.popuptableView)
     }
     
-    func pickerClosureOpenMulti() {
+    func pickerClosureOpenMulti(text:String, row:Int) {
         //        self.pickerView.isHidden = false
         //        self.pickerView.isUserInteractionEnabled = true
         //        self.view.bringSubview(toFront: self.pickerView)
@@ -385,7 +383,16 @@ class QuestionsViewController: UIViewController,  UITextFieldDelegate,  UINaviga
         self.tableView.isScrollEnabled = false
         print("picker closure open multi")
         self.currentType = .listMulti
+//        if let text = (cell.textLabel?.text) {
+        let checkedIndices = getIndicesOfTextString(text: text, row: row)
+//        }
+        
         self.view.bringSubview(toFront:self.popuptableView)
+        for index in checkedIndices {
+            let path = IndexPath(row: index, section: 0)
+            self.popuptableView.selectRow(at:path , animated: false, scrollPosition: .top )
+            self.popuptableView.delegate?.tableView!(self.popuptableView, didSelectRowAt: path)
+        }
     }
     
     func pickerClosureOpen(textField:UITextField) {
@@ -438,14 +445,15 @@ class QuestionsViewController: UIViewController,  UITextFieldDelegate,  UINaviga
         print(self.pickerViewTopConstraint.constant)
     }
     
+    
     func keyboardManageClosure(textField: UITextField, _ notification: NSNotification){
 
         let keyboardSize:CGSize = (notification.userInfo![UIKeyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue.size
         print("Keyboard size: \(keyboardSize)")
 
-        let keyboardRect = (notification.userInfo![UIKeyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
+//        let keyboardRect = (notification.userInfo![UIKeyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
 
-        var pointInTable:CGPoint = textField.superview!.convert(textField.frame.origin, to: tableView)
+        let pointInTable:CGPoint = textField.superview!.convert(textField.frame.origin, to: tableView)
         var contentOffset:CGPoint = tableView.contentOffset
         contentOffset.y  = pointInTable.y
         if let accessoryView = textField.inputAccessoryView {
@@ -496,11 +504,8 @@ class QuestionsViewController: UIViewController,  UITextFieldDelegate,  UINaviga
         let keyboardRect = (notification.userInfo![UIKeyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
         
         let indexPath = tableView.indexPathForSelectedRow
-        print("selected row \(indexPath)")
-        /*
-        let cell = tableView.cellForRow(at: indexPath!)
-        */
-        print("current text field \(currentTextField)")
+        print("selected row \(String(describing: indexPath))") 
+        print("current text field \(String(describing: currentTextField))")
         print("keyboard rect \(keyboardRect)")
         
     }
@@ -641,7 +646,7 @@ class QuestionsViewController: UIViewController,  UITextFieldDelegate,  UINaviga
         
             let imgPointer = self.currentItem!.imgPointer
             
-            let date = Date()
+//            let date = Date()
             let formatter = DateFormatter()
             formatter.dateFormat = "yyyy/MM/dd HH:mm"
             let dateTime = formatter.date(from: "2016/10/08 22:31")
@@ -749,28 +754,6 @@ class QuestionsViewController: UIViewController,  UITextFieldDelegate,  UINaviga
                     
                 }
                 
-//                for oneQuestion in self.theQuestions {
-//
-//                    print("saving \(oneQuestion.questionText) with num \(oneQuestion.questionNumber) on \(self.currentButton?.buttonInstanceID!)")
-//
-//                    let entityList =
-//                        NSEntityDescription.entity(forEntityName: "CDQuestionAnswer",
-//                                                   in: managedContext)!
-//                    let cdQuestionListAnswer = NSManagedObject(entity: entityList,
-//                                                         insertInto: managedContext)
-//
-//
-//                    cdQuestionListAnswer.setValue(self.currentButton?.buttonInstanceID!,     forKeyPath: "parentButtonID")
-//                    cdQuestionListAnswer.setValue(oneQuestion.parentQuestionSetID,     forKeyPath: "parentQuestionSetID")
-//                    cdQuestionListAnswer.setValue(oneQuestion.questionAnswer,     forKeyPath: "questionAnswerText")
-//                    cdQuestionListAnswer.setValue(oneQuestion.questionNumber,     forKeyPath: "questionNumber")
-//                    cdQuestionListAnswer.setValue(oneQuestion.questionTypeNumber,     forKeyPath: "questionTypeNumber")
-//
-//
-//                    let set = NSSet(object: cdQuestionListAnswer)
-//
-//                    theInstanceToUpdate?.setValue(set, forKey: "questionListAnswers")
-//                }
             }
             else {
                 
@@ -910,8 +893,22 @@ class QuestionsViewController: UIViewController,  UITextFieldDelegate,  UINaviga
             
             for oneAnswer in theAnswers {
                 
-                let text = oneAnswer.value(forKeyPath: "questionAnswerText") as? String
+                var text = oneAnswer.value(forKeyPath: "questionAnswerText") as? String
                 let number = oneAnswer.value(forKeyPath: "questionNumber") as? Int
+                
+                if (text?.last == " ") {
+                    text?.removeLast()
+                    if (text?.last == "-") {
+                        text?.removeLast()
+                    }
+                    if (text?.last == " ") {
+                        text?.removeLast()
+                    }
+                }
+                
+                if (text?.last == "-") {
+                    text?.removeLast()
+                }
                 
                 print("loading \(text!) with \(number!) from \((self.currentButton?.buttonInstanceID)!)")
                 
@@ -958,6 +955,52 @@ class QuestionsViewController: UIViewController,  UITextFieldDelegate,  UINaviga
 //        })
         clearAnswers()
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    func getAnswerStringFromCurrentSelections() -> String {
+        var string = ""
+        print("\n")
+        for s in self.currentSelectionPopup {
+            print(" " + s)
+            let trimS = s.trimmingCharacters(in: .whitespacesAndNewlines)
+            string.append(trimS + " - "  )
+        }
+        if string.count > 3 {
+            string.removeLast()
+            string.removeLast()
+            string.removeLast()
+        }
+        print("\n")
+        return string
+    }
+    
+    func getIndicesOfTextString(text:String, row:Int) -> [Int] {
+        let split = text.components(separatedBy: " - ")
+        var indices = [Int]()
+        for word in split {
+            var i = 0
+            for question in pickerQuestions  {
+                let trimmedWord = word.trimmingCharacters(in: .whitespacesAndNewlines)
+                if trimmedWord == question {
+                    indices.append(i)
+                }
+                i += 1
+            }
+        }
+        return indices
+    }
+    
+    func getStringsOfTextString(text:String, row:Int) -> [String] {
+        let split = text.components(separatedBy: " - ")
+        var matches = [String]()
+        for word in split {
+            for question in pickerQuestions  {
+                if word == question {
+                    matches.append(word)
+                }
+            }
+        }
+        return matches
     }
     
 }
@@ -1109,13 +1152,19 @@ extension QuestionsViewController: UITableViewDelegate, UITableViewDataSource {
         else if (type == .listMulti) {
             let cell = tableView.dequeueReusableCell(withIdentifier: "multiListCell") as! MultiListQuestionTableViewCell
             let textString = "  \(indexPath.row+1).  \(String(describing: text!))"
-            cell.textLabel?.text = nil
+//            cell.textLabel?.text = nil
+            var checkedIndices = [Int]()
+//            if let text = (cell.textLabel?.text) {
+//                checkedIndices = getIndicesOfTextString(text: text, row: indexPath.row)
+//            }
+            
             cell.questionLabel.text = nil
             cell.questionLabel.text = textString
             cell.questionText.text = nil
             cell.row = indexPath.row
             cell.pickerQuestions = theQuestions[indexPath.row].getAnswersOptions()
             cell.pickerAnswers = theQuestions[indexPath.row].getAnswersOptionsObject()
+            cell.checkedIndices = checkedIndices
             cell.pickerClosureOpen = pickerClosureOpenMulti
             cell.pickerClosureClose = pickerClosureClose
             cell.pickerPositionClosure = setPickerPositionClosure
@@ -1128,6 +1177,7 @@ extension QuestionsViewController: UITableViewDelegate, UITableViewDataSource {
             if let answer = theQuestion?.questionAnswer {
                 cell.questionText.text = answer
             }
+            
             let ans = self.currentButton?.getFromAnswersMap(key: (theQuestion?.questionNumber)!)
             cell.questionText.text = ans
             return cell
@@ -1190,8 +1240,8 @@ extension QuestionsViewController: UITableViewDelegate, UITableViewDataSource {
             
             let cell = tableView.cellForRow(at: indexPath)
 //            let type = theQuestions[indexPath.row].questionType
-            print("type      \(currentType)")
-            print("type cell \(currentCell)")
+            print("type      \(String(describing: currentType))")
+            print("type cell \(String(describing: currentCell))")
             
             let text = cell?.textLabel?.text
             if (self.currentSelectionPopup.contains(text!)){
@@ -1266,9 +1316,24 @@ extension QuestionsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     
+    
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        pickerClosureClose()
+        if (scrollView == self.tableView) {
+            pickerClosureClose()
+        }
+        if (scrollView == self.popuptableView) {
+            print("Will begin scrolling")
+        }
     }
+    
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if (scrollView == self.popuptableView) {
+            print("Did scroll")
+        }
+    }
+    
+    
 }
 
 

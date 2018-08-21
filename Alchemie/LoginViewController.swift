@@ -76,7 +76,8 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func loginButtonPressed(_ sender: Any) {
-        if ( !Reachability.isConnectedToNetwork() ) {
+        let reach = ReachabilityHelper()
+        if  !reach.isConnectedToNetworkHelper()   {
             notConnectedToInternetPopup()
             return
         }

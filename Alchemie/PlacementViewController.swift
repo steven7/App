@@ -20,6 +20,7 @@ class PlacementViewController: UIViewController, UICollectionViewDelegate, UICol
     
     @IBOutlet weak var bigImageView: UIImageView!
     
+    @IBOutlet weak var editButton: UIButton!
     @IBOutlet weak var bigImageButton: UIButton!
     
     @IBOutlet weak var stackView: UIStackView!
@@ -54,6 +55,7 @@ class PlacementViewController: UIViewController, UICollectionViewDelegate, UICol
     var touchedLocationThree = CGPoint(x: 0.0, y: 0.0)
     
     var currentItem:Item?
+    var currentIndex:Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -84,8 +86,7 @@ class PlacementViewController: UIViewController, UICollectionViewDelegate, UICol
         collectionViewOne.delegate = self
         collectionViewOne.dataSource = self
         
-        self.bigImageButton.isHidden = true
-        self.bigImageButton.isEnabled = false
+        noImageSelectedUIUpdate()
         
         //self.stackView.isUserInteractionEnabled = true
         
@@ -176,11 +177,12 @@ class PlacementViewController: UIViewController, UICollectionViewDelegate, UICol
             self.performSegue(withIdentifier: "toCreateItem", sender: self)
         }
         else if ( collectionViewOneContents[indexPath.row] is Item ) {
-            self.bigImageButton.isHidden = false
-            self.bigImageButton.isEnabled = true
+            
+            if (self.bigImageButton.isHidden == true) {
+                imageSelectedUIUpdate()
+            }
             print("pressed item cell at \(indexPath.row)")
-            let item = collectionViewOneContents[indexPath.row] as! Item
-            self.currentItem = item
+            let item = collectionViewOneContents[indexPath.row] as! Item 
             let cell = collectionView.cellForItem(at: indexPath) as! ItemCollectionViewCell
             clearAllCellBackgroundColors()
             cell.theBackgroundView.backgroundColor = UIColor(displayP3Red: 0.4, green: 0.6667, blue: 1.0, alpha: 1.0)
@@ -191,6 +193,8 @@ class PlacementViewController: UIViewController, UICollectionViewDelegate, UICol
             else {
                 bigImageView.image = item.originalImage
             }
+            currentIndex = indexPath.row
+            self.currentItem = collectionViewOneContents[indexPath.row] as? Item
             collectionViewOne.reloadData()
         }
         
@@ -254,7 +258,9 @@ class PlacementViewController: UIViewController, UICollectionViewDelegate, UICol
         let item = Item()
         item.originalImage = image
         item.parentSubOptionID = currentSubOption?.subOptionID
+//        item.id
         item.caption = caption
+        item.itemID = UUID().uuidString
         item.imgPointer = UUID().uuidString
         item.imgUUID = item.imgPointer
         collectionViewOneContents.append(item)
@@ -263,7 +269,50 @@ class PlacementViewController: UIViewController, UICollectionViewDelegate, UICol
         DataStore.shared.addItemToCurrentSubOptionCoreData(item: item, currentSubOption:currentSubOption!)
     }
     
+    func editItemCompletion(item: Item, image:UIImage , caption: String , imageChanged: Bool){
+        collectionViewOneContents.removeLast()
+        // collectionViewOneContents.insert(Item(), at: indexPath.row-1)
+        let oneItem = item
+        oneItem.originalImage = image
+        oneItem.parentSubOptionID = currentSubOption?.subOptionID
+        oneItem.caption = caption
+        oneItem.itemID = self.currentItem?.itemID
+        oneItem.imgPointer = self.currentItem?.imgPointer
+        oneItem.imgUUID = item.imgPointer
+        oneItem.editedImage = item.editedImage
+//        oneItem.editedimgUUID
+        if (imageChanged) {
+            bigImageView.image = item.originalImage
+            oneItem.editedImage = nil
+        }
+        DataStore.shared.editItemToCurrentSubOptionCoreData(item: oneItem, currentSubOption:currentSubOption!)
+        collectionViewOneContents = DataStore.shared.fetchItemsFromCoreData(currentSubOption: self.currentSubOption!)
+        collectionViewOne.reloadData()
+        collectionViewOne.deselectItem(at: IndexPath(row: currentIndex!, section: 0), animated: false)
+        
+        collectionViewOne.selectItem(at:   IndexPath(row: currentIndex!, section: 0), animated: false, scrollPosition: .top)
+        collectionViewOne.reloadData() 
+    }
     
+    func deleteItemCompletion(item: Item, image:UIImage , caption: String ){
+        collectionViewOneContents.removeLast()
+        // collectionViewOneContents.insert(Item(), at: indexPath.row-1)
+        let oneItem = Item()
+        oneItem.originalImage = image
+        oneItem.parentSubOptionID = currentSubOption?.subOptionID
+        oneItem.caption = caption
+        oneItem.itemID = self.currentItem?.itemID
+        oneItem.imgPointer = self.currentItem?.imgPointer
+        oneItem.imgUUID = item.imgPointer
+        
+        DataStore.shared.deleteItemToCurrentSubOptionCoreData(item: oneItem, currentSubOption:currentSubOption!)
+        collectionViewOneContents = DataStore.shared.fetchItemsFromCoreData(currentSubOption: self.currentSubOption!)
+//        collectionViewOne.reloadData()
+        collectionViewOne.deleteItems(at: [IndexPath(row: currentIndex!, section: 0)])
+//        collectionViewOne.selectItem(at: IndexPath(row: currentIndex!, section: 0) , animated: false, scrollPosition: .top)
+        collectionViewOne.reloadData()
+        noImageSelectedUIUpdate()
+    }
     //////
     //
     // MARK: - Image Pciker view
@@ -277,7 +326,7 @@ class PlacementViewController: UIViewController, UICollectionViewDelegate, UICol
         buttonOne.layer.render(in:UIGraphicsGetCurrentContext()!)
         buttonTwo.layer.render(in:UIGraphicsGetCurrentContext()!)
         buttonThree.layer.render(in:UIGraphicsGetCurrentContext()!)
-        var image = UIGraphicsGetImageFromCurrentImageContext()
+        let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
         //let croppedImage = image?.crop(rect: CGRect(x: 0, y: 100, width: 834, height: 800))
@@ -347,6 +396,16 @@ class PlacementViewController: UIViewController, UICollectionViewDelegate, UICol
             collectionViewOneContents.append(CreateItem())
             collectionViewOne.reloadData()
         }
+        if (segue.identifier == "toEditItem" ) {
+            let createItem = segue.destination as! CreateItemViewController
+            createItem.editMode = true
+            createItem.currentEditItem = self.currentItem
+            createItem.editItemCompletion = editItemCompletion
+            createItem.deleteItemCompletion = deleteItemCompletion
+            collectionViewOneContents.removeLast()
+            collectionViewOneContents.append(CreateItem())
+            collectionViewOne.reloadData()
+        }
         if (segue.identifier == "toBigImage" ) {
             // collectionViewOneContents = fetchItemsFromCoreData()
             let viewController = segue.destination as! BigImageViewController
@@ -381,7 +440,24 @@ class PlacementViewController: UIViewController, UICollectionViewDelegate, UICol
         self.comingSoonPopup()
     }
    
+    @IBAction func editButtonPressed(_ sender: Any) {
+        self.performSegue(withIdentifier: "toEditItem", sender: self)
+    }
     
+    func noImageSelectedUIUpdate() {
+        self.bigImageView.image = nil
+        self.editButton.isHidden = true
+        self.editButton.isUserInteractionEnabled = false
+        self.bigImageButton.isHidden = true
+        self.bigImageButton.isUserInteractionEnabled = false
+    }
+    
+    func imageSelectedUIUpdate() {
+        self.editButton.isHidden = false
+        self.editButton.isUserInteractionEnabled = true
+        self.bigImageButton.isHidden = false
+        self.bigImageButton.isUserInteractionEnabled = true
+    }
     ///////////////////
     //
     //    drop and drag

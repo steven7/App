@@ -335,6 +335,7 @@ class DataStore: NSObject {
             cdItem.setValue(item.itemID,             forKeyPath: "itemID")
             cdItem.setValue(item.imgUUID,            forKeyPath: "imgUUID")
             cdItem.setValue(item.imgPointer,         forKeyPath: "imgPointer")
+            cdItem.setValue(item.answerSetID,        forKeyPath: "answerSetID")
             cdItem.setValue(subOptionID,             forKeyPath: "parentSubOptionID")
             //cdItem.setValue(item.parentSubOptionID,  forKeyPath: "parentSubOptionID")
             
@@ -354,6 +355,113 @@ class DataStore: NSObject {
         catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         } 
+    }
+    
+    
+    func editItemToCurrentSubOptionCoreData(item: Item, currentSubOption:SubOption ){
+        
+        guard let appDelegate =
+            UIApplication.shared.delegate as? AppDelegate else {
+                return
+        }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        
+        let subOptionID = currentSubOption.subOptionID
+        let itemFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "CDItem")
+        itemFetchRequest.predicate = NSPredicate(format: "itemID == %@", item.itemID!)
+        
+        
+        do {
+            let itemsToUpdate = try managedContext.fetch(itemFetchRequest)
+            
+            if (itemsToUpdate.count >= 1) {
+                
+                let itemToUpdate = itemsToUpdate[0]
+                
+                itemToUpdate.setValue(item.caption,            forKeyPath: "caption")
+                itemToUpdate.setValue(item.itemID,             forKeyPath: "itemID")
+                itemToUpdate.setValue(item.imgUUID,            forKeyPath: "imgUUID")
+                itemToUpdate.setValue(item.imgPointer,         forKeyPath: "imgPointer")
+                itemToUpdate.setValue(item.answerSetID,        forKeyPath: "answerSetID")
+                itemToUpdate.setValue(subOptionID,             forKeyPath: "parentSubOptionID")
+                itemToUpdate.setValue(nil,                      forKeyPath: "editedimgPointer")
+                //cdItem.setValue(item.parentSubOptionID,  forKeyPath: "parentSubOptionID")
+                
+                imageStore.setImage(item.originalImage!, forKey: item.imgUUID!)
+                
+            }
+            do {
+                try managedContext.save()
+            } catch let error as NSError {
+                print("Could not save. \(error), \(error.userInfo)")
+            }
+            
+        }
+        catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+    }
+    
+    func deleteItemToCurrentSubOptionCoreData(item: Item, currentSubOption:SubOption ){
+        
+        guard let appDelegate =
+            UIApplication.shared.delegate as? AppDelegate else {
+                return
+        }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        
+        let subOptionID = currentSubOption.subOptionID
+        
+        let subOptionFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "CDSubOption")
+        subOptionFetchRequest.predicate = NSPredicate(format: "subOptionID == %@", subOptionID!)
+        
+        let itemFetchRequest = NSFetchRequest<NSManagedObject>(entityName: "CDItem")
+        itemFetchRequest.predicate = NSPredicate(format: "itemID == %@", item.itemID!)
+        
+        
+        do {
+            
+            let subOptionsToUpdate = try managedContext.fetch(subOptionFetchRequest)
+            let subOptionToUpdate = subOptionsToUpdate[0]
+            
+            
+            
+            let itemsToUpdate = try managedContext.fetch(itemFetchRequest)
+            
+            if (itemsToUpdate.count >= 1) {
+                
+                let itemToUpdate = itemsToUpdate[0]
+                
+//                itemToUpdate.de
+                
+//                itemToUpdate.setValue(item.caption,            forKeyPath: "caption")
+//                itemToUpdate.setValue(item.itemID,             forKeyPath: "itemID")
+//                itemToUpdate.setValue(item.imgUUID,            forKeyPath: "imgUUID")
+//                itemToUpdate.setValue(item.imgPointer,         forKeyPath: "imgPointer")
+//                itemToUpdate.setValue(item.answerSetID,        forKeyPath: "answerSetID")
+//                itemToUpdate.setValue(subOptionID,             forKeyPath: "parentSubOptionID")
+//                itemToUpdate.setValue(nil,                      forKeyPath: "editedimgPointer")
+                //cdItem.setValue(item.parentSubOptionID,  forKeyPath: "parentSubOptionID")
+                
+                
+//                imageStore.setImage(item.originalImage!, forKey: item.imgUUID!)
+                
+                try managedContext.delete(itemToUpdate)
+                try managedContext.save()
+                imageStore.deleteImage(forKey: item.imgUUID!)
+                appDelegate.saveContext()
+            }
+            
+        } catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
+        }
+            
+//        }
+//        catch let error as NSError {
+//            print("Could not fetch. \(error), \(error.userInfo)")
+//        }
     }
     
     func addItemToCurrentSubOptionCoreData(subOption: SubOption, item: Item ){
@@ -396,6 +504,7 @@ class DataStore: NSObject {
             cdItem.setValue(item.caption,            forKeyPath: "caption")
             cdItem.setValue(item.imgUUID,            forKeyPath: "imgUUID")
             cdItem.setValue(item.imgPointer,         forKeyPath: "imgPointer")
+            cdItem.setValue(item.answerSetID,        forKeyPath: "answerSetID")
             cdItem.setValue(item.parentSubOptionID,  forKeyPath: "parentSubOptionID")
             
             // fix this
@@ -713,7 +822,16 @@ class DataStore: NSObject {
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
-        
+        theOptions.sort(by: { (left: AnyObject, right:AnyObject) -> Bool in
+            if (left is Option && right is Option) {
+                let oleft = left as! Option
+                let oright = right as! Option
+                return oleft.title! < oright.title!
+            }
+            else {
+                return false
+            }
+        })
         return theOptions
     }
     
@@ -728,8 +846,7 @@ class DataStore: NSObject {
         let managedContext =
             appDelegate.persistentContainer.viewContext
         
-        let fetchRequest =
-            NSFetchRequest<NSManagedObject>(entityName: "CDItem")
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "CDItem")
         
         let subOptionID = currentSubOption.subOptionID
         
@@ -755,15 +872,17 @@ class DataStore: NSObject {
                 else {
                     itemIdSet.insert(oneItem.itemID!)
                 }
-                oneItem.caption    = oneManagedItem .value(forKeyPath: "caption") as? String
-                oneItem.imgUUID    = oneManagedItem .value(forKeyPath: "imgUUID") as? String
-                oneItem.imgPointer = oneManagedItem .value(forKeyPath: "imgPointer") as? String
+                oneItem.caption    = oneManagedItem.value(forKeyPath: "caption") as? String 
+                oneItem.imgUUID    = oneManagedItem.value(forKeyPath: "imgUUID") as? String
+                oneItem.imgPointer = oneManagedItem.value(forKeyPath: "imgPointer") as? String
                 oneItem.editedimgUUID = oneManagedItem.value(forKeyPath: "editedimgPointer") as? String
+                oneItem.answerSetID   = oneManagedItem.value(forKeyPath: "answerSetID")  as? String
+//                oneItem.caption    = oneManagedItem.value(forKey: "caption")  as? String
                 //oneItem.questionIconPositionsThree = oneManagedItem.value( forKeyPath: "questionIconPositionsThree") as? String
                 
                 if let dataOne = oneManagedItem.value(forKey: "questionIconPositionsOne") as? Data {
                     let unarchiveObjectOne = NSKeyedUnarchiver.unarchiveObject(with: dataOne)
-                    let arrayObjectOne = unarchiveObjectOne as AnyObject! as! [CGPoint]
+                    let arrayObjectOne = unarchiveObjectOne as AnyObject? as! [CGPoint]
                     oneItem.questionIconPositionsOne = arrayObjectOne
                 }
                 else {
@@ -772,7 +891,7 @@ class DataStore: NSObject {
                 
                 if let dataTwo = oneManagedItem.value(forKey: "questionIconPositionsTwo") as? Data {
                     let unarchiveObjectTwo = NSKeyedUnarchiver.unarchiveObject(with: dataTwo)
-                    let arrayObjectTwo = unarchiveObjectTwo as AnyObject! as! [CGPoint]
+                    let arrayObjectTwo = unarchiveObjectTwo as AnyObject? as! [CGPoint]
                     oneItem.questionIconPositionsTwo = arrayObjectTwo
                 }
                 else {
@@ -781,7 +900,7 @@ class DataStore: NSObject {
                 
                 if let dataThree = oneManagedItem.value(forKey: "questionIconPositionsThree") as? Data {
                     let unarchiveObjectThree = NSKeyedUnarchiver.unarchiveObject(with: dataThree)
-                    let arrayObjectThree = unarchiveObjectThree as AnyObject! as! [CGPoint]
+                    let arrayObjectThree = unarchiveObjectThree as AnyObject? as! [CGPoint]
                     oneItem.questionIconPositionsThree = arrayObjectThree
                 }
                 else {
@@ -954,7 +1073,7 @@ class DataStore: NSObject {
             UIApplication.shared.delegate as? AppDelegate else {
                 return
         }
-        var managedContext =  NSManagedObjectContext()
+        var managedContext =  NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
         managedContext = appDelegate.persistentContainer.viewContext
         
         let fetchRequest =
@@ -1001,6 +1120,12 @@ class DataStore: NSObject {
                 }
                 
                 managedContext.delete(oneManagedOption)
+                do {
+                    try managedContext.save()
+                }
+                catch let error as NSError {
+                    print("Could not delete. \(error), \(error.userInfo)")
+               }
             }
             
             appDelegate.saveContext()

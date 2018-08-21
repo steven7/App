@@ -16,6 +16,7 @@ class Item: NSObject {
     var itemID:String?
     var imgPointer:String?
     var imgUUID:String?
+    var answerSetID:String?
     var editedimgUUID:String?
     var caption:String?
     var parentSubOptionID:String?
@@ -36,6 +37,7 @@ class Item: NSObject {
         itemID = NSUUID().uuidString
         imgPointer = ""
         imgUUID = NSUUID().uuidString
+        answerSetID = NSUUID().uuidString
         caption = ""
         parentSubOptionID = ""
         highlightedBackground = false

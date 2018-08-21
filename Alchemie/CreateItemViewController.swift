@@ -18,10 +18,17 @@ class CreateItemViewController: UIViewController, UIImagePickerControllerDelegat
     
     @IBOutlet weak var doneButton: UIButton!
     
+    @IBOutlet weak var deleteButton: UIButton!
+    
     var theImage:UIImage?
+    var editMode = false
+    var currentEditItem: Item?
     let imagePicker = UIImagePickerController()
     
     var createItemCompletion: ((UIImage, String) -> ())?
+    var editItemCompletion: ((Item, UIImage, String, Bool) -> ())?
+    var deleteItemCompletion: ((Item, UIImage, String) -> ())?
+    var imageChanged = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +39,19 @@ class CreateItemViewController: UIViewController, UIImagePickerControllerDelegat
         self.view.addGestureRecognizer(tapGesture)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(noti:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(noti:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        if (editMode) {
+            self.photoButton.setBackgroundImage(currentEditItem?.originalImage, for: .normal)
+            self.titleTextField.text = currentEditItem?.caption
+            self.doneButton.setTitle("Save Changes", for: .normal)
+            self.doneButton.backgroundColor = UIColor.lightGray
+            self.deleteButton.layer.cornerRadius = 15
+            self.deleteButton.isHidden = false
+            self.deleteButton.isUserInteractionEnabled = true
+        }
+        else {
+            self.deleteButton.isHidden = true
+            self.deleteButton.isUserInteractionEnabled = false
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -72,6 +92,7 @@ class CreateItemViewController: UIViewController, UIImagePickerControllerDelegat
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
             theImage = pickedImage
             photoButton.setBackgroundImage(self.theImage, for: .normal)
+            imageChanged = true
         } 
         dismiss(animated: true, completion: {
         })
@@ -96,7 +117,23 @@ class CreateItemViewController: UIViewController, UIImagePickerControllerDelegat
         if let cap = self.titleTextField.text{
             caption = cap
         }
-        createItemCompletion!(theImage!, caption)
+        if (editMode) {
+            self.currentEditItem?.originalImage = theImage
+            self.currentEditItem?.editedImage = nil
+            editItemCompletion!(self.currentEditItem!, theImage!, caption, imageChanged)
+        }
+        else {
+            createItemCompletion!(theImage!, caption)
+        }
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    @IBAction func deleteButtonPressed(_ sender: Any) {
+        var caption = ""
+        if let cap = self.titleTextField.text{
+            caption = cap
+        }
+        deleteItemCompletion!(self.currentEditItem!, theImage!, caption)
         self.navigationController?.popViewController(animated: true)
     }
     

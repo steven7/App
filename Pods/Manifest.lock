@@ -1,25 +1,37 @@
 PODS:
-  - Alamofire (4.6.0)
-  - AlamofireImage (3.3.0):
+  - Alamofire (4.7.3)
+  - AlamofireImage (3.3.1):
     - Alamofire (~> 4.5)
-  - DropDown (2.3.1)
-  - SVProgressHUD (2.2.3)
+  - DynamicBlurView (2.0.2)
+  - PopupDialog (0.7.1):
+    - DynamicBlurView (~> 2.0)
+  - SVProgressHUD (2.2.5)
   - SwiftKeychainWrapper (3.0.1)
 
 DEPENDENCIES:
   - Alamofire (~> 4.5)
   - AlamofireImage (~> 3.3)
-  - DropDown
+  - PopupDialog (~> 0.7.1)
   - SVProgressHUD
   - SwiftKeychainWrapper (~> 3.0.1)
 
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Alamofire
+    - AlamofireImage
+    - DynamicBlurView
+    - PopupDialog
+    - SVProgressHUD
+    - SwiftKeychainWrapper
+
 SPEC CHECKSUMS:
-  Alamofire: f41a599bd63041760b26d393ec1069d9d7b917f4
-  AlamofireImage: 2e784dc5d00f04903a52c1d169181469c805c3df
-  DropDown: 20499c7b2731b0d21609af924e47c7677a2be50d
-  SVProgressHUD: a5eaeff664a82dda89809c409ace40183ce91523
+  Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
+  AlamofireImage: 3b35b586853abaf94ca1250f4e94cff3c21a4c0d
+  DynamicBlurView: aa6db4defc6e537eb86fc5e58dd3991666178399
+  PopupDialog: 39598b7d41719f5c025b4b70e62728bae7734fef
+  SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SwiftKeychainWrapper: 38952a3636320ae61bad3513cadd870929de7a4a
 
-PODFILE CHECKSUM: 8aceb49824465c81a299a62403c86f6f9a06b28d
+PODFILE CHECKSUM: cad51eea3a3eee01a97d8d8a8276976532be7f66
 
-COCOAPODS: 1.4.0
+COCOAPODS: 1.5.3

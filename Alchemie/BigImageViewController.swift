@@ -9,6 +9,7 @@
 import UIKit
 import CoreData
 import SVProgressHUD
+//import Reachability
 
 class BigImageViewController: UIViewController, UIScrollViewDelegate {
     
@@ -202,10 +203,28 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
             }
         }
         
+//        let reachability = Reachability()
+//        NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(note:)), name: .reachabilityChanged, object: reachability)
+//        do{
+//            try reachability?.startNotifier()
+//        }catch{
+//            print("could not start reachability notifier")
+//        }
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         saveOperation()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+//        if ReachabilityHelper.isConnectedToNetworkHelper() == true {
+//            print("Internet connection OK")
+//            self.uploadButton.isEnabled = true
+//        } else {
+//            self.uploadButton.isEnabled = false
+//            self.connectivityLostPopup()
+//        }
     }
     
     func copyQuestionArray(questionList: [Question]) {
@@ -387,7 +406,7 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
         if (segue.identifier == "toQuestions") {
             let viewController = segue.destination as! QuestionsViewController
             if let option = currentOption {
-                viewController.currentOption = self.currentOption
+                viewController.currentOption = option
                 viewController.currentSubOption = self.currentSubOption
                 viewController.currentButton = self.currentButton
                 viewController.currentItem = self.currentItem
@@ -633,7 +652,7 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
     
     func addButtonOneOnPositionWithAnswers(positionCenter: CGPoint, buttonTypeArray: inout [QuestionButton]){
         let buttonView = buttonOne.copyButton()
-        var copyArray = self.currentOption!.questionSetList[0].questionList
+        let copyArray = self.currentOption!.questionSetList[0].questionList
         buttonView.setQuestions(questions: copyArray)
         let newPanGestureOne   = UIPanGestureRecognizer(target: self, action: #selector(draggedButtonEvery(_:) ) )
         buttonView.isUserInteractionEnabled = true
@@ -649,7 +668,7 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
     
     func addButtonTwoOnPosition(positionCenter: CGPoint, buttonTypeArray: inout [QuestionButton]){
         let buttonView = buttonTwo.copyButton()
-        var copyArray = self.currentOption!.questionSetList[1].questionList
+        let copyArray = self.currentOption!.questionSetList[1].questionList
         buttonView.setQuestions(questions: copyArray)
         buttonView.clearAnswers()
         let newPanGestureOne   = UIPanGestureRecognizer(target: self, action: #selector(draggedButtonEvery(_:) ) )
@@ -659,7 +678,7 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
         buttonView.center   = positionCenter
         buttonView.setLocation(point: positionCenter)
         buttonView.setType(typeInt: 1)
-        let keyTwo = self.currentOption?.questionSetList[0].surveyIconPointer
+        _ = self.currentOption?.questionSetList[0].surveyIconPointer
         buttonView.setImage(self.buttonImageTwo, for: .normal)
         buttonTypeArray.append(buttonView)
         self.bigImage.addSubview(buttonView)
@@ -667,7 +686,7 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
     
     func addButtonThreeOnPosition(positionCenter: CGPoint, buttonTypeArray: inout [QuestionButton]){
         let buttonView = buttonThree.copyButton() // sender.view as! UIButton
-        var copyArray = self.currentOption!.questionSetList[2].questionList
+        let copyArray = self.currentOption!.questionSetList[2].questionList
         buttonView.setQuestions(questions: copyArray)
         buttonView.clearAnswers()
         let newPanGestureOne   = UIPanGestureRecognizer(target: self, action: #selector(draggedButtonEvery(_:) ) )
@@ -677,7 +696,7 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
         buttonView.center   = positionCenter
         buttonView.setLocation(point: positionCenter)
         buttonView.setType(typeInt: 2)
-        let keyThree = self.currentOption?.questionSetList[2].surveyIconPointer
+        _ = self.currentOption?.questionSetList[2].surveyIconPointer
         buttonView.setImage(self.buttonImageThree, for: .normal)
         buttonTypeArray.append(buttonView)
         self.bigImage.addSubview(buttonView)
@@ -696,7 +715,7 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
         let locationv = sender.location(in: self.view)
         
         let buttonView = sender.view as! QuestionButton
-        let point = buttonView.center
+//        let point = buttonView.center
         let rect = scrollView.frame
         
         if sender.state == .began || sender.state == .changed {
@@ -710,8 +729,8 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
                 translation = sender.translation(in: self.bigImage)
             }
             
-            let xDif = location.x - locationv.x
-            let yDif = location.y - locationv.y
+//            let xDif = location.x - locationv.x
+//            let yDif = location.y - locationv.y
             
             buttonView.center   = CGPoint(x: buttonView.center.x + translation!.x , y: buttonView.center.y + translation!.y)
             
@@ -911,10 +930,6 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
     // new
     
     
-    func saveOneButton(){
-        
-    }
-    
     func clearButtonsOutsidePicture(){
         
         var indexesToRemove = [Int]()
@@ -967,9 +982,8 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
         // important!!
         clearButtonsOutsidePicture()
         
-        let dispatchGroup = DispatchGroup()
-        let queue = DispatchQueue.global()
-        
+//        let dispatchGroup = DispatchGroup()
+//        let queue = DispatchQueue.global()
         
         successOperation = BlockOperation {
             DispatchQueue.main.async {
@@ -994,10 +1008,7 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
             let qOne = self.currentOption?.questionSetList[0].questionList
             let qTwo = self.currentOption?.questionSetList[1].questionList
             let qThree = self.currentOption?.questionSetList[2].questionList
-            
-//            questionsUploadOld(questionList: qOne!, button: buttonOnes[0], dispatchGroup: dispatchGroup)
-//            questionsUploadOld(questionList: qTwo!, button: buttonTwos[0], dispatchGroup: dispatchGroup)
-//            questionsUploadOld(questionList: qThree!, button: buttonThrees[0], dispatchGroup: dispatchGroup)
+             
             for oneButtonOne in buttonOnes {
                 questionsUpload(questionList: qOne!, button: oneButtonOne) //, dispatchGroup: dispatchGroup, queue: queue)
             }
@@ -1060,7 +1071,7 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
         
         
         operationQueue.addOperation {
-            let questionText = "Item background" // oneQuestion.questionText!
+//            let questionText = "Item background" // oneQuestion.questionText!
             // var answer = oneQuestion.questionAnswer!
             let questionNum  = 0 // oneQuestion.questionNumber!
             let guid  = self.currentOption!.optionID!
@@ -1127,7 +1138,7 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
         
         SVProgressHUD.show()
         
-        let oneAnswerSetInstanceId = UUID().uuidString
+//        let oneAnswerSetInstanceId = UUID().uuidString
         
         
         if let questions = button.getQuestions() {
@@ -1139,13 +1150,13 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
                 }
                 
                 
-                let questionText = oneQuestion.questionText!
+                _ = oneQuestion.questionText!
                 // var answer = oneQuestion.questionAnswer!
                 let questionNum  = oneQuestion.questionNumber!
                 let guid  = self.currentOption!.optionID!
                 let projectID  = self.currentOption!.optionID! //oneQuestion.parentQuestionSetID!
                 let questionSetID  = oneQuestion.parentQuestionSetID! //
-                let answerSetInstanceID  = oneAnswerSetInstanceId //.parentQuestionSetID!
+                let answerSetInstanceID  = self.currentItem!.answerSetID! //.parentQuestionSetID!
                 let backgroundID  =  self.currentItem!.imgPointer!
                 let answerSetXPosition  = Int(button.center.x)
                 let answerSetYPosition  = Int(button.center.y)
@@ -1338,5 +1349,26 @@ class BigImageViewController: UIViewController, UIScrollViewDelegate {
             return false
         }
     }
+    
+    
+    // reachability
+    
+//    @objc func reachabilityChanged(note: Notification) {
+//
+//        let reachability = note.object as! Reachability
+//
+//        switch reachability.connection {
+//        case .wifi:
+//            print("Reachable via WiFi")
+//            self.uploadButton.isEnabled = true
+//        case .cellular:
+//            print("Reachable via Cellular")
+//            self.uploadButton.isEnabled = true
+//        case .none:
+//            print("Network not reachable")
+//            self.uploadButton.isEnabled = false
+//            self.connectivityLostPopup()
+//        }
+//    }
     
 }

@@ -8,10 +8,11 @@ target 'Alchemie' do
   # Pods for Alchemie
   
   pod 'Alamofire', '~> 4.5'
-  pod 'SVProgressHUD'
-  pod 'SwiftKeychainWrapper','~>3.0.1'	
   pod 'AlamofireImage', '~> 3.3'
-  pod 'DropDown'
+  pod 'SVProgressHUD'
+  pod 'SwiftKeychainWrapper', '~>3.0.1'	
+  pod 'PopupDialog', '~> 0.7.1' 
+  # pod 'ReachabilitySwift', :git => 'https://github.com/FelixII/Reachability.swift.git'
   
   target 'AlchemieTests' do
     inherit! :search_paths
